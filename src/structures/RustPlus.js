@@ -349,29 +349,17 @@ class RustPlus extends RustPlusLib {
                 }
             };
 
-            this.log('sendRequest', JSON.stringify(requestBody));
-
             this.sendRequest(requestBody);
 
             var response = await this.getEntityInfoAsync(id, timeout);
             var payload = response?.entityInfo?.payload;
             var payloadValue = payload?.value;
 
-            this.log('getEntityInfoPayload', JSON.stringify(payload));
-
-            if (requestBody.value === payloadValue || (payloadValue === undefined && value === false)) {
-               this.log('setEntityValueAsync', 'success!!!'); 
+            if (value === payloadValue || (payloadValue === undefined && value === false)) {
+                return { success: true };
             }
 
-            return { success: true };
-            // return await this.sendRequestAsync({
-            //     entityId: id,
-            //     setEntityValue: {
-            //         value: value
-            //     }
-            // }, timeout).catch((e) => {
-            //     return e;
-            // });
+            return { error: Client.client.intlGet(null, 'errorCap') };
         }
         catch (e) {
             return e;
