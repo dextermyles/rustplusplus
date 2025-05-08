@@ -22,7 +22,7 @@ class Ai {
 
         try {
             const resp = await this.groq.chat.completions.create({
-                model: "deepseek-r1-distill-llama-70b",
+                model: "llama3-8b-8192",
                 messages: [
                     {
                         role: "user",
