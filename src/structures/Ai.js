@@ -18,24 +18,22 @@ class Ai {
     async askAiBot(query) {
         this.lastQuestion = query;
 
-        this.log('askAiBot', query);
+        this.log('AI Question', query);
 
         try {
             const resp = await this.groq.chat.completions.create({
-                model: "llama3-8b-8192",
+                model: "llama-3.1-8b-instant",
                 messages: [
                     {
                         role: "user",
-                        content: "In Rust, " + this.lastQuestion
+                        content: "Summarize " + this.lastQuestion + ", for the PC game Rust."
                     }
                 ],
-                max_completion_tokens: 1024,
-                stream: false,
-                reasoning_format: "hidden",
-                
+                max_completion_tokens: 2048,
+                stream: false
             });
     
-            this.log('askAiBot response', JSON.stringify(resp.choices));
+            this.log('AI Answer', JSON.stringify(resp.choices));
     
             this.lastAnswer = resp.choices[0].message.content;
     
