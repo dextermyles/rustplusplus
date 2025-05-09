@@ -27,9 +27,6 @@ class Ai {
                     {
                         role: "system",
                         content: "You are a helpful assistant for the PC game Rust.\n"
-                        + "Use rusthelp.com to search for answers.\n"
-                        + "Breakdown the ingredient costs for each resource."
-                        + "Provide the source for your answers."
                     },
                     {
                         role: "user",
@@ -37,7 +34,8 @@ class Ai {
                     }
                 ],
                 stream: false,
-                include_domains: [ "rusthelp.com" ]
+                include_domains: [ "rusthelp.com" ],
+                max_completion_tokens: 1024
             });
 
             this.log('AI Answer', JSON.stringify(resp.choices));
