@@ -22,28 +22,35 @@ class Ai {
 
         try {
             const resp = await this.groq.chat.completions.create({
-                model: "llama-3.1-8b-instant",
+                model: "llama3-70b-8192",
                 messages: [
                     {
+                        role: "system",
+                        content: "You are a helpful assistant for the PC game Rust.\n"
+                        + "Use rusthelp.com to search for answers.\n"
+                        + "Breakdown the ingredient costs for each resource."
+                        + "Provide the source for your answers."
+                    },
+                    {
                         role: "user",
-                        content: "Summarize " + this.lastQuestion + ", for the PC game Rust."
+                        content: "Summarize " + this.lastQuestion
                     }
                 ],
-                max_completion_tokens: 2048,
-                stream: false
+                stream: false,
+                include_domains: [ "rusthelp.com" ]
             });
-    
+
             this.log('AI Answer', JSON.stringify(resp.choices));
-    
+
             this.lastAnswer = resp.choices[0].message.content;
-    
+
             return this.lastAnswer;
         }
         catch (e) {
             this.log('ai failed', e, 'error');
             return { error: e };
         }
-        
+
     }
 
     log(title, text, level = 'info') {

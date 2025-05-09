@@ -61,7 +61,7 @@ class Items {
     getClosestItemIdByName(name) {
         const closestString = Utils.findClosestString(name, this.itemNames);
         if (closestString !== null) {
-            const id = Object.entries(this.items).find(([key, value]) => value.name === closestString);
+            const id = Object.entries(this.items).find(([key, value]) => value.name.includes(closestString));
             return id ? id[0] : null;
         }
         return null;

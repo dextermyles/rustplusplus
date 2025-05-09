@@ -34,7 +34,6 @@ module.exports = {
 
 		if (aiQuery !== null) {
 			const aiResponse = await rustplus.askAiBot(aiQuery);
-			client.log(client.intlGet(null, 'aiCap'),  aiResponse);
 			await DiscordMessages.sendAiMessage(interaction, aiResponse);
 		}
 	}

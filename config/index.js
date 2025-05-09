@@ -22,7 +22,7 @@ module.exports = {
     general: {
         language: process.env.RPP_LANGUAGE || 'en',
         pollingIntervalMs: process.env.RPP_POLLING_INTERVAL || 10000,
-        showCallStackError: process.env.RPP_LOG_CALL_STACK || false,
+        showCallStackError: process.env.RPP_LOG_CALL_STACK || true,
         reconnectIntervalMs: process.env.RPP_RECONNECT_INTERVAL || 15000,
     },
     discord: {
