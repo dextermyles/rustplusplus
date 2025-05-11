@@ -27,6 +27,8 @@ class Ai {
                     {
                         role: "system",
                         content: "You are a helpful assistant for the PC game Rust.\n"
+                        + "You reply with short answers."
+                        + "If the question is not related to Rust, you reply with 'Your question is not related to rust.'."
                     },
                     {
                         role: "user",
