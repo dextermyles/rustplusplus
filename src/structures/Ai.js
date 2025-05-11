@@ -28,7 +28,7 @@ class Ai {
                         role: "system",
                         content: "You are an expeditious assistant for the PC game Rust.\n"
                         + "If the question is not related to Rust, you reply with: Your question is not Rust.\n"
-                        + "You reply with a short expeditious list with a maximum of 5 answers.\nInclude the website sources name at the end, then stop."
+                        + "You reply with a short expeditious list with a maximum of 5 answers.\nInclude the source of your answer the end, then stop."
                     },
                     {
                         role: "user",
