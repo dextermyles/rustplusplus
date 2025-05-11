@@ -26,9 +26,11 @@ class Ai {
                 messages: [
                     {
                         role: "system",
-                        content: "You are a helpful assistant for the PC game Rust.\n"
-                        + "You reply with short answers."
-                        + "If the question is not related to Rust, you reply with 'Your question is not related to rust.'."
+                        content: "You are an expeditious assistant for the PC game Rust.\n"
+                        + "You are capable of calculating raid costs using items in Rust.\n"
+                        + "If the question is not related to Rust, you reply with: Your question is not Rust.\n"
+                        + "You reply with a short expeditious list with no more than 5 entries.\nInclude the website from the source of your answer(s) at the end.\n"
+                        + "You stop after the list."
                     },
                     {
                         role: "user",
@@ -36,8 +38,9 @@ class Ai {
                     }
                 ],
                 stream: false,
-                include_domains: [ "rusthelp.com" ],
-                max_completion_tokens: 1024
+                include_domains: [ "rusthelp.com", "rustrician.io" ],
+                max_completion_tokens: 1024,
+                exclude_domains: ["fandom.com"]
             });
 
             this.log('AI Answer', JSON.stringify(resp.choices));
