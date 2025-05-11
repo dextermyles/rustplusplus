@@ -1762,7 +1762,14 @@ class RustPlus extends RustPlusLib {
                 }
 
                 const locations = [];
+                let foundLines = '';
+                let full = false;
+
+                const unknownString = Client.client.intlGet(this.guildId, 'unknown');
+                const leftString = Client.client.intlGet(this.guildId, 'remain');
+
                 for (const vendingMachine of this.mapMarkers.vendingMachines) {
+                    if (full) break;
                     if (!vendingMachine.hasOwnProperty('sellOrders')) continue;
 
                     for (const order of vendingMachine.sellOrders) {
@@ -1775,12 +1782,39 @@ class RustPlus extends RustPlusLib {
                             (Object.keys(Client.client.items.items).includes(order.currencyId.toString())) ?
                                 order.currencyId : null;
 
+                        const orderQuantity = order.quantity;
+                        const orderCostPerItem = order.costPerItem;
+                        const orderAmountInStock = order.amountInStock;
+                        const orderItemIsBlueprint = order.itemIsBlueprint;
+                        const orderCurrencyIsBlueprint = order.currencyIsBlueprint;
+
+                        const orderItemName = (orderItemId !== null) ?
+                            Client.client.items.getName(orderItemId) : unknownString;
+                        const orderCurrencyName = (orderCurrencyId !== null) ?
+                            Client.client.items.getName(orderCurrencyId) : unknownString;
+
                         if ((orderType === 'all' &&
                             (orderItemId === parseInt(itemId) || orderCurrencyId === parseInt(itemId))) ||
                             (orderType === 'buy' && orderCurrencyId === parseInt(itemId)) ||
                             (orderType === 'sell' && orderItemId === parseInt(itemId))) {
                             if (locations.includes(vendingMachine.location.location)) continue;
-                            locations.push(vendingMachine.location.location);
+                            
+                            const prevFoundLines = foundLines;
+                            
+                            foundLines += `[${vendingMachine.location.location}] `;
+                            foundLines += `${orderQuantity}x ${orderItemName}`;
+                            foundLines += `${(orderItemIsBlueprint) ? ' (BP)' : ''} for `;
+                            foundLines += `${orderCostPerItem}x ${orderCurrencyName}`;
+                            foundLines += `${(orderCurrencyIsBlueprint) ? ' (BP)' : ''} `;
+                            foundLines += `(${orderAmountInStock} ${leftString})`;
+
+                            if (foundLines.length >= 4000) {
+                                foundLines = prevFoundLines;
+                                foundLines += `...`;
+                                full = true;
+                                break;
+                            }
+                            locations.push(foundLines);
                         }
                     }
                 }
@@ -1789,7 +1823,7 @@ class RustPlus extends RustPlusLib {
                     return Client.client.intlGet(this.guildId, 'noItemFound');
                 }
 
-                return locations.join(', ');
+                return locations.join('\n');
             } break;
 
             case commandSubEn:
