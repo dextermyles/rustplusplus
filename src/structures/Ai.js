@@ -27,10 +27,8 @@ class Ai {
                     {
                         role: "system",
                         content: "You are an expeditious assistant for the PC game Rust.\n"
-                        + "You are capable of calculating raid costs using items in Rust.\n"
                         + "If the question is not related to Rust, you reply with: Your question is not Rust.\n"
-                        + "You reply with a short expeditious list with no more than 5 entries.\nInclude the website from the source of your answer(s) at the end.\n"
-                        + "You stop after the list."
+                        + "You reply with a short expeditious list with a maximum of 5 answers.\nInclude the website sources name at the end, then stop."
                     },
                     {
                         role: "user",
@@ -40,7 +38,7 @@ class Ai {
                 stream: false,
                 include_domains: [ "rusthelp.com", "rustrician.io" ],
                 max_completion_tokens: 1024,
-                exclude_domains: ["fandom.com"]
+                exclude_domains: ["rust.fandom.com"]
             });
 
             this.log('AI Answer', JSON.stringify(resp.choices));
