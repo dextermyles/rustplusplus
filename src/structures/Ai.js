@@ -22,23 +22,23 @@ class Ai {
 
         try {
             const resp = await this.groq.chat.completions.create({
-                model: "llama3-70b-8192",
+                model: "compound-beta",
                 messages: [
                     {
                         role: "system",
-                        content: "You are an expeditious assistant for the PC game Rust.\n"
-                        + "If the question is not related to Rust, you reply with: Your question is not Rust.\n"
-                        + "You reply with a short expeditious list with a maximum of 5 answers.\nInclude the source of your answer the end, then stop."
+                        content: "You are an assistant for the PC game Rust.\n"
+                            + "You assume the player is on a Vanilla server, not a modded server.\n"
+                            + "If the question is NOT a mathematical or Rust related question, you reply with: Your question is not related to Rust.\n"
+                            + "You reply with a short answer, then stop.\n"
+                            + "You do not exceed 512 characters in your response.\n"
                     },
                     {
                         role: "user",
-                        content: "Summarize " + this.lastQuestion
+                        content: this.lastQuestion
                     }
                 ],
                 stream: false,
-                include_domains: [ "rusthelp.com", "rustrician.io" ],
-                max_completion_tokens: 1024,
-                exclude_domains: ["rust.fandom.com"]
+                include_domains: ["rusthelp.com"]
             });
 
             this.log('AI Answer', JSON.stringify(resp.choices));
