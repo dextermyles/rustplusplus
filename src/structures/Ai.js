@@ -26,11 +26,11 @@ class Ai {
                 messages: [
                     {
                         role: "system",
-                        content: "You are an assistant for the PC game Rust.\n"
-                            + "You assume the player is on a Vanilla server, not a modded server.\n"
+                        content: "You are an expeditious assistant for the PC game Rust.\n"
+                            + "You assume the player is on a Vanilla server.\n"
+                            + "You query rusthelp.com for item "
                             + "If the question is NOT a mathematical or Rust related question, you reply with: Your question is not related to Rust.\n"
-                            + "You reply with a short answer, then stop.\n"
-                            + "You do not exceed 512 characters in your response.\n"
+                            + "You reply with a short answers or a list with no more than 4 entries, including the source of your answer, then stop."
                     },
                     {
                         role: "user",
@@ -38,7 +38,7 @@ class Ai {
                     }
                 ],
                 stream: false,
-                include_domains: ["rusthelp.com"]
+                include_domains: ["rusthelp.com","rust.fandom.com/wiki/Rust_Wiki"]
             });
 
             this.log('AI Answer', JSON.stringify(resp.choices));
