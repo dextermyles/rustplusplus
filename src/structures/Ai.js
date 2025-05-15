@@ -26,20 +26,21 @@ class Ai {
                 messages: [
                     {
                         role: "system",
-                        content: "You are an expeditious assistant for the PC game Rust.\n"
-                            + "You assume the player is on a Vanilla server.\n"
+                        content: "You are an assistant for the PC game Rust.\n"
+                            + "You assume the questions are related to the Vanilla game mode.\n"
                             + "If the question is NOT a mathematical or Rust related question, you reply with: Your question is not related to Rust.\n"
-                            + "You reply with a short answers or a list with no more than 4 entries, including the source of your answer, then stop."
+                            + "You reply with short, concisise answers, or a list with with a maximum of 3 entries, including the source of your answer, then stop."
                     },
                     {
                         role: "user",
                         content: this.lastQuestion
-                    }
+                    },
                 ],
                 stream: false,
-                include_domains: ["rusthelp.com","rust.fandom.com/wiki/Rust_Wiki"]
+                include_domains: ["rusthelp.com","rust.fandom.com/wiki/Rust_Wiki"],
+                max_completion_tokens: 1024
             });
-
+npm
             this.log('AI Answer', JSON.stringify(resp.choices));
 
             this.lastAnswer = resp.choices[0].message.content;
