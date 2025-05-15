@@ -33,14 +33,14 @@ class Ai {
                     },
                     {
                         role: "user",
-                        content: this.lastQuestion
+                        content: "In Rust, summarize: " + this.lastQuestion
                     },
                 ],
                 stream: false,
                 include_domains: ["rusthelp.com","rust.fandom.com/wiki/Rust_Wiki"],
                 max_completion_tokens: 1024
             });
-npm
+
             this.log('AI Answer', JSON.stringify(resp.choices));
 
             this.lastAnswer = resp.choices[0].message.content;
