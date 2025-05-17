@@ -66,14 +66,14 @@ module.exports = {
             if (client.isJpgImageChanged(guildId, map.map)) {
                 rustplus.map = new Map(map.map, rustplus);
 
-                await rustplus.map.writeMap(false, true);
+                await rustplus.map.writeMap(true, true);
                 await DiscordMessages.sendServerWipeDetectedMessage(guildId, serverId);
                 await DiscordMessages.sendInformationMapMessage(guildId);
             }
             else {
                 rustplus.map = new Map(map.map, rustplus);
 
-                await rustplus.map.writeMap(false, true);
+                await rustplus.map.writeMap(true, true);
                 await DiscordMessages.sendInformationMapMessage(guildId);
             }
         }
