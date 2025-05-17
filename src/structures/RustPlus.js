@@ -1808,7 +1808,9 @@ class RustPlus extends RustPlusLib {
                             foundLines += `${(orderCurrencyIsBlueprint) ? ' (BP)' : ''} `;
                             foundLines += `(${orderAmountInStock} ${leftString})`;
 
-                            if (foundLines.length >= 4000) {
+                            this.log('foundLines', foundLines);
+                            
+                            if (foundLines.length >= 10) {
                                 foundLines = prevFoundLines;
                                 foundLines += `...`;
                                 full = true;
