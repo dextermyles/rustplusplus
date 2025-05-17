@@ -1808,9 +1808,7 @@ class RustPlus extends RustPlusLib {
                             foundLines += `${(orderCurrencyIsBlueprint) ? ' (BP)' : ''} `;
                             foundLines += `(${orderAmountInStock} ${leftString})`;
 
-                            this.log('foundLines', foundLines);
-                            
-                            if (foundLines.length >= 10) {
+                            if (foundLines.length >= 4000) {
                                 foundLines = prevFoundLines;
                                 foundLines += `...`;
                                 full = true;
@@ -1825,7 +1823,10 @@ class RustPlus extends RustPlusLib {
                     return Client.client.intlGet(this.guildId, 'noItemFound');
                 }
 
-                return locations.join('\n');
+                var response = locations.join('\n');
+                if (response.length > 512)
+                    return response.substring(0, 511);
+                return ;
             } break;
 
             case commandSubEn:
