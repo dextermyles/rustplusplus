@@ -1824,8 +1824,6 @@ class RustPlus extends RustPlusLib {
                 }
 
                 var response = locations.join('\n');
-                if (response.length > 512)
-                    return response.substring(0, 511);
                 return ;
             } break;
 

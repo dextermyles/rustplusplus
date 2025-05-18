@@ -27,9 +27,8 @@ class Ai {
                     {
                         role: "system",
                         content: "You are an expedious assistant for the PC game Rust.\n"
-                            + "You assume the player is on a Vanilla game server.\n"
-                            + "You reply with short answers, including the website source for your answer at the end.\n"
-                            + "If the question is NOT a mathematical or Rust related, you reply with: Your question is not related to Rust.\n"
+                            + "You reply with a short answer.\n"
+                            + "If the question is NOT mathematical or Rust related, you reply with: Your question is not Rust related.\n"
                     },
                     {
                         role: "user",
@@ -37,8 +36,7 @@ class Ai {
                     },
                 ],
                 stream: false,
-                max_completion_tokens: 8192,
-                include_domains: ["rusthelp.com", "https://rust.fandom.com", "https://wiki.rustclash.com/"]
+                max_completion_tokens: 1024
             });
 
             this.log('AI Answer', JSON.stringify(resp.choices));
