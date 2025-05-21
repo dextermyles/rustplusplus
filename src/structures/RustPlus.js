@@ -110,7 +110,7 @@ class RustPlus extends RustPlusLib {
         this.team = null;           /* Stores the Team structure. */
         this.mapMarkers = null;     /* Stores the MapMarkers structure. */
 
-        /* Groq AI chat assistant */
+        /* AI chat assistant */
         this.ai = new Ai(guildId);
 
         this.loadRustPlusEvents();

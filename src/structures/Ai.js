@@ -1,9 +1,8 @@
 const Fs = require('fs');
 const Logger = require('./Logger');
 const Path = require('path');
-const Groq = require("groq-sdk");
 const Config = require('../../config');
-
+const OpenAI = require("openai");
 class Ai {
 
     constructor(guildId = null) {
@@ -12,7 +11,7 @@ class Ai {
         this.lastAnswer = null;
         this.logger = new Logger(Path.join(__dirname, '..', '..', 'logs/ai.log'), 'default');
         this.logger.setGuildId(this.guildId);
-        this.groq = new Groq.Groq({ apiKey: Config.groq.token });
+        this.openai = new OpenAI.OpenAI({ apiKey: Config.groq.token });
     }
 
     async askAiBot(query) {
@@ -21,14 +20,25 @@ class Ai {
         this.log('AI Question', query);
 
         try {
-            const resp = await this.groq.chat.completions.create({
-                model: "compound-beta",
+            const resp = await this.openai.chat.completions.create({
+                model: "gpt-4o",
                 messages: [
                     {
                         role: "system",
-                        content: "You are an expedious assistant for the PC game Rust.\n"
-                            + "You reply with a short answer.\n"
-                            + "If the question is NOT mathematical or Rust related, you reply with: Your question is not Rust related.\n"
+                        content: "You are my assistant for the survival game Rust. "
+                            + "Assume I play on official servers, solo or in teams, "
+                            + "with goals that vary between PvP dominance, efficient raiding, farming, "
+                            + "and base defense. Provide clear, concise, and tactical advice based on "
+                            + "current Rust meta and best practices."
+                            + `You should:\n
+                            - Offer strategies for early, mid, and late-game progression.\n
+                            - Help with base design (solo, duo, clan, bunker bases, trap bases).\n
+                            - Suggest efficient loot routes, monument progression, and safe zones.\n
+                            - Explain weapons, recoil control, and gear tier usage.\n
+                            - Recommend farming strategies (sulfur, HQM, scrap) and tech tree paths.\n
+                            - Support raiding techniques, including explosive usage and base breach planning.\n
+                            - Analyze images like maps, base layouts, or monuments for strategy suggestions.\n
+                            - Stay up to date with changes to weapons, building rules, or monument layouts as much as possible. Offer tactical and practical insight like a veteran Rust player would.`
                     },
                     {
                         role: "user",
