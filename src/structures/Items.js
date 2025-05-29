@@ -22,12 +22,12 @@ const Fs = require('fs');
 const Path = require('path');
 
 const Utils = require('../util/utils.js');
+const Assets = require('./Assets')
 
 class Items {
+    
     constructor() {
-        this._items = JSON.parse(Fs.readFileSync(
-            Path.join(__dirname, '..', 'staticFiles', 'items.json'), 'utf8'));
-
+        this._items = Assets.load();
         this._itemNames = Object.values(this.items).map(item => item.name);
     }
 
@@ -35,34 +35,73 @@ class Items {
     get items() { return this._items; }
     get itemNames() { return this._itemNames; }
 
-    addItem(id, content) { this.items[id] = content; }
-    removeItem(id) { delete this.items[id]; }
-    itemExist(id) { return (id in this.items) ? true : false; }
+    addItem(id, content) { 
+        if (this.itemExist(id))
+            return;
+        this.items.push(content);
+    }
+
+    removeItem(id) { 
+        let index = this.items.findIndex(x => x.id === id);
+        if (index !== -1) {
+            this.items.splice(index, 1);
+        }
+    }
+
+    itemExist(id) { 
+        for(let x = 0; x <= this.items.length; x++) {
+            let item = this.items[x];
+            if (item.id === id) {
+                return true;
+            }    
+        }
+        return false;
+    }
+
+    getItem(id) {
+        for(let x = 0; x <= this.items.length; x++) {
+            let item = this.items[x];
+            if (item.id === id) {
+                return item;
+            }    
+        }
+        return undefined;
+    }
 
     getShortName(id) {
         if (!this.itemExist(id)) return undefined;
-        return this.items[id].shortname;
+        let item = this.getItem(id);
+        return item !== undefined ? item.shortname : '';
     }
 
     getName(id) {
         if (!this.itemExist(id)) return undefined;
-        return this.items[id].name;
+        let item = this.getItem(id);
+        return item !== undefined ? item.name : '';
     }
 
     getDescription(id) {
         if (!this.itemExist(id)) return undefined;
-        return this.items[id].description;
+        let item = this.getItem(id);
+        return item !== undefined ? item.description : '';
     }
 
     getIdByName(name) {
-        return Object.keys(this.items).find(id => this.items[id].name === name);
+        let itemByName = this.items.find(x => x.name === name);
+        if (itemByName !== undefined) {
+            return itemByName.id;
+        }
+        return undefined;
     }
 
     getClosestItemIdByName(name) {
         const closestString = Utils.findClosestString(name, this.itemNames);
         if (closestString !== null) {
-            const id = Object.entries(this.items).find(([key, value]) => value.name.includes(closestString));
-            return id ? id[0] : null;
+            const item = this.items.find(x => x.name ===  closestString);
+            if (item !== undefined) {
+                return item;
+            }
+            return null;
         }
         return null;
     }

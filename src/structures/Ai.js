@@ -21,13 +21,13 @@ class Ai {
 
         try {
             const resp = await this.openai.chat.completions.create({
-                model: "compound-beta",
+                model: "deepseek-r1-distill-llama-70b",
                 messages: [
                     {
                         role: "system",
                         content: "You are my assistant for the survival game Rust. "
                             + "Assume I play on official servers. "
-                            + "Provide clear, concise, advice based on current Rust data, and only provide the final answer.\n"
+                            + "Provide only provide the final answer to the user, and then end the conversation.\n"
                             + `You should:\n
                             - "Stay up to date with changes to weapons, building rules, or monument layouts as much as possible.\n"`
                     },
@@ -39,8 +39,9 @@ class Ai {
                 stream: false,
                 max_completion_tokens: 1024,
                 temperature: 1,
-                top_p: 0.8,
-                stop: null
+                top_p: 0.77,
+                stop: null,
+                reasoning_format: 'parsed'
             });
 
             this.log('AI Answer', JSON.stringify(resp.choices));

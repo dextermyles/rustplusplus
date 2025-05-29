@@ -26,7 +26,7 @@
 
 const Fs = require('fs');
 
-var items = {};
+var items = [];
 
 /* Iterate each file in current directory. */
 Fs.readdirSync('.').forEach(file => {
@@ -34,14 +34,7 @@ Fs.readdirSync('.').forEach(file => {
     if (file.endsWith('.json')) {
 
         /* Read item meta. */
-        var item = JSON.parse(Fs.readFileSync(file));
-
-        /* Push item meta we want to keep. */
-        items[item.itemid] = {
-            shortname: item.shortname,
-            name: item.Name,
-            description: item.Description
-        };
+        items = JSON.parse(Fs.readFileSync(file));
     }
 });
 
