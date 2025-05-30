@@ -467,10 +467,12 @@ class RustPlus extends RustPlusLib {
             return await this.sendRequestAsync({
                 getInfo: {}
             }, timeout).catch((e) => {
+                console.error(`sendRequestAsync error: `, e);
                 return e;
             });
         }
         catch (e) {
+            console.error(`sendRequestAsync error: `, e);
             return e;
         }
     }
