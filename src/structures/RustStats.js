@@ -22,20 +22,25 @@ class RustStats {
         return `public-api/user/banned?steam_id=${id}`
     }
 
+    async getUserBanned(id) {
+        return await this.request(this.GET_USER_BANNED(id));
+    }
+
     async getUserStats(id) {
         return await this.request(this.GET_USER_STATISTICS(id));
     }
 
     async httpGet(api_call) {
         try {
-            let ax = new Axios.Axios({ headers: { Authorization: Config.ruststats.apiKey}});
+            let ax = new Axios.Axios({ 
+                headers: { 
+                    "Content-Type": 'application/json' 
+                }
+            }); 
             var url = `https://ruststats.io/${api_call}`;
-            console.log('http get: ' , url);
-            console.log(JSON.stringify(url))
-            return await ax.get(url);
+            return await ax.get(url, { headers: { Authorization: `ApiKey ${Config.ruststats.apiKey}`}});
         }
         catch (e) {
-            console.log(e);
             return { error: e };
         }
     }
