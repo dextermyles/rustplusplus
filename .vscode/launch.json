@@ -1,6 +1,7 @@
 {
   "version": "1.0.0",
   "configurations": [
+    
     {
       "name": "TS-Node",
       "type": "node",
@@ -15,6 +16,18 @@
       "cwd": "${workspaceRoot}",
       "internalConsoleOptions": "openOnSessionStart",
       "skipFiles": ["<node_internals>/**", "node_modules/**"]
+    },
+    {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch Program",
+        "runtimeArgs": [
+            "-r",
+            "ts-node/register"
+        ],
+        "args": [
+            "${workspaceFolder}/index.ts"
+        ]
     }
   ]
 }

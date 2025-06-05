@@ -44,6 +44,10 @@ module.exports = {
             commandLowerCase.startsWith(`${prefix}${client.intlGet(guildId, 'commandSyntaxAi')}`)) {
             response = await rustplus.getCommandAi(command);
         }
+        else if (commandLowerCase.startsWith(`${prefix}${client.intlGet('en', 'commandSyntaxRustStats')}`) ||
+            commandLowerCase.startsWith(`${prefix}${client.intlGet(guildId, 'commandSyntaxRustStats')}`)) {
+            response = await rustplus.getCommandRustStats(command);
+        }
         else if (commandLowerCase.startsWith(`${prefix}${client.intlGet('en', 'commandSyntaxAlive')}`) ||
             commandLowerCase.startsWith(`${prefix}${client.intlGet(guildId, 'commandSyntaxAlive')}`)) {
             response = rustplus.getCommandAlive(command);

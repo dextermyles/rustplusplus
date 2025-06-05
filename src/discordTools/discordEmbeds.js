@@ -1413,5 +1413,16 @@ module.exports = {
             title: `Rust AI`,
             description: description
         });
-    }
+    },
+
+    getRustStatsEmbed: function (guildId, data) {
+        const stats = data;
+
+        return module.exports.getEmbed({
+            color: Constants.COLOR_DEFAULT,
+            timestamp: true,
+            title: `Stats`,
+            description: stats
+        });
+    },
 }

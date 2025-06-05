@@ -608,4 +608,12 @@ module.exports = {
         }
         await Client.client.interactionEditReply(interaction, content);
     },
+
+    sendRustStatsMessage: async function (interaction, response) {
+        const instance = Client.client.getInstance(interaction.guildId);
+        const content = {
+            embeds: [DiscordEmbeds.getRustStatsEmbed(interaction.guildId, response)]
+        }
+        await Client.client.interactionEditReply(interaction, content);
+    },
 }

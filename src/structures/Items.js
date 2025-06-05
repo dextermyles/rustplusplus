@@ -22,7 +22,7 @@ const Fs = require('fs');
 const Path = require('path');
 
 const Utils = require('../util/utils.js');
-const Assets = require('./Assets')
+const Assets = require('./Assets.js')
 
 class Items {
     
@@ -49,7 +49,7 @@ class Items {
     }
 
     itemExist(id) { 
-        for(let x = 0; x <= this.items.length; x++) {
+        for(let x = 0; x < this.items.length; x++) {
             let item = this.items[x];
             if (item.id === id) {
                 return true;
@@ -59,7 +59,7 @@ class Items {
     }
 
     getItem(id) {
-        for(let x = 0; x <= this.items.length; x++) {
+        for(let x = 0; x < this.items.length; x++) {
             let item = this.items[x];
             if (item.id === id) {
                 return item;
@@ -99,7 +99,7 @@ class Items {
         if (closestString !== null) {
             const item = this.items.find(x => x.name ===  closestString);
             if (item !== undefined) {
-                return item;
+                return item.id;
             }
             return null;
         }

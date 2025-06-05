@@ -33,5 +33,9 @@ module.exports = {
     },
     groq: {
         token: process.env.RPP_GROQ_TOKEN || ''
+    },
+    ruststats: {
+        apiKey: process.env.RPP_RUSTSTATS_TOKEN || '',
+        baseUrl: 'https://ruststats.io'
     }
 };

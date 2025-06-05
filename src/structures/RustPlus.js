@@ -39,6 +39,7 @@ const RustPlusLite = require('../structures/RustPlusLite');
 const TeamHandler = require('../handlers/teamHandler.js');
 const Timer = require('../util/timer.js');
 const Ai = require('./Ai.js');
+const RustStats = require('./RustStats.js');
 
 const TOKENS_LIMIT = 24;        /* Per player */
 const TOKENS_REPLENISH = 3;     /* Per second */
@@ -112,6 +113,9 @@ class RustPlus extends RustPlusLib {
 
         /* AI chat assistant */
         this.ai = new Ai(guildId);
+
+        /* RustStats.io */
+        this.ruststats = new RustStats(guildId);
 
         this.loadRustPlusEvents();
     }
@@ -355,13 +359,22 @@ class RustPlus extends RustPlusLib {
 
             this.sendRequest(requestBody);
 
-            var response = await this.getEntityInfoAsync(id, timeout);
-            var payload = response?.entityInfo?.payload;
-            var payloadValue = payload?.value;
+            try {
+                var response = await this.getEntityInfoAsync(id, timeout);
+                console.log('response: ', response);
+                var payload = response?.entityInfo?.payload;
+                var payloadValue = payload?.value;
 
-            if (value === payloadValue || (payloadValue === undefined && value === false)) {
-                return { success: true };
+                if (value === payloadValue || (payloadValue === undefined && value === false)) {
+                    return { success: true };
+                }
             }
+            catch (ex) {
+                console.log('getEntityInfoAsync error: ', ex);
+            }
+
+
+            console.log('response: ', response);
 
             return { error: Client.client.intlGet(null, 'errorCap') };
         }
@@ -399,10 +412,12 @@ class RustPlus extends RustPlusLib {
                 entityId: id,
                 getEntityInfo: {}
             }, timeout).catch((e) => {
+                console.log(e);
                 return e;
             });
         }
         catch (e) {
+            console.log(e);
             return e;
         }
     }
@@ -486,10 +501,12 @@ class RustPlus extends RustPlusLib {
             return await this.sendRequestAsync({
                 getTeamInfo: {}
             }, timeout).catch((e) => {
+                this.log('getTeamInfoAsync error', e, 'error');
                 return e;
             });
         }
         catch (e) {
+            this.log('getTeamInfoAsync error', e, 'error');
             return e;
         }
     }
@@ -705,6 +722,27 @@ class RustPlus extends RustPlusLib {
         if (query === null) return null;
 
         let response = await this.askAiBot(query);
+
+        return response;
+    }
+
+    async getCommandRustStats(command) {
+        const instance = Client.client.getInstance(this.guildId);
+        const prefix = this.generalSettings.prefix;
+        const commandRustStats = `${prefix}${Client.client.intlGet(this.guildId, 'commandSyntaxRustStats')}`;
+        const commandRustStatsEn = `${prefix}${Client.client.intlGet('en', 'commandSyntaxRustStats')}`;
+        let query = null;
+
+        if (command.toLowerCase().startsWith(`${commandRustStats} `)) {
+            query = command.slice(`${commandRustStats} `.length).trim();
+        }
+        else if (command.toLowerCase().startsWith(`${commandRustStatsEn} `)) {
+            query = command.slice(`${commandRustStatsEn} `.length).trim();
+        }
+
+        if (query === null) return null;
+
+        let response = await this.getUserStats(query);
 
         return response;
     }
@@ -1800,9 +1838,9 @@ class RustPlus extends RustPlusLib {
                             (orderType === 'buy' && orderCurrencyId === parseInt(itemId)) ||
                             (orderType === 'sell' && orderItemId === parseInt(itemId))) {
                             if (locations.includes(vendingMachine.location.location)) continue;
-                            
+
                             const prevFoundLines = foundLines;
-                            
+
                             foundLines += `[${vendingMachine.location.location}] `;
                             foundLines += `${orderQuantity}x ${orderItemName}`;
                             foundLines += `${(orderItemIsBlueprint) ? ' (BP)' : ''} for `;
@@ -1826,7 +1864,7 @@ class RustPlus extends RustPlusLib {
                 }
 
                 var response = locations.join('\n');
-                return ;
+                return;
             } break;
 
             case commandSubEn:
@@ -2820,12 +2858,23 @@ class RustPlus extends RustPlusLib {
     }
 
     async askAiBot(query) {
-        if (this.ai !== null) {
+        if (this.ruststats !== null) {
             let response = await this.ai.askAiBot(query);
 
             return response;
         }
         return { error: 'Failed to ask Rust bot.' }
+    }
+
+    async getUserStats(steamId) {
+        if (this.steamId !== null) {
+            console.log('getUserStats: ', steamId);
+            let response = await this.ruststats.getUserStats(steamId);
+            console.log('getUserStats: ', response);
+            return response;
+        }
+
+        return { error: 'Failed to fetch stats.' }
     }
 }
 
