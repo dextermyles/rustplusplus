@@ -1415,14 +1415,12 @@ module.exports = {
         });
     },
 
-    getRustStatsEmbed: function (guildId, data) {
-        const stats = data;
-
+    getRustStatsEmbed: function (guildId, response) {
         return module.exports.getEmbed({
             color: Constants.COLOR_DEFAULT,
             timestamp: true,
-            title: `Stats`,
-            description: stats
+            title: `Rust Stats`,
+            description: response
         });
     },
 }

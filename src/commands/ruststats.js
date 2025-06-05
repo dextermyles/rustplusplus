@@ -1,7 +1,6 @@
 
 const Builder = require('@discordjs/builders');
 
-const DiscordEmbeds = require('../discordTools/discordEmbeds.js');
 const DiscordMessages = require('../discordTools/discordMessages.js');
 
 module.exports = {
@@ -10,9 +9,9 @@ module.exports = {
 	getData(client, guildId) {
 		return new Builder.SlashCommandBuilder()
 			.setName('ruststats')
-			.setDescription('Rust Stats by Steam ID')
+			.setDescription('Get Player Stats')
 			.addStringOption(option => option
-				.setName('steamId')
+				.setName('query')
 				.setDescription('Players steam ID')
 				.setRequired(true));
 	},
@@ -25,14 +24,16 @@ module.exports = {
 
 		client.logInteraction(interaction, verifyId, 'slashCommand');
 
-		if (!await client.validatePermissions(interaction)) return;
+		if (!await client.validatePermissions(interaction)) 
+			return;
+
 		await interaction.deferReply({ ephemeral: true });
 
-		const steamId = interaction.options.getString('steamId');
+		const query = interaction.options.getString('query');
 
-		if (steamId !== null) {
-			const statsResponse = await rustplus.getUserStats(steamId);
-			await DiscordMessages.sendRustStatsMessage(interaction, statsResponse);
+		if (query !== null) {
+			const response = await rustplus.getUserStats(query);
+			await DiscordMessages.sendRustStatsMessage(interaction, response);
 		}
-	}
+	},
 };

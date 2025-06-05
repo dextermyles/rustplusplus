@@ -602,7 +602,6 @@ module.exports = {
     },
 
     sendAiMessage: async function (interaction, response) {
-        const instance = Client.client.getInstance(interaction.guildId);
         const content = {
             embeds: [DiscordEmbeds.getAiEmbed(interaction.guildId, response)]
         }
@@ -610,7 +609,6 @@ module.exports = {
     },
 
     sendRustStatsMessage: async function (interaction, response) {
-        const instance = Client.client.getInstance(interaction.guildId);
         const content = {
             embeds: [DiscordEmbeds.getRustStatsEmbed(interaction.guildId, response)]
         }

@@ -2858,19 +2858,16 @@ class RustPlus extends RustPlusLib {
     }
 
     async askAiBot(query) {
-        if (this.ruststats !== null) {
+        if (this.ai !== null) {
             let response = await this.ai.askAiBot(query);
-
             return response;
         }
         return { error: 'Failed to ask Rust bot.' }
     }
 
-    async getUserStats(steamId) {
-        if (this.steamId !== null) {
-            console.log('getUserStats: ', steamId);
-            let response = await this.ruststats.getUserStats(steamId);
-            console.log('getUserStats: ', response);
+    async getUserStats(query) {
+        if (this.ruststats !== null) {
+            let response = await this.ruststats.getUserStats(query);
             return response;
         }
 
