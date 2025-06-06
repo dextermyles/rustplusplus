@@ -47,9 +47,9 @@ module.exports = {
             commandLowerCase.startsWith(`${prefix}${client.intlGet(guildId, 'commandSyntaxAi')}`)) {
             rustplus.sendInGameMessage(await rustplus.getCommandAi(command));
         }
-        else if (commandLowerCase.startsWith(`${prefix}${client.intlGet('en', 'commandSyntaxRustStats')}`) ||
-            commandLowerCase.startsWith(`${prefix}${client.intlGet(guildId, 'commandSyntaxRustStats')}`)) {
-            rustplus.sendInGameMessage(await rustplus.getCommandRustStats(command));
+        else if (commandLowerCase.startsWith(`${prefix}${client.intlGet('en', 'commandSyntaxQuery')}`) ||
+            commandLowerCase.startsWith(`${prefix}${client.intlGet(guildId, 'commandSyntaxQuery')}`)) {
+            rustplus.sendInGameMessage(await rustplus.getCommandQuery(command));
         }
         else if (commandLowerCase === `${prefix}${client.intlGet('en', 'commandSyntaxAfk')}` ||
             commandLowerCase === `${prefix}${client.intlGet(guildId, 'commandSyntaxAfk')}`) {

@@ -3,15 +3,16 @@ const Path = require('path');
 const Logger = require('./Logger');
 
 const Axios = require('axios');
-const Client = require('../../index.ts');
+const Client = require('../..');
 const Config = require('../../config');
 
-class RustStats {
+class Query {
 
     constructor(guildId = null) {
         this.guildId = guildId;
-        this.logger = new Logger(Path.join(__dirname, '..', '..', 'logs/ruststats.log'), 'default');
+        this.logger = new Logger(Path.join(__dirname, '..', '..', 'logs/query.log'), 'default');
         this.logger.setGuildId(this.guildId);
+        this.rustStatsURL = Config.ruststats.baseUrl;
     }
 
     GET_USER_STATISTICS(id) {
@@ -30,17 +31,24 @@ class RustStats {
         return await this.request(this.GET_USER_STATISTICS(id));
     }
 
-    async httpGet(api_call) {
+    async httpGet(url) {
+        let requestUrl = `${Config.ruststats.baseUrl}/${url}`;
+        let authKey = `ApiKey ${Config.ruststats.apiKey}`;
+        let config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': authKey
+            }
+        };
+
         try {
-            let ax = new Axios.Axios({ 
-                headers: { 
-                    "Content-Type": 'application/json' 
-                }
-            }); 
-            var url = `https://ruststats.io/${api_call}`;
-            return await ax.get(url, { headers: { Authorization: `ApiKey ${Config.ruststats.apiKey}`}});
+            let ax = new Axios.Axios(config);
+            this.log('httpGet', ax);
+
+            return await ax.get(requestUrl);
         }
         catch (e) {
+            this.log('httpGet', e, 'error');
             return { error: e };
         }
     }
@@ -61,4 +69,4 @@ class RustStats {
 
 }
 
-module.exports = RustStats;
+module.exports = Query;

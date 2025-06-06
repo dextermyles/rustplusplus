@@ -148,7 +148,7 @@
     "commandSyntaxRecycle": "recycle",
     "commandSyntaxRemove": "remove",
     "commandSyntaxResearch": "research",
-    "commandSyntaxRustStats": "ruststats",
+    "commandSyntaxQuery": "query",
     "commandSyntaxSearch": "search",
     "commandSyntaxSend": "send",
     "commandSyntaxSmall": "small",

@@ -39,7 +39,7 @@ const RustPlusLite = require('../structures/RustPlusLite');
 const TeamHandler = require('../handlers/teamHandler.js');
 const Timer = require('../util/timer.js');
 const Ai = require('./Ai.js');
-const RustStats = require('./RustStats.js');
+const Query = require('./Query.js');
 
 const TOKENS_LIMIT = 24;        /* Per player */
 const TOKENS_REPLENISH = 3;     /* Per second */
@@ -114,8 +114,8 @@ class RustPlus extends RustPlusLib {
         /* AI chat assistant */
         this.ai = new Ai(guildId);
 
-        /* RustStats.io */
-        this.ruststats = new RustStats(guildId);
+        /* Query (Rust stats, Companion app testing, rust+, etc) */
+        this.query = new Query(guildId);
 
         this.loadRustPlusEvents();
     }
@@ -482,12 +482,10 @@ class RustPlus extends RustPlusLib {
             return await this.sendRequestAsync({
                 getInfo: {}
             }, timeout).catch((e) => {
-                console.error(`sendRequestAsync error: `, e);
                 return e;
             });
         }
         catch (e) {
-            console.error(`sendRequestAsync error: `, e);
             return e;
         }
     }
@@ -501,7 +499,6 @@ class RustPlus extends RustPlusLib {
             return await this.sendRequestAsync({
                 getTeamInfo: {}
             }, timeout).catch((e) => {
-                this.log('getTeamInfoAsync error', e, 'error');
                 return e;
             });
         }
@@ -726,23 +723,42 @@ class RustPlus extends RustPlusLib {
         return response;
     }
 
-    async getCommandRustStats(command) {
+    async getCommandQuery(command) {
         const instance = Client.client.getInstance(this.guildId);
         const prefix = this.generalSettings.prefix;
-        const commandRustStats = `${prefix}${Client.client.intlGet(this.guildId, 'commandSyntaxRustStats')}`;
-        const commandRustStatsEn = `${prefix}${Client.client.intlGet('en', 'commandSyntaxRustStats')}`;
+        const commandQuery = `${prefix}${Client.client.intlGet(this.guildId, 'commandSyntaxQuery')}`;
+        const commandQueryEn = `${prefix}${Client.client.intlGet('en', 'commandSyntaxQuery')}`;
         let query = null;
 
-        if (command.toLowerCase().startsWith(`${commandRustStats} `)) {
-            query = command.slice(`${commandRustStats} `.length).trim();
+        if (command.toLowerCase().startsWith(`${commandQueryEn} `)) {
+            command = command.slice(`${commandQueryEn} `.length).trim();
         }
-        else if (command.toLowerCase().startsWith(`${commandRustStatsEn} `)) {
-            query = command.slice(`${commandRustStatsEn} `.length).trim();
+        else {
+            command = command.slice(`${commandQuery} `.length).trim();
         }
 
-        if (query === null) return null;
+        const subcommand = command.replace(/ .*/, '');
+        query = command.slice(subcommand.length + 1);
 
-        let response = await this.getUserStats(query);
+        this.log('QUERY', command);
+        this.log('QUERY', subcommand);
+        this.log('QUERY', query);
+
+        if (query === null)
+            return null;
+
+        var response;
+
+        switch (subcommand) {
+            case 'ban':
+                response = await this.getUserBanned(query);
+                break;
+            case 'stats':
+                response = await this.getUserStats(query);
+                break;
+            case 'entity': break;
+            default: break;
+        }
 
         return response;
     }
@@ -2866,12 +2882,21 @@ class RustPlus extends RustPlusLib {
     }
 
     async getUserStats(query) {
-        if (this.ruststats !== null) {
-            let response = await this.ruststats.getUserStats(query);
+        if (this.query !== null) {
+            let response = await this.query.getUserStats(query);
             return response;
         }
 
-        return { error: 'Failed to fetch stats.' }
+        return { error: 'Failed to make request.' }
+    }
+
+    async getUserBanned(query) {
+        if (this.query !== null) {
+            let response = await this.query.getUserBanned(query);
+            return response;
+        }
+
+        return { error: 'Failed to make request.' }
     }
 }
 
