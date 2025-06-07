@@ -96,7 +96,7 @@ class Query {
         const response = await this.httpGet(api_call);
         if (response.status !== 200) {
             Client.client.log(Client.client.intlGet(null, 'errorCap'), Client.client.intlGet(null, 'apiFailed', { api_call: api_call }), 'error');
-            console.error('RESPONSE FAILED: ', JSON.stringify(response));
+            console.error('RESPONSE FAILED: ', response);
             return null;
         }
 
