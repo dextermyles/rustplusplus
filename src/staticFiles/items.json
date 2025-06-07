@@ -6,6 +6,30 @@
         "description": "A large wooden pool that can be filled with water."
     },
     {
+        "id": -1498613415,
+        "shortname": "advancedcoolingtea",
+        "name": "Advanced Cooling Tea",
+        "description": "An advanced cooling tea, provides hydration and temporarily decreases your max and core temperature."
+    },
+    {
+        "id": -652889722,
+        "shortname": "advancedcraftingtea_quality",
+        "name": "Advanced Crafting Quality Tea",
+        "description": "An advanced crafting tea, provides hydration and temporarily increases the chances of a higher quality crafting outcome."
+    },
+    {
+        "id": -334418777,
+        "shortname": "advancedwarmingtea",
+        "name": "Advanced Warming Tea",
+        "description": "An advanced warming tea that temporarily increases both your core and minimum temperature."
+    },
+    {
+        "id": -1385721419,
+        "shortname": "advanceharvestingtea",
+        "name": "Advanced Harvesting Tea",
+        "description": "An advanced harvesting tea, provides hydration and temporarily boosts the amount of resources you receive from harvesting corpses a moderate amount."
+    },
+    {
         "id": 343045591,
         "shortname": "aiming.module.mlrs",
         "name": "MLRS Aiming Module",
@@ -834,6 +858,12 @@
         "description": "A tape that you can record audio on to using a Cassette Recorder. Stores up to 10s of audio."
     },
     {
+        "id": 1954597876,
+        "shortname": "catapult.ammo.bee",
+        "name": "Bee Catapult Bomb",
+        "description": "A bunch of Bee Grenades in a single catapult projectile. Creates swarms of Bees on impact."
+    },
+    {
         "id": 1831249347,
         "shortname": "catapult.ammo.boulder",
         "name": "Scattershot",
@@ -1071,7 +1101,7 @@
         "id": -593892112,
         "shortname": "clothing.mod.armorinsert_wood",
         "name": "Wooden Armor Insert",
-        "description": "Wood insert for crafted clothes and armor, provides some extra protection from bullets and melee."
+        "description": "Wood insert for crafted clothes and armor, provides some extra protection from bullets and melee. "
     },
     {
         "id": 204391461,
@@ -1114,6 +1144,12 @@
         "shortname": "coffin.storage",
         "name": "Coffin",
         "description": "An old wooden coffin, can store up to 42 items"
+    },
+    {
+        "id": -1247485104,
+        "shortname": "command.block",
+        "name": "Command Block",
+        "description": "A block that runs commands"
     },
     {
         "id": -1488398114,
@@ -1160,8 +1196,8 @@
     {
         "id": -1260229965,
         "shortname": "coolingtea",
-        "name": "Cooling Tea",
-        "description": "A cooling tea that temporarily decreases your max and core temperature."
+        "name": "Basic Cooling Tea",
+        "description": "A basic cooling tea that temporarily decreases your max and core temperature."
     },
     {
         "id": 1367190888,
@@ -1172,8 +1208,8 @@
     {
         "id": 368008432,
         "shortname": "craftingtea_quality",
-        "name": "Crafting Quality Tea",
-        "description": "A crafting tea. provides hydration and increases the chances of a higher quality crafting outcome for a short time."
+        "name": "Basic Crafting Quality Tea",
+        "description": "A basic crafting tea. provides hydration and increases the chances of a higher quality crafting outcome for a short time."
     },
     {
         "id": 1158340334,
@@ -1473,7 +1509,7 @@
         "id": 1588492232,
         "shortname": "drone",
         "name": "Drone",
-        "description": "A remote controlled drone operated from the Computer station with a limited range. Easily damaged from impacts."
+        "description": "A remote controlled drone operated from the Computer station with a limited range. Easily damaged from impacts. "
     },
     {
         "id": -1519126340,
@@ -2169,7 +2205,7 @@
         "id": -2107018088,
         "shortname": "fun.bass",
         "name": "Shovel Bass",
-        "description": "Use this stringed together shovel to play some deep, deep tunes."
+        "description": "Use this stringed together shovel to play some deep, deep tunes.\r"
     },
     {
         "id": 576509618,
@@ -2193,7 +2229,7 @@
         "id": -2040817543,
         "shortname": "fun.flute",
         "name": "Pan Flute",
-        "description": "A set of repurposed PVC pipes that can be used to play a variety of melodies."
+        "description": "A set of repurposed PVC pipes that can be used to play a variety of melodies.\r"
     },
     {
         "id": -2124352573,
@@ -2217,13 +2253,13 @@
         "id": 273172220,
         "shortname": "fun.trumpet",
         "name": "Plumber's Trumpet",
-        "description": "Toot your own horn with this brassy improvised Trumpet."
+        "description": "Toot your own horn with this brassy improvised Trumpet.\r"
     },
     {
         "id": 1784406797,
         "shortname": "fun.tuba",
         "name": "Sousaphone",
-        "description": "A collection of used piping that’s been converted into a Tuba. Probably not very hygienic."
+        "description": "A collection of used piping that’s been converted into a Tuba. Probably not very hygienic.\r"
     },
     {
         "id": -1999722522,
@@ -2576,8 +2612,8 @@
     {
         "id": 1516531815,
         "shortname": "harvestingtea",
-        "name": "Harvesting Tea",
-        "description": "A basic tea that temporarily increases the amount of resources you receive from harvesting corpses a small amount."
+        "name": "Basic Harvesting Tea",
+        "description": "A basic harvesting tea, provides hydration and temporarily increases the amount of resources you receive from harvesting corpses a small amount."
     },
     {
         "id": 1675639563,
@@ -2997,7 +3033,7 @@
         "id": 196784377,
         "shortname": "improvised.shield",
         "name": "Improvised Shield",
-        "description": "A makeshift metal shield, sturdy but only protects a small area. Usable with single handed weapons and tools."
+        "description": "A makeshift metal shield, sturdy but only protects a small area. Usable with single handed weapons and tools. "
     },
     {
         "id": 1538126328,
@@ -3022,6 +3058,12 @@
         "shortname": "industrial.splitter",
         "name": "Industrial Splitter",
         "description": "Splits an industrial connection into three separate connections."
+    },
+    {
+        "id": 920930831,
+        "shortname": "industrial.wall.light.blue",
+        "name": "Blue Industrial Wall Light",
+        "description": "A small blue light source."
     },
     {
         "id": 1268178466,
@@ -3435,7 +3477,7 @@
         "id": 1712261904,
         "shortname": "maxhealthtea.pure",
         "name": "Pure Max Health Tea",
-        "description": "An advanced health tea, provides hydration and temporarily boosts maximum health a large amount."
+        "description": "A pure health tea, provides hydration and temporarily boosts maximum health a large amount."
     },
     {
         "id": 621915341,
@@ -3825,7 +3867,7 @@
         "id": 1272430949,
         "shortname": "piano",
         "name": "Wheelbarrow Piano",
-        "description": "The Piano is a repurposed wheelbarrow that weighs a ton, but makes up for it with a wide range of notes."
+        "description": "The Piano is a repurposed wheelbarrow that weighs a ton, but makes up for it with a wide range of notes. "
     },
     {
         "id": -1302129395,
@@ -3849,7 +3891,7 @@
         "id": 309017792,
         "shortname": "pie.bigcat",
         "name": "Big Cat Pie",
-        "description": "A delicious Big Cat Pie, always too hot. Provides a boost to hunger, health and hydration. Gives better night vision, including tree markings and ore hotspots, for a short time."
+        "description": "A pie made from jungle cat meat, purrfect temperature. Boosts hunger, health and hydration. Shows nearby animal tracks for a short time."
     },
     {
         "id": 120820987,
@@ -3861,7 +3903,7 @@
         "id": 54265286,
         "shortname": "pie.crocodile",
         "name": "Crocodile Pie",
-        "description": "A delicious Crocodile Pie, always too hot. Provides a boost to hunger, health and hydration. Gives better night vision, including tree markings and ore hotspots, for a short time."
+        "description": "A pie made from crocodile meat, may cause a reptile dysfunction. Boosts hunger, health and hydration. Gives better night vision, including tree markings and ore hotspots, for a short time."
     },
     {
         "id": -1785248332,
@@ -3885,7 +3927,7 @@
         "id": -1488408786,
         "shortname": "pie.pumpkin",
         "name": "Pumpkin Pie",
-        "description": "Spooky pumpkin pie, provides a boost to health, hunger and hydration.\nIncreases maximum health for a short time."
+        "description": "Spooky pumpkin pie, provides a boost to health, hunger and hydration. Increases maximum health for a short time."
     },
     {
         "id": -963820355,
@@ -3993,7 +4035,7 @@
         "id": 1903654061,
         "shortname": "planter.small",
         "name": "Small Planter Box",
-        "description": "A small planter with enough room to plant 3 seeds."
+        "description": "A small planter with enough room to plant 3 seeds.\r"
     },
     {
         "id": -280812482,
@@ -4066,6 +4108,30 @@
         "shortname": "pumpkinbasket",
         "name": "Pumpkin Basket",
         "description": "A pumpkin basket to help you collect candy much faster during Trick or Treat events with left click. Use right click to throw candy"
+    },
+    {
+        "id": 1121416193,
+        "shortname": "purecoolingtea",
+        "name": "Pure Cooling Tea",
+        "description": "A pure cooling tea that temporarily decreases your max and core temperature."
+    },
+    {
+        "id": 97903330,
+        "shortname": "purecraftingtea_quality",
+        "name": "Pure Crafting Quality Tea",
+        "description": "A pure crafting tea. provides hydration and increases the chances of a higher quality crafting outcome for a short time."
+    },
+    {
+        "id": 377750553,
+        "shortname": "pureharvestingtea",
+        "name": "Pure Harvesting Tea",
+        "description": "A pure harvesting tea, provides hydration and temporarily increases the amount of resources you receive from harvesting corpses a large amount."
+    },
+    {
+        "id": -1476814093,
+        "shortname": "purewarmingtea",
+        "name": "Pure Warming Tea",
+        "description": "A pure warming tea that temporarily increases both your core and minimum temperature."
     },
     {
         "id": -1386082991,
@@ -5196,6 +5262,12 @@
         "description": "An interactive spinning wheel."
     },
     {
+        "id": 1184215560,
+        "shortname": "spoiled.produce",
+        "name": "Spoiled Produce",
+        "description": "A spoiled fruit or vegetable. It's so far gone it's hard to tell what it originally was."
+    },
+    {
         "id": 1885488976,
         "shortname": "spookyspeaker",
         "name": "Spooky Speaker",
@@ -5880,10 +5952,34 @@
         "description": "Bulletproof glass insert"
     },
     {
+        "id": 1730664641,
+        "shortname": "wallpaper.ceiling",
+        "name": "Wallpaper Ceiling",
+        "description": ""
+    },
+    {
+        "id": -551431036,
+        "shortname": "wallpaper.flooring",
+        "name": "Wallpaper Flooring",
+        "description": ""
+    },
+    {
         "id": -1501434104,
         "shortname": "wallpaper",
         "name": "Wallpaper",
         "description": "Transform your base from a rusty shack to a cozy hideout with this sleek wallpaper. A nice touch of style - until the next raid, at least."
+    },
+    {
+        "id": 1629564540,
+        "shortname": "wallpaper.tool",
+        "name": "Wallpaper Tool",
+        "description": "Transform your base from a rusty shack to a cozy hideout! This tool lets you apply wallpaper on walls, floors and ceilings. A nice touch of style - until the next raid, at least.\n\nPress [+attack2] to select your skin."
+    },
+    {
+        "id": 553967074,
+        "shortname": "wallpaper.wall",
+        "name": "Wallpaper Wall",
+        "description": ""
     },
     {
         "id": -1344017968,
@@ -5912,8 +6008,8 @@
     {
         "id": -1142222427,
         "shortname": "warmingtea",
-        "name": "Warming Tea",
-        "description": "A warming tea that temporarily increases both your core and minimum temperature."
+        "name": "Basic Warming Tea",
+        "description": "A basic warming tea that temporarily increases both your core and minimum temperature."
     },
     {
         "id": -463122489,
@@ -6030,9 +6126,15 @@
         "description": "Lowers recoil felt by the operator but can make bullet path more unpredictable and dealing slightly less damage to your foes."
     },
     {
+        "id": -781866273,
+        "shortname": "weapon.mod.oilfiltersilencer",
+        "name": "Oil Filter Silencer",
+        "description": "Significantly reduces the sound of gunfire, and completely removes any visible muzzle flash. Fashioned out of an old oil filter, this won't last long."
+    },
+    {
         "id": -1850571427,
         "shortname": "weapon.mod.silencer",
-        "name": "Silencer",
+        "name": "Military Silencer",
         "description": "Significantly reduces the sound of gunfire, and completely removes any visible muzzle flash."
     },
     {
@@ -6046,6 +6148,18 @@
         "shortname": "weapon.mod.small.scope",
         "name": "8x Zoom Scope",
         "description": "A small 8x zoom scope."
+    },
+    {
+        "id": -1659598760,
+        "shortname": "weapon.mod.sodacansilencer",
+        "name": "Soda Can Silencer",
+        "description": "Significantly reduces the sound of gunfire, and completely removes any visible muzzle flash. Crudely made out of a soda can, this will only survive a few shots."
+    },
+    {
+        "id": 1719587208,
+        "shortname": "weapon.mod.targetingattachment",
+        "name": "Targeting Attachment",
+        "description": "An internal weapon mod that allows the user to send pings to their team while the weapon is equipped."
     },
     {
         "id": 1277159544,
