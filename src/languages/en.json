@@ -604,7 +604,7 @@
     "roleSet": "rustplusplus role has been set to {name}.",
     "rustMonument": "Rust Monument",
     "rustplusOperational": "RUSTPLUS OPERATIONAL.",
-    "rustStatsApiFailed": "Ruststats API Request Failed: {api_call}.",
+    "apiFailed": "API Request Failed: {api_call}.",
     "safe-zone-recycler": "Safe Zone Recycler",
     "samsite": "SAM site",
     "satelliteDish": "Satellite Dish",

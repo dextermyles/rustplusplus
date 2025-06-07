@@ -32,20 +32,42 @@ class Query {
     }
 
     async getUserStats(id) {
-        return await this.request(this.GET_USER_STATISTICS(id))
-            .then(async (resp) => {
-                if (typeof(resp) === 'string') {
-                    resp = JSON.parse(resp);
-                }
-                this.log('STATS', JSON.stringify(resp));
-                if(resp
-                    && resp.success 
-                    && !resp.is_private) {
-                        return await this.request(this.GET_USER_RUST_STATS(id));
-                } else {
-                    return resp;
-                }
-            });
+        var promise = new Promise(async (resolve, reject) => {
+            await this.request(this.GET_USER_STATISTICS(id))
+                .then(async (resp) => {
+                    
+                    // parse
+                    if (typeof (resp) === 'string') {
+                        resp = JSON.parse(resp);
+                    }
+
+                    this.log('RUSTSTATS', JSON.stringify(resp));
+
+                    await this.request(this.GET_USER_RUST_STATS(id))
+                        .then((stats) => {
+                            // parse
+                            if (typeof (stats) === 'string') {
+                                stats = JSON.parse(stats);
+                            }
+                            // return from steam api
+                            var finalResponse = {
+                                ruststats: {
+                                    ...resp
+                                },
+                                steam: {
+                                    ...stats
+                                }
+                            }
+                            this.log('HTTP IN', JSON.stringify(finalResponse));
+                            console.log(finalResponse);
+                            resolve(JSON.stringify(stats));
+                        })
+                        .catch((err) => reject(err));
+                })
+                .catch((err) => reject(err));
+        });
+
+        return promise;
     }
 
     async httpGet(url) {
@@ -54,16 +76,18 @@ class Query {
         let config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': authKey
+                'Authorization': url.indexOf(Config.ruststats.baseUrl) > -1 ? authKey : ''
             }
         };
 
         try {
             let ax = new Axios.Axios(config);
+            this.log('HTTP OUT CONFIG', JSON.stringify(config));
+            this.log('HTTP OUT URL', requestUrl);
             return await ax.get(requestUrl);
         }
         catch (e) {
-            this.log('httpGet', e, 'error');
+            this.log('HTTP ERROR', e, 'error');
             return { error: e };
         }
     }
@@ -71,7 +95,8 @@ class Query {
     async request(api_call) {
         const response = await this.httpGet(api_call);
         if (response.status !== 200) {
-            Client.client.log(Client.client.intlGet(null, 'errorCap'), Client.client.intlGet(null, 'rustStatsApiFailed', { api_call: api_call }), 'error');
+            Client.client.log(Client.client.intlGet(null, 'errorCap'), Client.client.intlGet(null, 'apiFailed', { api_call: api_call }), 'error');
+            console.error('RESPONSE FAILED: ', JSON.stringify(response));
             return null;
         }
 
