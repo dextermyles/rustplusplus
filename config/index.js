@@ -37,5 +37,8 @@ module.exports = {
     ruststats: {
         apiKey: process.env.RPP_RUSTSTATS_TOKEN || '',
         baseUrl: 'https://ruststats.io'
+    },
+    steam: {
+        apiKey: process.env.RPP_STEAM_API_KEY || ''
     }
 };

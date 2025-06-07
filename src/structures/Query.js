@@ -15,12 +15,16 @@ class Query {
         this.rustStatsURL = Config.ruststats.baseUrl;
     }
 
+    GET_USER_RUST_STATS(id) {
+        return `https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=252490&key=${Config.steam.apiKey}&steamid=${id}&include_appinfo=1`
+    }
+
     GET_USER_STATISTICS(id) {
-        return `public-api/user/statistics?steam_id=${id}`
+        return `${Config.ruststats.baseUrl}/public-api/user/statistics?steam_id=${id}`
     }
 
     GET_USER_BANNED(id) {
-        return `public-api/user/banned?steam_id=${id}`
+        return `${Config.ruststats.baseUrl}/public-api/user/banned?steam_id=${id}`
     }
 
     async getUserBanned(id) {
@@ -28,11 +32,24 @@ class Query {
     }
 
     async getUserStats(id) {
-        return await this.request(this.GET_USER_STATISTICS(id));
+        return await this.request(this.GET_USER_STATISTICS(id))
+            .then(async (resp) => {
+                if (typeof(resp) === 'string') {
+                    resp = JSON.parse(resp);
+                }
+                this.log('STATS', JSON.stringify(resp));
+                if(resp
+                    && resp.success 
+                    && !resp.is_private) {
+                        return await this.request(this.GET_USER_RUST_STATS(id));
+                } else {
+                    return resp;
+                }
+            });
     }
 
     async httpGet(url) {
-        let requestUrl = `${Config.ruststats.baseUrl}/${url}`;
+        let requestUrl = url;
         let authKey = `ApiKey ${Config.ruststats.apiKey}`;
         let config = {
             headers: {
@@ -43,8 +60,6 @@ class Query {
 
         try {
             let ax = new Axios.Axios(config);
-            this.log('httpGet', ax);
-
             return await ax.get(requestUrl);
         }
         catch (e) {
