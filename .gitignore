@@ -6,3 +6,4 @@ maps
 logs
 temp
 dist
+package-lock.json
