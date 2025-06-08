@@ -28,7 +28,7 @@ class Items {
     
     constructor() {
         this._items = Assets.load();
-        this._itemNames = Object.values(this.items).map(item => item.name);
+        this._itemNames = this.items.map(item => item.name);
     }
 
     /* Getters */
