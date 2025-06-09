@@ -2888,6 +2888,22 @@ class RustPlus extends RustPlusLib {
     async getUserStats(query) {
         if (this.query !== null) {
             let response = await this.query.getUserStats(query);
+            this.log('STATS', JSON.stringify(response));
+            if (response) {
+                var steam = response?.steam;
+                if (steam) {
+                    var playerStats = [{name:'',value:0}];
+                    if (steam?.playerStats?.stats ) {
+                        playerStats = steam?.playerStats?.stats;
+                    }
+                    this.log('PLAYER STATS', JSON.stringify(playerStats));
+                    var deaths = parseInt(playerStats.find(x => x.name === 'deaths')?.value || 0);
+                    var kills = parseInt(playerStats.find(x => x.name === 'kills')?.value || 0);
+                    var kdr = (kills / (kills + deaths)) || 0;
+
+                    return { kills, deaths, kdr };
+                }
+            }
             return response;
         }
 
