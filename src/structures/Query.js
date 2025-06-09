@@ -39,14 +39,12 @@ class Query {
                     if (typeof (resp) === 'string') {
                         resp = JSON.parse(resp);
                     }
-                    this.log('RUSTSTATS', JSON.stringify(resp));
                     await this.request(this.GET_USER_RUST_STATS(id))
                         .then((stats) => {
                             // parse
                             if (typeof (stats) === 'string') {
                                 stats = JSON.parse(stats);
                             }
-                            this.log('STEAM', JSON.stringify(stats));
                             // return from steam api
                             var finalResponse = {
                                 ruststats: {
