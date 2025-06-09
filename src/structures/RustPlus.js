@@ -756,8 +756,12 @@ class RustPlus extends RustPlusLib {
             case 'stats':
                 response = await this.getUserStats(query);
                 break;
-            case 'entity': break;
-            default: break;
+            case 'entity': 
+                response = await this.getEntityInfoAsync(query, 30000);
+            break;
+            default: 
+                return 'Command not found.';
+            break;
         }
 
         return response;
