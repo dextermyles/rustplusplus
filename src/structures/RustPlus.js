@@ -2900,7 +2900,7 @@ class RustPlus extends RustPlusLib {
 
                     var deaths = parseInt(playerStats.find(x => x.name === 'deaths')?.value || 0);
                     var kills = parseInt(playerStats.find(x => x.name === 'kill_player')?.value || 0);
-                    var kdr = (kills / (kills + deaths)) || 0;
+                    var kdr = (kills / deaths) || 0;
 
                     return `kills [${kills}] deaths [${deaths}] kdr [${kdr}]`;
                 }
