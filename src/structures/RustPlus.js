@@ -756,12 +756,12 @@ class RustPlus extends RustPlusLib {
             case 'stats':
                 response = await this.getUserStats(query);
                 break;
-            case 'entity': 
+            case 'entity':
                 response = await this.getEntityInfoAsync(query, 30000);
-            break;
-            default: 
+                break;
+            default:
                 return 'Command not found.';
-            break;
+                break;
         }
 
         return response;
@@ -2892,12 +2892,12 @@ class RustPlus extends RustPlusLib {
             if (response) {
                 var steam = response?.steam;
                 if (steam) {
-                    var playerStats = [{name:'',value:0}];
-                    if (steam?.playerStats?.stats ) {
-                        playerStats = steam?.playerStats?.stats;
+                    var playerStats = [{ name: '', value: 0 }];
+                    if (steam?.playerstats?.stats) {
+                        playerStats = steam?.playerstats?.stats;
                     }
                     this.log('PLAYER STATS', JSON.stringify(playerStats));
-                    
+
                     var deaths = parseInt(playerStats.find(x => x.name === 'deaths')?.value || 0);
                     var kills = parseInt(playerStats.find(x => x.name === 'kills')?.value || 0);
                     var kdr = (kills / (kills + deaths)) || 0;
