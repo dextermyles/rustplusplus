@@ -77,8 +77,6 @@ class Query {
 
         try {
             let ax = new Axios.Axios(config);
-            this.log('HTTP OUT CONFIG', JSON.stringify(config));
-            this.log('HTTP OUT URL', requestUrl);
             return await ax.get(requestUrl);
         }
         catch (e) {
