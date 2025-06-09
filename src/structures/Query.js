@@ -35,20 +35,18 @@ class Query {
         var promise = new Promise(async (resolve, reject) => {
             await this.request(this.GET_USER_STATISTICS(id))
                 .then(async (resp) => {
-                    
                     // parse
                     if (typeof (resp) === 'string') {
                         resp = JSON.parse(resp);
                     }
-
                     this.log('RUSTSTATS', JSON.stringify(resp));
-
                     await this.request(this.GET_USER_RUST_STATS(id))
                         .then((stats) => {
                             // parse
                             if (typeof (stats) === 'string') {
                                 stats = JSON.parse(stats);
                             }
+                            this.log('STEAM', JSON.stringify(stats));
                             // return from steam api
                             var finalResponse = {
                                 ruststats: {
@@ -58,9 +56,8 @@ class Query {
                                     ...stats
                                 }
                             }
-                            this.log('HTTP IN', JSON.stringify(finalResponse));
-                            console.log(finalResponse);
-                            resolve(JSON.stringify(stats));
+                            // return final response
+                            resolve(finalResponse);
                         })
                         .catch((err) => reject(err));
                 })

@@ -2897,11 +2897,12 @@ class RustPlus extends RustPlusLib {
                         playerStats = steam?.playerStats?.stats;
                     }
                     this.log('PLAYER STATS', JSON.stringify(playerStats));
+                    
                     var deaths = parseInt(playerStats.find(x => x.name === 'deaths')?.value || 0);
                     var kills = parseInt(playerStats.find(x => x.name === 'kills')?.value || 0);
                     var kdr = (kills / (kills + deaths)) || 0;
 
-                    return { kills, deaths, kdr };
+                    return `kills [${kills}] deaths [${deaths}] kdr [${kdr}]`;
                 }
             }
             return response;
