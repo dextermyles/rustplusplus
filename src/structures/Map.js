@@ -389,14 +389,13 @@ class Map {
             let x = marker.x * ((this.width - 2 * this.oceanMargin) / this.rustplus.info.mapSize) + this.oceanMargin;
             let n = this.height - 2 * this.oceanMargin;
             let y = this.height - (marker.y * (n / this.rustplus.info.mapSize) + this.oceanMargin);
-
-            /* Compensate rotations */
-            if (marker.type === this.rustplus.mapMarkers.types.CargoShip) {
-                x -= 20;
-                y -= 20;
-            }
-
             try {
+                /* Compensate rotations */
+                if (marker.type === this.rustplus.mapMarkers?.types?.CargoShip) {
+                    x -= 20;
+                    y -= 20;
+
+                }
                 let markerImageMeta = this.getMarkerImageMetaByType(marker.type);
                 let size = this.mapMarkerImageMeta[markerImageMeta].size;
 
@@ -435,7 +434,8 @@ class Map {
                 return;
             }
 
-            if (!markers) return;
+            if (!markers)
+                return;
 
             /* Tracer for CargoShip */
             image.stroke(Constants.COLOR_CARGO_TRACER, 2);
