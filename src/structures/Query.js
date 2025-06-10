@@ -39,6 +39,13 @@ class Query {
         return `https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=252490&key=${Config.steam.apiKey}&steamid=${id}`
     }
 
+    async getAllData(id) {
+        return await Promise.all([
+            this.getUserProfile(id), 
+            this.getUserPlaytime(id), 
+            this.getUserAchievements(id)
+        ]);
+    }
     async getUserBanned(id) {
         return await this.request(this.GET_USER_BANNED(id));
     }
@@ -46,7 +53,17 @@ class Query {
     async getUserProfile(id) {
         return await this.request(this.GET_USER_PROFILE(id))
             .then((data) => {
-                var response = data.response;
+                this.log('PROFILE', JSON.stringify(data));
+                if (data) {
+                    var resp = data.response;
+                    console.log(resp);
+                    var player = resp?.players[0];
+                    var steamId = player.steamid;
+                    var profileurl = player.profileurl;
+                    var personaname = player.personaname;
+                    return `name [${personaname}] profileurl [${profileurl}] steamId [${steamId}]`;
+                }
+                return response;
             });
     }
     
