@@ -25,6 +25,27 @@ module.exports = {
 						.setDescription('Players Steam ID.')
 						.setRequired(true)))
 				.addSubcommand(subcommand => subcommand
+					.setName('achievements')
+					.setDescription('Rust Achievements for Player.')
+					.addStringOption(option => option
+						.setName('id')
+						.setDescription('Players Steam ID.')
+						.setRequired(true)))
+				.addSubcommand(subcommand => subcommand
+					.setName('profile')
+					.setDescription('Rust Profile for Player.')
+					.addStringOption(option => option
+						.setName('id')
+						.setDescription('Players Steam ID.')
+						.setRequired(true)))
+				.addSubcommand(subcommand => subcommand
+					.setName('playtime')
+					.setDescription('Rust Play Time for Player.')
+					.addStringOption(option => option
+						.setName('id')
+						.setDescription('Players Steam ID.')
+						.setRequired(true)))
+				.addSubcommand(subcommand => subcommand
 					.setName('entity')
 					.setDescription('Test Rust+ sendRequest features.')
 					.addStringOption(option => option
@@ -68,6 +89,15 @@ module.exports = {
 				break;
 			case 'stats':
 				response = await rustplus.getUserStats(playerId);
+				break;
+			case 'achivements':
+				response = await rustplus.getUserAchievements(playerId);
+				break;
+			case 'profile':
+				response = await rustplus.getUserProfile(playerId);
+				break;
+			case 'playtime':
+				response = await rustplus.getUserPlaytime(playerId);
 				break;
 			case 'entity':
 				var entityId = playerId;

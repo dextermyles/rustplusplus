@@ -740,14 +740,10 @@ class RustPlus extends RustPlusLib {
         const subcommand = command.replace(/ .*/, '');
         query = command.slice(subcommand.length + 1);
 
-        this.log('QUERY', command);
-        this.log('QUERY', subcommand);
-        this.log('QUERY', query);
-
         if (query === null)
             return null;
 
-        var response;
+        var response = '';
 
         switch (subcommand) {
             case 'ban':
@@ -756,12 +752,20 @@ class RustPlus extends RustPlusLib {
             case 'stats':
                 response = await this.getUserStats(query);
                 break;
+            case 'achivements':
+				response = await this.getUserAchievements(query);
+				break;
+			case 'profile':
+				response = await this.getUserProfile(query);
+				break;
+			case 'playtime':
+				response = await this.getUserPlaytime(query);
+				break;
             case 'entity':
-                response = await this.getEntityInfoAsync(query, 30000);
+                response = await this.getEntityInfoAsync(query);
                 break;
             default:
                 return 'Command not found.';
-                break;
         }
 
         return response;
@@ -2883,6 +2887,18 @@ class RustPlus extends RustPlusLib {
             return response;
         }
         return { error: 'Failed to ask Rust bot.' }
+    }
+
+    async getUserProfile(query) {
+        return await this.query.getUserProfile(query);
+    }
+
+    async getUserAchievements(query) {
+        return await this.query.getUserAchievements(query);
+    }
+
+    async getUserPlaytime(query) {
+        return await this.query.getUserPlaytime(query);
     }
 
     async getUserStats(query) {

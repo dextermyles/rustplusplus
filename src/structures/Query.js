@@ -27,8 +27,32 @@ class Query {
         return `${Config.ruststats.baseUrl}/public-api/user/banned?steam_id=${id}`
     }
 
+    GET_USER_PROFILE(id) {
+        return `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${Config.steam.apiKey}&steamids=${id}`
+    }
+
+    GET_USER_PLAYTIME(id) {
+        return `https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${Config.steam.apiKey}&steamid=${id}&include_appinfo=true&appids_filter[0]=252490`
+    }
+
+    GET_USER_ACHIEVEMENTS(id) {
+        return `https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=252490&key=${Config.steam.apiKey}&steamid=${id}`
+    }
+
     async getUserBanned(id) {
         return await this.request(this.GET_USER_BANNED(id));
+    }
+
+    async getUserProfile(id) {
+        return await this.request(this.GET_USER_PROFILE(id));
+    }
+    
+    async getUserAchievements(id) {
+        return await this.request(this.GET_USER_ACHIEVEMENTS(id));
+    }
+
+    async getUserPlaytime(id) {
+        return await this.request(this.GET_USER_PLAYTIME(id));
     }
 
     async getUserStats(id) {
