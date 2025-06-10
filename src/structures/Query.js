@@ -44,7 +44,10 @@ class Query {
     }
 
     async getUserProfile(id) {
-        return await this.request(this.GET_USER_PROFILE(id));
+        return await this.request(this.GET_USER_PROFILE(id))
+            .then((data) => {
+                var response = data.response;
+            });
     }
     
     async getUserAchievements(id) {
@@ -121,6 +124,7 @@ class Query {
             this.log(Client.client.intlGet(null, 'errorCap'), Client.client.intlGet(null, 'apiFailed', { api_call: api_call }), 'error');
             throw new Error(response.error);
         }
+        this.log('HTTP RESPONSE', JSON.stringify(response.data));
         return response.data;
     }
 
