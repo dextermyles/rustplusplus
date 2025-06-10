@@ -32,37 +32,43 @@ class Query {
     }
 
     async getUserStats(id) {
-        var promise = new Promise(async (resolve, reject) => {
-            await this.request(this.GET_USER_STATISTICS(id))
-                .then(async (resp) => {
-                    // parse
-                    if (typeof (resp) === 'string') {
-                        resp = JSON.parse(resp);
-                    }
-                    await this.request(this.GET_USER_RUST_STATS(id))
-                        .then((stats) => {
-                            // parse
-                            if (typeof (stats) === 'string') {
-                                stats = JSON.parse(stats);
-                            }
-                            // return from steam api
-                            var finalResponse = {
-                                ruststats: {
-                                    ...resp
-                                },
-                                steam: {
-                                    ...stats
-                                }
-                            }
-                            // return final response
-                            resolve(finalResponse);
-                        })
-                        .catch((err) => reject(err));
-                })
-                .catch((err) => reject(err));
-        });
+        var p1 = this.request(this.GET_USER_STATISTICS(id))
+            .then((resp) => {
+                // parse
+                if (typeof (resp) === 'string') {
+                    resp = JSON.parse(resp);
+                }
 
-        return promise;
+                return resp;
+            })
+            .catch((err) => { return err });
+
+        var p2 = this.request(this.GET_USER_RUST_STATS(id))
+            .then((resp) => {
+                // parse
+                if (typeof (resp) === 'string') {
+                    resp = JSON.parse(resp);
+                }
+                return resp;
+            })
+            .catch((err) => { return err });
+
+        return Promise.all([p1, p2])
+            .then((results) => {
+                var p1result = results[0];
+                var p2result = results[1];
+
+                var finalResponse = {
+                    ruststats: {
+                        ...p1result
+                    },
+                    steam: {
+                        ...p2result
+                    }
+                }
+
+                return finalResponse;
+            });
     }
 
     async httpGet(url) {
@@ -88,9 +94,8 @@ class Query {
     async request(api_call) {
         const response = await this.httpGet(api_call);
         if (response.status !== 200) {
-            Client.client.log(Client.client.intlGet(null, 'errorCap'), Client.client.intlGet(null, 'apiFailed', { api_call: api_call }), 'error');
-            console.error('RESPONSE FAILED: ', response);
-            return null;
+            this.log(Client.client.intlGet(null, 'errorCap'), Client.client.intlGet(null, 'apiFailed', { api_call: api_call }), 'error');
+            throw new Error(response.error);
         }
         return response.data;
     }

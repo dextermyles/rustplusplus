@@ -2890,6 +2890,7 @@ class RustPlus extends RustPlusLib {
             let response = await this.query.getUserStats(query);
             this.log('STATS', JSON.stringify(response));
             if (response) {
+                var isPrivate = response?.ruststats?.is_private === true;
                 var steam = response?.steam;
                 if (steam) {
                     var playerStats = [{ name: '', value: 0 }];
