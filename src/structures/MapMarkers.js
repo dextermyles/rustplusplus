@@ -17,6 +17,9 @@
     https://github.com/alexemanuelol/rustplusplus
 
 */
+/**
+ * @type {MapMarkers}
+ */
 
 const Constants = require('../util/constants.js');
 const Map = require('../util/map.js');
@@ -732,7 +735,7 @@ class MapMarkers {
 
             this.travelingVendors.push(marker);
         }
-        
+
         /* TravelingVendor markers that have left. */
         for (let marker of leftMarkers) {
             this.rustplus.sendEvent(

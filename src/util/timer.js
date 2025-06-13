@@ -18,6 +18,10 @@
 
 */
 
+/**
+ * @type {Timer}
+ */
+
 module.exports = {
     timer: function (callback, delay, ...args) {
         let id, started, remaining = delay, running = false;
