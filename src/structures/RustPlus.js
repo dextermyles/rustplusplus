@@ -3619,7 +3619,12 @@ class RustPlus extends RustPlusLib {
     }
 
     async getUserPlaytime(query) {
-        return await this.query.getUserPlaytime(query);
+        var playtime = await this.query.getUserPlaytime(query);
+        if (playtime) {
+            var rust = playtime.response.games.find(x => x.name === 'Rust');
+            return `total time played [${rust.playtime_forever / 60} hrs] last 2 weeks [${rust.playtime_2weeks / 60} hrs]`
+        }
+        return { error: "Failed to make request." };
     }
 
     async getUserStats(query) {
@@ -3642,7 +3647,7 @@ class RustPlus extends RustPlusLib {
                 );
                 var hsr = Math.round(hs / bullet_hit_player * 100);
                 var kdr = Math.round(kills / deaths * 100) / 100;
-                return `${profile.response.players[profile.response.players.length - 1].personaname} => players killed [${kills}] deaths [${deaths}] kdr [${kdr}] headshots % [${hsr}]`;
+                return `${profile.response.players[profile.response.players.length - 1].personaname} => players killed [${kills}] deaths [${deaths}] kdr [${kdr}] headshots [${hsr}%]`;
             }
         }
 
