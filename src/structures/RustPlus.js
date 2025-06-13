@@ -3628,7 +3628,6 @@ class RustPlus extends RustPlusLib {
             let steam = await this.query.getUserStats(query);
             if (profile && steam) {
                 var playerStats = steam.playerstats.stats;
-                this.log("PLAYER STATS", JSON.stringify(playerStats));
                 var deaths = parseInt(
                     playerStats.find((x) => x.name === "deaths")?.value || 0
                 );
@@ -3638,14 +3637,12 @@ class RustPlus extends RustPlusLib {
                 var hs = parseInt(
                     playerStats.find((x) => x.name === "headshot")?.value || 0
                 );
-
                 var bullet_hit_player = parseInt(
                     playerStats.find((x) => x.name === "bullet_hit_player")?.value || 0
                 );
-
-                var hsr = ((bullet_hit_player / hs || 0) / 100) * 100;
-                var kdr = ((kills / deaths || 0) / 100) * 100;
-                return `${profile.response.players[profile.response.players.length - 1].personaname} => players killed [${kills}] deaths [${deaths}] kdr [${kdr}] headshots [${hs}] (${hsr}%)`;
+                var hsr = Math.round(hs / bullet_hit_player * 100);
+                var kdr = Math.round(kills / deaths * 100) / 100;
+                return `${profile.response.players[profile.response.players.length - 1].personaname} => players killed [${kills}] deaths [${deaths}] kdr [${kdr}] headshots % [${hsr}]`;
             }
         }
 
