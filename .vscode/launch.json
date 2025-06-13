@@ -15,19 +15,7 @@
       "program": "index.ts",
       "cwd": "${workspaceRoot}",
       "internalConsoleOptions": "openOnSessionStart",
-      //"skipFiles": ["<node_internals>/**", "node_modules/**"]
-    },
-    {
-        "type": "node",
-        "request": "launch",
-        "name": "Launch Program",
-        "runtimeArgs": [
-            "-r",
-            "ts-node/register"
-        ],
-        "args": [
-            "${workspaceFolder}/index.ts"
-        ]
+      "skipFiles": ["<node_internals>/**", "node_modules/**"]
     }
   ]
 }

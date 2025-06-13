@@ -39,55 +39,15 @@ class Query {
         return `https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=252490&key=${Config.steam.apiKey}&steamid=${id}`
     }
 
-    async getAllData(id) {
-        return await Promise.all([
-            this.getUserProfile(id), 
-            this.getUserPlaytime(id), 
+    getAllData(id) {
+        return Promise.all([
+            this.getUserProfile(id),
+            this.getUserPlaytime(id),
             this.getUserAchievements(id)
         ]);
     }
-    async getUserBanned(id) {
-        return await this.request(this.GET_USER_BANNED(id));
-    }
-
-    async getUserProfile(id) {
-        return await this.request(this.GET_USER_PROFILE(id))
-            .then((data) => {
-                this.log('PROFILE', JSON.stringify(data));
-                if (data) {
-                    var resp = data.response;
-                    console.log(resp);
-                    var player = resp?.players[0];
-                    var steamId = player.steamid;
-                    var profileurl = player.profileurl;
-                    var personaname = player.personaname;
-                    return `name [${personaname}] profileurl [${profileurl}] steamId [${steamId}]`;
-                }
-                return response;
-            });
-    }
-    
-    async getUserAchievements(id) {
-        return await this.request(this.GET_USER_ACHIEVEMENTS(id));
-    }
-
-    async getUserPlaytime(id) {
-        return await this.request(this.GET_USER_PLAYTIME(id));
-    }
-
-    async getUserStats(id) {
-        var p1 = this.request(this.GET_USER_STATISTICS(id))
-            .then((resp) => {
-                // parse
-                if (typeof (resp) === 'string') {
-                    resp = JSON.parse(resp);
-                }
-
-                return resp;
-            })
-            .catch((err) => { return err });
-
-        var p2 = this.request(this.GET_USER_RUST_STATS(id))
+    getUserBanned(id) {
+        return this.request(this.GET_USER_BANNED(id))
             .then((resp) => {
                 // parse
                 if (typeof (resp) === 'string') {
@@ -96,26 +56,57 @@ class Query {
                 return resp;
             })
             .catch((err) => { return err });
-
-        return Promise.all([p1, p2])
-            .then((results) => {
-                var p1result = results[0];
-                var p2result = results[1];
-
-                var finalResponse = {
-                    ruststats: {
-                        ...p1result
-                    },
-                    steam: {
-                        ...p2result
-                    }
-                }
-
-                return finalResponse;
-            });
     }
 
-    async httpGet(url) {
+    getUserProfile(id) {
+        return this.request(this.GET_USER_PROFILE(id))
+            .then((resp) => {
+                // parse
+                if (typeof (resp) === 'string') {
+                    resp = JSON.parse(resp);
+                }
+                return resp;
+            })
+            .catch((err) => { return err });
+    }
+
+    getUserAchievements(id) {
+        return this.request(this.GET_USER_ACHIEVEMENTS(id))
+            .then((resp) => {
+                // parse
+                if (typeof (resp) === 'string') {
+                    resp = JSON.parse(resp);
+                }
+                return resp;
+            })
+            .catch((err) => { return err });
+    }
+
+    getUserPlaytime(id) {
+        return this.request(this.GET_USER_PLAYTIME(id))
+            .then((resp) => {
+                // parse
+                if (typeof (resp) === 'string') {
+                    resp = JSON.parse(resp);
+                }
+                return resp;
+            })
+            .catch((err) => { return err });
+    }
+
+    getUserStats(id) {
+        return this.request(this.GET_USER_RUST_STATS(id))
+            .then((resp) => {
+                // parse
+                if (typeof (resp) === 'string') {
+                    resp = JSON.parse(resp);
+                }
+                return resp;
+            })
+            .catch((err) => { return err });
+    }
+
+    httpGet(url) {
         let requestUrl = url;
         let authKey = `ApiKey ${Config.ruststats.apiKey}`;
         let config = {
@@ -125,23 +116,25 @@ class Query {
             }
         };
 
-        try {
-            let ax = new Axios.Axios(config);
-            return await ax.get(requestUrl);
-        }
-        catch (e) {
-            this.log('HTTP ERROR', e, 'error');
-            return { error: e };
-        }
+        let ax = new Axios.Axios(config);
+        return ax.get(requestUrl);
     }
 
     async request(api_call) {
-        const response = await this.httpGet(api_call);
+        var response = await this.httpGet(api_call);
+        var retries = 0;
+        while (response.status === 429 || retries >= 10) {
+            response = await this.httpGet(api_call);
+            retries++;
+        }
+
         if (response.status !== 200) {
             this.log(Client.client.intlGet(null, 'errorCap'), Client.client.intlGet(null, 'apiFailed', { api_call: api_call }), 'error');
-            throw new Error(response.error);
+            return { error: `Request failed: ${response.statusText}` }
         }
+
         this.log('HTTP RESPONSE', JSON.stringify(response.data));
+        console.log(response.data);
         return response.data;
     }
 
