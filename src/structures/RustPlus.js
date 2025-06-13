@@ -3622,7 +3622,7 @@ class RustPlus extends RustPlusLib {
         var playtime = await this.query.getUserPlaytime(query);
         if (playtime) {
             var rust = playtime.response.games.find(x => x.name === 'Rust');
-            return `total time played [${rust.playtime_forever / 60} hrs] last 2 weeks [${rust.playtime_2weeks / 60} hrs]`
+            return `total time played [${Math.round(rust.playtime_forever / 60)} hrs] last 2 weeks [${Math.round(rust.playtime_2weeks / 60)} hrs]`
         }
         return { error: "Failed to make request." };
     }
