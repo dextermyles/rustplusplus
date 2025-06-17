@@ -3629,25 +3629,40 @@ class RustPlus extends RustPlusLib {
 
     async getUserStats(query) {
         if (this.query !== null) {
-            let profile = await this.query.getUserProfile(query);
-            let steam = await this.query.getUserStats(query);
-            if (profile && steam) {
-                var playerStats = steam.playerstats.stats;
-                var deaths = parseInt(
-                    playerStats.find((x) => x.name === "deaths")?.value || 0
-                );
-                var kills = parseInt(
-                    playerStats.find((x) => x.name === "kill_player")?.value || 0
-                );
-                var hs = parseInt(
-                    playerStats.find((x) => x.name === "headshot")?.value || 0
-                );
-                var bullet_hit_player = parseInt(
-                    playerStats.find((x) => x.name === "bullet_hit_player")?.value || 0
-                );
-                var hsr = Math.round(hs / bullet_hit_player * 100);
-                var kdr = Math.round(kills / deaths * 100) / 100;
-                return `${profile.response.players[profile.response.players.length - 1].personaname} => players killed [${kills}] deaths [${deaths}] kdr [${kdr}] headshots [${hsr}%]`;
+            try {
+                let profile = await this.query.getUserProfile(query);
+                let steam = await this.query.getUserStats(query);
+                let playtime = await this.query.getUserPlaytime(query);
+
+                console.log('profile: ', profile);
+                console.log('steam: ', steam);
+                console.log('playtime: ', playtime);
+
+                if (profile && steam && playtime) {
+
+                    this.log('STEAM', steam);
+                    this.log('PROFILE', profile);
+                    var playerStats = steam.playerstats?.stats || [];
+                    var deaths = parseInt(
+                        playerStats.find((x) => x.name === "deaths")?.value || 0
+                    );
+                    var kills = parseInt(
+                        playerStats.find((x) => x.name === "kill_player")?.value || 0
+                    );
+                    var hs = parseInt(
+                        playerStats.find((x) => x.name === "headshot")?.value || 0
+                    );
+                    var bullet_hit_player = parseInt(
+                        playerStats.find((x) => x.name === "bullet_hit_player")?.value || 0
+                    );
+                    var hsr = Math.round(hs / bullet_hit_player * 100);
+                    var kdr = Math.round(kills / deaths * 100) / 100;
+                    return `${profile.response.players[profile.response.players.length - 1].personaname} => players killed [${kills}] deaths [${deaths}] kdr [${kdr}] headshots [${hsr}%]`;
+
+                }
+            } catch (error) {
+                console.log(error);
+                return { error: `error occured: ${error}` }
             }
         }
 

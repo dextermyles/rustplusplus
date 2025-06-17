@@ -19,10 +19,6 @@ class Query {
         return `https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=252490&key=${Config.steam.apiKey}&steamid=${id}&include_appinfo=1`
     }
 
-    GET_USER_STATISTICS(id) {
-        return `${Config.ruststats.baseUrl}/public-api/user/statistics?steam_id=${id}`
-    }
-
     GET_USER_BANNED(id) {
         return `${Config.ruststats.baseUrl}/public-api/user/banned?steam_id=${id}`
     }
@@ -106,36 +102,37 @@ class Query {
             .catch((err) => { return err });
     }
 
-    httpGet(url) {
-        let requestUrl = url;
-        let authKey = `ApiKey ${Config.ruststats.apiKey}`;
-        let config = {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': url.indexOf(Config.ruststats.baseUrl) > -1 ? authKey : ''
-            }
-        };
-
-        let ax = new Axios.Axios(config);
-        return ax.get(requestUrl);
+    async httpGet(url) {
+        let ax = new Axios.Axios({ headers: { 'Content-Type': 'application/json' } });
+        return await ax.get(url);
     }
 
     async request(api_call) {
-        var response = await this.httpGet(api_call);
-        var retries = 0;
-        while (response.status === 429 || retries >= 10) {
-            response = await this.httpGet(api_call);
-            retries++;
-        }
+        try {
+            var response = await this.httpGet(api_call);
+            var retries = 0;
 
-        if (response.status !== 200) {
-            this.log(Client.client.intlGet(null, 'errorCap'), Client.client.intlGet(null, 'apiFailed', { api_call: api_call }), 'error');
-            return { error: `Request failed: ${response.statusText}` }
-        }
+            if (response.status !== 200) {
+                while (response.status === 429 && retries < 10) {
+                    response = await this.httpGet(api_call);
+                    retries++;
+                }
+            }
 
-        this.log('HTTP RESPONSE', JSON.stringify(response.data));
-        console.log(response.data);
-        return response.data;
+            if (response.status !== 200) {
+                this.log(Client.client.intlGet(null, 'errorCap'), Client.client.intlGet(null, 'apiFailed', { api_call: api_call }), 'error');
+                var message = '';
+                message = response.data;
+                return { error: `Request failed: ${message}` }
+            }
+
+            this.log('HTTP RESPONSE', JSON.stringify(response.data));
+            console.log(response.data);
+            return response.data;
+        }
+        catch (ex) {
+            return { error: `request error: ${ex}` }
+        }
     }
 
     log(title, text, level = 'info') {
