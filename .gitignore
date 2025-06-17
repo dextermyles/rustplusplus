@@ -8,3 +8,4 @@ temp
 dist
 package-lock.json
 src/structures/Query.d.ts
+src/structures/Query.d.ts
