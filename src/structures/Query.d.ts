@@ -23,9 +23,6 @@ declare class Query {
     log(title: any, text: any, level?: string): void;
 }
 
-import Logger = require("./Logger");
-import Axios = require("axios");
-
 export interface GetUserProfileDto {
   response: Response;
 }
