@@ -42,8 +42,5 @@
     "resolutions": {
         "jpeg-js": "0.4.4",
         "protobufjs": "7.2.4"
-    },
-    "devDependencies": {
-        "typescript": "^5.8.3"
     }
 }
