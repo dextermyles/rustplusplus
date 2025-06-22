@@ -2271,14 +2271,10 @@ class RustPlus extends RustPlusLib {
                         for (const order of vendingMachine.sellOrders) {
                             if (order.amountInStock === 0) continue;
 
-                            const orderItemId = Object.keys(
-                                Client.client.items.items
-                            ).includes(order.itemId.toString())
+                            const orderItemId = Client.client.items.itemExist(order.itemId.toString())
                                 ? order.itemId
                                 : null;
-                            const orderCurrencyId = Object.keys(
-                                Client.client.items.items
-                            ).includes(order.currencyId.toString())
+                            const orderCurrencyId = Client.client.items.itemExist(order.currencyId.toString())
                                 ? order.currencyId
                                 : null;
 
@@ -2290,11 +2286,11 @@ class RustPlus extends RustPlusLib {
 
                             const orderItemName =
                                 orderItemId !== null
-                                    ? Client.client.items.getName(orderItemId)
+                                    ? Client.client.items.getName(orderItemId.toString())
                                     : unknownString;
                             const orderCurrencyName =
                                 orderCurrencyId !== null
-                                    ? Client.client.items.getName(orderCurrencyId)
+                                    ? Client.client.items.getName(orderCurrencyId.toString())
                                     : unknownString;
 
                             if (
@@ -2897,8 +2893,8 @@ class RustPlus extends RustPlusLib {
         ]);
 
         let str = `${itemName}: `;
-        for (const item of recycleData["recycler"]) {
-            str += `${Client.client.items.getName(item.itemId)} x${item.quantity}, `;
+        for (const rd of recycleData["recycler"]) {
+            str += `${Client.client.items.getName(rd.itemId)} x${rd.quantity}, `;
         }
         str = str.slice(0, -2);
 

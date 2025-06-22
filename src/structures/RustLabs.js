@@ -334,9 +334,11 @@ class RustLabs {
      *  @return {array|null} null if something went wrong, otherwise [id, itemDetails, recycleDetails]
      */
     getRecycleDetailsById(id) {
-        if (typeof (id) !== 'string') return null;
-        if (!this.hasRecycleDetails(id)) return null;
-        return [id, this.items.items[id], this.recycleData[id]];
+        if (typeof (id) !== 'string') 
+            return null;
+        if (!this.hasRecycleDetails(id)) 
+            return null;
+        return [id, this.items.items.find(x => x.id === id), this.recycleData[id]];
     }
 
     /**

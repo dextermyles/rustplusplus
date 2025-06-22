@@ -71,12 +71,16 @@ module.exports = {
             const currentString = array[i];
             const distance = levenshteinDistance(string, currentString);
 
+            if (currentString === 'Diesel Fuel')
+                console.log('findClosestString: ', currentString, ' distance: ', distance);
+            
             if (distance < minDistance) {
                 minDistance = distance;
                 closestString = currentString;
             }
 
-            if (minDistance === 0) break;
+            if (minDistance === 0) 
+                break;
         }
 
         return minDistance > threshold ? null : closestString;

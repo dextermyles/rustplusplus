@@ -15,6 +15,15 @@ module.exports = {
 
         items = itemsLoaded;
 
+        items = items.map(x => {
+            return {
+                id: x.id.toString(),
+                name: x.name,
+                description: x.description,
+                shortname: x.shortname
+            }
+        });
+
         return items;
     }
 }

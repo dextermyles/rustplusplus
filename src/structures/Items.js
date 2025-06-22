@@ -96,6 +96,7 @@ class Items {
 
     getClosestItemIdByName(name) {
         const closestString = Utils.findClosestString(name, this.itemNames);
+        console.log('getClosestItemIdByName: ', name, ' result: ', closestString);
         if (closestString !== null) {
             const item = this.items.find(x => x.name ===  closestString);
             if (item !== undefined) {
