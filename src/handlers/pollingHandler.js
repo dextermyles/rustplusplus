@@ -49,6 +49,9 @@ module.exports = {
             rustplus.mapMarkers = new MapMarkers(mapMarkers.mapMarkers, rustplus, client);
         }
 
+        var test = await rustplus.getCommandSmall(false);
+        console.log(`!small (testing): ${test}`)
+        
         await module.exports.handlers(rustplus, client, info, mapMarkers, teamInfo, time);
         rustplus.isFirstPoll = false;
     },
