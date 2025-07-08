@@ -38,7 +38,10 @@ module.exports = {
         if (options.hasOwnProperty('title')) embed.setTitle(options.title);
         if (options.hasOwnProperty('color')) embed.setColor(options.color);
         if (options.hasOwnProperty('description')) embed.setDescription(options.description);
-        if (options.hasOwnProperty('thumbnail') && options.thumbnail !== '') embed.setThumbnail(options.thumbnail);
+        if (options.hasOwnProperty('thumbnail')
+            && options.thumbnail !== ''
+            && isValidUrl(options.thumbnail))
+            embed.setThumbnail(options.thumbnail);
         if (options.hasOwnProperty('image')) embed.setImage(options.image);
         if (options.hasOwnProperty('url') && options.url !== '') embed.setURL(options.url);
         if (options.hasOwnProperty('author')) embed.setAuthor(options.author);
@@ -837,7 +840,7 @@ module.exports = {
             let kdr = '0';
             if (player.stats !== null) {
                 var playerStats = player.stats || [];
-                
+
                 kills = parseInt(
                     playerStats.find((x) => x.name === "kill_player")?.value || 0
                 )
