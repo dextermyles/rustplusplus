@@ -15,8 +15,9 @@ class Query {
         this.rustStatsURL = Config.ruststats.baseUrl;
     }
 
+
     GET_USER_RUST_STATS(id) {
-        return `https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=252490&key=${Config.steam.apiKey}&steamid=${id}&include_appinfo=1`
+        return `https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=252490&key=${Config.steam.apiKey}&steamid=${id}`
     }
 
     GET_USER_BANNED(id) {
@@ -24,15 +25,15 @@ class Query {
     }
 
     GET_USER_PROFILE(id) {
-        return `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${Config.steam.apiKey}&steamids=${id}`
+        return `https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?key=${Config.steam.apiKey}&steamids=${id}`
     }
 
     GET_USER_PLAYTIME(id) {
-        return `https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${Config.steam.apiKey}&steamid=${id}&include_appinfo=true&appids_filter[0]=252490`
+        return `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${Config.steam.apiKey}&steamid=${id}`
     }
 
     GET_USER_ACHIEVEMENTS(id) {
-        return `https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=252490&key=${Config.steam.apiKey}&steamid=${id}`
+        return `https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?appid=252490&key=${Config.steam.apiKey}&steamid=${id}&l=en`
     }
 
     getAllData(id) {
@@ -104,7 +105,14 @@ class Query {
 
     async httpGet(url) {
         let ax = new Axios.Axios({ headers: { 'Content-Type': 'application/json' } });
-        return await ax.get(url);
+        var result = await ax.get(url);
+        try {
+            this.log('HTTP', JSON.stringify(result.data));
+        }
+        catch(e) {
+            this.log('HTTP', e);
+        }
+        return result;
     }
 
     async request(api_call) {
@@ -123,7 +131,7 @@ class Query {
                 this.log(Client.client.intlGet(null, 'errorCap'), Client.client.intlGet(null, 'apiFailed', { api_call: api_call }), 'error');
                 var message = '';
                 message = response.data;
-                return { error: `Request failed: ${message}` }
+                return { error: `Request failed [${response.status}]: ${message}` }
             }
             return response.data;
         }
