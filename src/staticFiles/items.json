@@ -6,6 +6,18 @@
         "description": "A large wooden pool that can be filled with water."
     },
     {
+        "id": -880494890,
+        "shortname": "abyss.barrel.horizontal",
+        "name": "Abyss Horizontal Storage Tank",
+        "description": "Horizontal Abyss container taken from the depths of the ocean"
+    },
+    {
+        "id": -919882824,
+        "shortname": "abyss.barrel.vertical",
+        "name": "Abyss Vertical Storage Tank",
+        "description": "Vertical Abyss container taken from the depths of the ocean"
+    },
+    {
         "id": -1498613415,
         "shortname": "advancedcoolingtea",
         "name": "Advanced Cooling Tea",
@@ -1422,6 +1434,12 @@
         "description": "A Wetsuit providing protection from frigid waters."
     },
     {
+        "id": -451310088,
+        "shortname": "documents",
+        "name": "Documents",
+        "description": "A stack of technical looking documents."
+    },
+    {
         "id": 1223900335,
         "shortname": "dogtagneutral",
         "name": "Dog Tag",
@@ -2290,6 +2308,12 @@
         "shortname": "gates.external.high.frontier",
         "name": "High External Frontier Gate",
         "description": "A high wooden gate, allowing access in and out of your compound."
+    },
+    {
+        "id": -1442339204,
+        "shortname": "gates.external.high.legacy",
+        "name": "High External Legacy Gate",
+        "description": "A legacy themed wooden gate to keep the untamed wilderness away from your property, it's seen better days. Replaces the High External Wooden Wall."
     },
     {
         "id": -691113464,
@@ -5842,6 +5866,12 @@
         "shortname": "wall.external.high",
         "name": "High External Wooden Wall",
         "description": "A high wooden wall used to keep people off your property."
+    },
+    {
+        "id": -1993883724,
+        "shortname": "wall.external.high.legacy",
+        "name": "High External Legacy Wall",
+        "description": "A legacy themed wooden wall to keep the untamed wilderness away from your property, made with questionable carpentry. Replaces the High External Wooden Wall."
     },
     {
         "id": -967648160,
