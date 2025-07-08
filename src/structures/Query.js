@@ -125,9 +125,6 @@ class Query {
                 message = response.data;
                 return { error: `Request failed: ${message}` }
             }
-
-            this.log('HTTP RESPONSE', JSON.stringify(response.data));
-            console.log(response.data);
             return response.data;
         }
         catch (ex) {

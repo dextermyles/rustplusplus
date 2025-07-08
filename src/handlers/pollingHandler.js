@@ -29,6 +29,7 @@ const TeamHandler = require('../handlers/teamHandler.js');
 const Time = require('../structures/Time');
 const TimeHandler = require('../handlers/timeHandler.js');
 const VendingMachines = require('../handlers/vendingMachineHandler.js');
+const CustomScriptHandler = require('../handlers/customScriptHandler.js');
 
 module.exports = {
     pollingHandler: async function (rustplus, client) {
@@ -49,9 +50,6 @@ module.exports = {
             rustplus.mapMarkers = new MapMarkers(mapMarkers.mapMarkers, rustplus, client);
         }
 
-        var test = await rustplus.getCommandSmall(false);
-        console.log(`!small (testing): ${test}`)
-        
         await module.exports.handlers(rustplus, client, info, mapMarkers, teamInfo, time);
         rustplus.isFirstPoll = false;
     },
@@ -71,5 +69,6 @@ module.exports = {
         await InformationHandler.handler(rustplus);
         await StorageMonitorHandler.handler(rustplus, client);
         await SmartAlarmHandler.handler(rustplus, client);
+        await CustomScriptHandler.handlers(rustplus)
     },
 };

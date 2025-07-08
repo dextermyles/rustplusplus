@@ -793,17 +793,59 @@ module.exports = {
         const teamMemberFieldName = Client.client.intlGet(guildId, 'teamMember');
         const statusFieldName = Client.client.intlGet(guildId, 'status');
         const locationFieldName = Client.client.intlGet(guildId, 'location');
+        const killsFieldName = 'Kills';
+        const deathsFieldName = 'Deaths';
+        const kdrFieldName = 'KDR';
+
         const footer = instance.serverList[rustplus.serverId].title;
 
-        let totalCharacters = title.length + teamMemberFieldName.length + statusFieldName.length + locationFieldName.length + footer.length;
+        let totalCharacters = title.length
+            + teamMemberFieldName.length
+            + statusFieldName.length
+            + locationFieldName.length
+            + killsFieldName.length
+            + deathsFieldName.length
+            + kdrFieldName.length
+            + footer.length;
         let fieldIndex = 0;
-        let teammateName = [''], teammateStatus = [''], teammateLocation = [''];
-        let teammateNameCharacters = 0, teammateStatusCharacters = 0, teammateLocationCharacters = 0;
+        let teammateName = [''],
+            teammateStatus = [''],
+            teammateLocation = [''],
+            teamKills = [''],
+            teamDeaths = [''],
+            teamKDR = [''];
+
+        let teammateNameCharacters = 0,
+            teammateStatusCharacters = 0,
+            teammateLocationCharacters = 0,
+            teammateKillsCharacters = 0,
+            teammateDeathsCharacters = 0,
+            teammateKDRCharacters = 0;
+
         for (const player of rustplus.team.players) {
             let name = player.name === '' ? '-' : `[${player.name}](${Constants.STEAM_PROFILES_URL}${player.steamId})`;
             name += (player.teamLeader) ? `${Constants.LEADER_EMOJI}\n` : '\n';
             let status = '';
             let location = (player.isOnline || player.isAlive) ? `${player.pos.string}\n` : '-\n';
+            let kills = '0';
+            let deaths = '0';
+            let kdr = '0';
+            if (player.stats !== null) {
+                var playerStats = player.stats || [];
+                
+                kills = parseInt(
+                    playerStats.find((x) => x.name === "kill_player")?.value || 0
+                )
+                    .toString();
+
+                deaths = parseInt(
+                    playerStats.find((x) => x.name === "deaths")?.value || 0
+                )
+                    .toString();
+
+                kdr = (Math.round(kills / deaths * 100) / 100)
+                    .toString();
+            }
 
             if (player.isOnline) {
                 const isAfk = player.getAfkSeconds() >= Constants.AFK_TIME_SECONDS;
@@ -826,34 +868,48 @@ module.exports = {
                 status += '\n';
             }
 
-            if (totalCharacters + (name.length + status.length + location.length) >=
+            if (totalCharacters + (name.length + status.length + location.length + kills.length + deaths.length + kdr.length) >=
                 Constants.EMBED_MAX_TOTAL_CHARACTERS) {
                 break;
             }
 
             if ((teammateNameCharacters + name.length) > Constants.EMBED_MAX_FIELD_VALUE_CHARACTERS ||
                 (teammateStatusCharacters + status.length) > Constants.EMBED_MAX_FIELD_VALUE_CHARACTERS ||
-                (teammateLocationCharacters + location.length) > Constants.EMBED_MAX_FIELD_VALUE_CHARACTERS) {
+                (teammateLocationCharacters + location.length) > Constants.EMBED_MAX_FIELD_VALUE_CHARACTERS ||
+                (teammateKillsCharacters + kills.length) > Constants.EMBED_MAX_FIELD_VALUE_CHARACTERS ||
+                (teammateDeathsCharacters + deaths.length) > Constants.EMBED_MAX_FIELD_VALUE_CHARACTERS ||
+                (teammateKDRCharacters + kdr.length) > Constants.EMBED_MAX_FIELD_VALUE_CHARACTERS) {
                 fieldIndex += 1;
 
                 teammateName.push('');
                 teammateStatus.push('');
                 teammateLocation.push('');
-
+                teamKills.push('');
+                teamDeaths.push('');
+                teamKDR.push('');
                 teammateNameCharacters = 0;
                 teammateStatusCharacters = 0;
                 teammateLocationCharacters = 0;
+                teammateKillsCharacters = 0;
+                teammateDeathsCharacters = 0;
+                teammateKDRCharacters = 0;
             }
 
             teammateNameCharacters += name.length;
             teammateStatusCharacters += status.length;
             teammateLocationCharacters += location.length;
+            teammateKillsCharacters += kills.length;
+            teammateDeathsCharacters += deaths.length;
+            teammateKDRCharacters += kdr.length;
 
-            totalCharacters += name.length + status.length + location.length;
+            totalCharacters += name.length + status.length + location.length + kills.length + deaths.length + kdr.length;
 
             teammateName[fieldIndex] += name;
             teammateStatus[fieldIndex] += status;
             teammateLocation[fieldIndex] += location;
+            teamKills[fieldIndex] += kills;
+            teamDeaths[fieldIndex] += deaths;
+            teamKDR[fieldIndex] += kdr;
         }
 
         const fields = [];
@@ -871,6 +927,21 @@ module.exports = {
             fields.push({
                 name: i === 0 ? locationFieldName : '\u200B',
                 value: teammateLocation[i] !== '' ? teammateLocation[i] : Client.client.intlGet(guildId, 'empty'),
+                inline: true
+            });
+            fields.push({
+                name: i === 0 ? killsFieldName : '\u200B',
+                value: teamKills[i] !== '' ? teamKills[i] : Client.client.intlGet(guildId, 'empty'),
+                inline: true
+            });
+            fields.push({
+                name: i === 0 ? deathsFieldName : '\u200B',
+                value: teamDeaths[i] !== '' ? teamDeaths[i] : Client.client.intlGet(guildId, 'empty'),
+                inline: true
+            });
+            fields.push({
+                name: i === 0 ? kdrFieldName : '\u200B',
+                value: teamKDR[i] !== '' ? teamKDR[i] : Client.client.intlGet(guildId, 'empty'),
                 inline: true
             });
         }

@@ -53,6 +53,8 @@ class Team {
     isLeaderSteamIdChanged(team) { return (this.leaderSteamId !== team.leaderSteamId.toString()); }
 
     updateTeam(team) {
+        console.log('updateTeam: ', JSON.stringify(team));
+        
         const instance = Client.client.getInstance(this.rustplus.guildId);
 
         if (this.isLeaderSteamIdChanged(team)) {
@@ -76,7 +78,9 @@ class Team {
         for (let player of team.members) {
             let steamId = player.steamId.toString();
             if (this.players.some(e => e.steamId === steamId)) {
-                this.getPlayer(steamId).updatePlayer(player);
+                var p = this.getPlayer(steamId)
+                if (p)
+                    p.updatePlayer(player);
                 unhandled = unhandled.filter(e => e.steamId !== steamId);
             }
             else {
@@ -130,7 +134,8 @@ class Team {
 
     getPlayer(steamId) {
         for (let player of this.players) {
-            if (player.steamId === steamId) return player;
+            if (player.steamId === steamId) 
+                return player;
         }
         return null;
     }

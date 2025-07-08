@@ -21,6 +21,7 @@
 const Constants = require('../util/constants.js');
 const Map = require('../util/map.js');
 const Time = require('../util/timer.js');
+const Query = require('./Query.js');
 
 class Player {
     constructor(player, rustplus) {
@@ -40,6 +41,7 @@ class Player {
         this._teamLeader = false;
         this._afkSeconds = 0;
         this._wentOfflineTime = null;
+        this._stats = null;
 
         this.updatePos();
     }
@@ -74,6 +76,14 @@ class Player {
     get wentOfflineTime() { return this._wentOfflineTime; }
     set wentOfflineTime(wentOfflineTime) { this._wentOfflineTime = wentOfflineTime; }
 
+    get stats() {
+        return this._stats;
+    }
+
+    set stats(statsValue) {
+        this._stats = statsValue;
+    }
+
     /* Change checkers */
     isSteamIdChanged(player) { return (this.steamId !== player.steamId.toString()); }
     isNameChanged(player) { return (this.name !== player.name); }
@@ -102,7 +112,7 @@ class Player {
             ((new Date() - this.lastMovement) / 1000) >= Constants.AFK_TIME_SECONDS);
     }
 
-    updatePlayer(player) {
+    async updatePlayer(player) {
         if (this.isGoneOffline(player)) {
             this.wentOfflineTime = new Date();
         }
@@ -135,6 +145,17 @@ class Player {
         this.deathTime = player.deathTime;
 
         this.updatePos();
+
+
+        let steam = await this.getUserStats(this.steamId);
+        if (steam.playerstats.stats) {
+            this.stats = steam.playerstats.stats;
+        }
+    }
+
+    getUserStats(steamId) {
+        var q = new Query();
+        return q.getUserStats(this.steamId);
     }
 
     updatePos() {

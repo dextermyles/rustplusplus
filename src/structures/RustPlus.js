@@ -3623,6 +3623,10 @@ class RustPlus extends RustPlusLib {
         return { error: "Failed to make request." };
     }
 
+    queryUserStats(steamId) {
+        return this.query.getUserStats(query);
+    }
+
     async getUserStats(query) {
         if (this.query !== null) {
             try {
