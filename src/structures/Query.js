@@ -106,12 +106,6 @@ class Query {
     async httpGet(url) {
         let ax = new Axios.Axios({ headers: { 'Content-Type': 'application/json' } });
         var result = await ax.get(url);
-        try {
-            this.log('HTTP', JSON.stringify(result.data));
-        }
-        catch(e) {
-            this.log('HTTP', e);
-        }
         return result;
     }
 
@@ -136,7 +130,7 @@ class Query {
             return response.data;
         }
         catch (ex) {
-            return { error: `request error: ${ex}` }
+            return { error: `request error [${response.status}]: ${ex}` }
         }
     }
 

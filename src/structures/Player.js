@@ -147,11 +147,16 @@ class Player {
         this.updatePos();
 
 
-        let steam = await this.getUserStats(this.steamId);
-        if (steam?.playerstats?.stats) {
-            this.stats = steam.playerstats.stats;
-            console.log(this.stats);
+        try {
+            let steam = await this.getUserStats(this.steamId);
+            if (steam?.playerstats?.stats) {
+                this.stats = steam.playerstats.stats;
+            }
         }
+        catch(e) {
+            this.stats = [];
+        }
+        
     }
 
     async getUserStats(steamId) {
