@@ -12,7 +12,7 @@ const VendingMachines = require('../handlers/vendingMachineHandler.js');
 
 module.exports = {
     handlers: async function (rustplus) {
-        var test = await rustplus.getCommandSmall(false);
-        console.log(`!small (testing): ${test}`)
+        //var test = await rustplus.getCommandSmall(false);
+        //console.log(`!small (testing): ${test}`)
     },
 };
