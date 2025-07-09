@@ -53,8 +53,6 @@ class Team {
     isLeaderSteamIdChanged(team) { return (this.leaderSteamId !== team.leaderSteamId.toString()); }
 
     updateTeam(team) {
-        console.log('updateTeam: ', JSON.stringify(team));
-        
         const instance = Client.client.getInstance(this.rustplus.guildId);
 
         if (this.isLeaderSteamIdChanged(team)) {
