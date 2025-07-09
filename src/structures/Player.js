@@ -144,19 +144,7 @@ class Player {
         this.isAlive = player.isAlive;
         this.deathTime = player.deathTime;
 
-        this.updatePos();
-
-
-        try {
-            let steam = await this.getUserStats(this.steamId);
-            if (steam?.playerstats?.stats) {
-                this.stats = steam.playerstats.stats;
-            }
-        }
-        catch(e) {
-            this.stats = [];
-        }
-        
+        this.updatePos();        
     }
 
     async getUserStats(steamId) {

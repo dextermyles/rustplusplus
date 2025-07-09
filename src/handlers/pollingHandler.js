@@ -69,6 +69,5 @@ module.exports = {
         await InformationHandler.handler(rustplus);
         await StorageMonitorHandler.handler(rustplus, client);
         await SmartAlarmHandler.handler(rustplus, client);
-        await CustomScriptHandler.handlers(rustplus)
     },
 };
