@@ -122,7 +122,6 @@ class Query {
             }
 
             if (response.status !== 200) {
-                this.log(Client.client.intlGet(null, 'errorCap'), Client.client.intlGet(null, 'apiFailed', { api_call: api_call }), 'error');
                 var message = '';
                 message = response.data;
                 return { error: `Request failed [${response.status}]: ${message}` }
