@@ -4,7 +4,7 @@ const Path = require('path');
 module.exports = {
     load() {
         var items = [{
-            id: 0,
+            id: '',
             name: '',
             shortname: '',
             description: ''

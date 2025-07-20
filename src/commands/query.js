@@ -46,6 +46,27 @@ module.exports = {
 						.setDescription('Players Steam ID.')
 						.setRequired(true)))
 				.addSubcommand(subcommand => subcommand
+					.setName('server')
+					.setDescription('Server Battle Metrics')
+					.addStringOption(option => option
+						.setName('id')
+						.setDescription('Server Battlemetrics ID.')
+						.setRequired(true)))
+				.addSubcommand(subcommand => subcommand
+					.setName('rusticated')
+					.setDescription('Rusticated History')
+					.addStringOption(option => option
+						.setName('id')
+						.setDescription('Player ID')
+						.setRequired(true))
+					.addStringOption(option => option
+						.setName('history')
+						.setDescription('Type of History to display')
+						.setRequired(true)
+						.addChoices(
+							{ name: 'Kills', value: '0' }, 
+							{ name: 'Deaths', value: '1' })))
+				.addSubcommand(subcommand => subcommand
 					.setName('entity')
 					.setDescription('Test Rust+ sendRequest features.')
 					.addStringOption(option => option
@@ -70,37 +91,41 @@ module.exports = {
 			return;
 
 		await interaction.deferReply({ ephemeral: true });
-
-		console.log(JSON.stringify(interaction.options));
-
-		const playerId = interaction.options.getString('id');
+		const id = interaction.options.getString('id');
 		var response = '';
 
-		if (!playerId) {
-			throw new Error('PlayerID is null');
+		if (!id) {
+			throw new Error('ID is null');
 		}
-			
+
 		var subCommand = interaction.options.getSubcommand();
 		console.log('subCommand: ', subCommand);
-		
+
 		switch (interaction.options.getSubcommand()) {
 			case 'ban':
-				response = await rustplus.getUserBanned(playerId);
+				response = await rustplus.getUserBanned(id);
 				break;
 			case 'stats':
-				response = await rustplus.getUserStats(playerId);
+				response = await rustplus.getUserStats(id);
 				break;
 			case 'achivements':
-				response = await rustplus.getUserAchievements(playerId);
+				response = await rustplus.getUserAchievements(id);
 				break;
 			case 'profile':
-				response = await rustplus.getUserProfile(playerId);
+				response = await rustplus.getUserProfile(id);
 				break;
 			case 'playtime':
-				response = await rustplus.getUserPlaytime(playerId);
+				response = await rustplus.getUserPlaytime(id);
+				break;
+			case 'server':
+				response = await rustplus.getServerBattleMetrics(id);
+				break;
+			case 'rusticated':
+				const historyType = parseInt(interaction.options.getString('history'));
+				response = await rustplus.getRusticatedStats(id, historyType);
 				break;
 			case 'entity':
-				var entityId = playerId;
+				var entityId = id;
 				response = await rustplus.getEntityInfoAsync(entityId, 30000);
 				break;
 			default:

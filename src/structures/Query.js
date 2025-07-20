@@ -36,6 +36,14 @@ class Query {
         return `https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/?appid=252490&key=${Config.steam.apiKey}&steamid=${id}&l=en`
     }
 
+    GET_RUSTICATED_KILL_HISTORY(id) {
+        return `https://rusticated.com/api/v3/events/kills-minimal?attackerSteamId=${id}&offset=0&orgId=1`
+    }
+
+    GET_RUSTICATED_DEATH_HISTORY(id) {
+        return `https://rusticated.com/api/v3/events/kills-minimal?victimSteamId=${id}&offset=0&orgId=1`
+    }
+
     getAllData(id) {
         return Promise.all([
             this.getUserProfile(id),
@@ -103,10 +111,61 @@ class Query {
             .catch((err) => { return err });
     }
 
+    async getServerBattleMetrics(serverId) {
+        let bmResponse = await this.#get(`https://api.battlemetrics.com/servers/27286944?include=player`);
+        var data = bmResponse.data;
+        var status = bmResponse.status;
+        var text = bmResponse.statusText;
+        console.log(`getServerBattleMetrics [${serverId}] status [{${status}}] text [${text}] data: `)
+        console.log(data);
+        console.log('-----------------\n')
+        return data;
+    }
+
+    async getRusticatedStats(id, type = 0) {
+        let url = type === 0
+            ? this.GET_RUSTICATED_KILL_HISTORY(id)
+            : this.GET_RUSTICATED_DEATH_HISTORY(id);
+
+        let response = await this.#get(url);
+        var data = response.data;
+
+        try {
+            if (typeof data === 'string')
+                data = JSON.parse(data);
+        }
+
+        catch (e) {
+            return 'failed to parse response: ' + e;
+        }
+
+        var status = response.status;
+        var text = response.statusText;
+        var result = `rusticated response [${status}] (${text}): ${JSON.stringify(data)}`;
+        this.log('RUSTICATED', JSON.stringify(data));
+        console.log(data);
+        return data;
+    }
+
     async httpGet(url) {
         let ax = new Axios.Axios({ headers: { 'Content-Type': 'application/json' } });
         var result = await ax.get(url);
         return result;
+    }
+
+    /**
+     *  Request a get call from the Axios library.
+     *  @param {string} api_call The request api call string.
+     *  @return {object} The response from Axios library.
+     */
+    async #get(api_call) {
+        try {
+            let ax = new Axios.Axios();
+            return await ax.get(api_call);
+        }
+        catch (e) {
+            return {};
+        }
     }
 
     async request(api_call) {

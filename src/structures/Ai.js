@@ -25,11 +25,10 @@ class Ai {
                 messages: [
                     {
                         role: "system",
-                        content: "You are my assistant for the survival game Rust, developed by Face "
-                            + "Assume I play on official servers. "
+                        content: "You are my assistant for the survival game Rust, developed by Face Punch.\n"
+                            + "Assume I play on official servers. \n"
                             + "Any  mention of Rust refers to the PC game developed by Facepunch (https://rust.facepunch.com/)."
-                            + "Provide final answers for the user, keep conversations brief to prevent spam..\n"
-                            + `You should stay up to date with changes (https://rust.facepunch.com/changes) or commits.\n"`
+                            + "Provide final answers for the user, keep conversations brief to prevent spam.\n"
                     },
                     {
                         role: "user",
@@ -37,12 +36,11 @@ class Ai {
                     },
                 ],
                 stream: false,
-                max_completion_tokens: 1024,
+                max_completion_tokens: 2048,
                 temperature: 1,
                 top_p: 0.77,
                 stop: null,
-                reasoning_format: 'parsed',
-
+                reasoning_format: 'hidden',
             });
 
             this.log('AI Answer', JSON.stringify(resp.choices));

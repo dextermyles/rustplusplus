@@ -610,7 +610,7 @@ module.exports = {
 
     sendRustStatsMessage: async function (interaction, response) {
         const content = {
-            embeds: [DiscordEmbeds.getRustStatsEmbed(interaction.guildId, response)]
+            embeds: [DiscordEmbeds.getRusticatedEmbed(interaction.guildId, response)]
         }
         await Client.client.interactionEditReply(interaction, content);
     },

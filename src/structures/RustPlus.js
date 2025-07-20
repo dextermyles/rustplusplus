@@ -3677,6 +3677,54 @@ class RustPlus extends RustPlusLib {
 
         return { error: "Failed to make request." };
     }
+
+    async getServerBattleMetrics(serverId) {
+        if (this.query !== null) {
+            let response = await this.query.getServerBattleMetrics(serverId);
+            return response;
+        }
+        return { error: "Failed to make request." };
+    }
+
+    async getRusticatedStats(id, type) {
+        var response = await this.query.getRusticatedStats(id, type);
+        console.log(response);
+        var entries = response.data.entries;
+
+        let getWeaponName = (entry) => {
+            return entry.substring(0, entry.indexOf('.'));
+        }
+
+        let getDistance = (entry) => {
+            let distance = parseFloat(entry)
+                .toFixed(2);
+            return `${distance}m`;
+        }
+
+        // History type
+        if (type === 0) {
+            // kill history
+            return entries.map(x => {
+                let victim = {
+                    name: x.victim.name,
+                    value: `${getWeaponName(x.weapon)} @ ${getDistance(x.distance)}`
+                };
+
+                return victim;
+            })
+        } else {
+            // death history
+            return entries.map(x => {
+                let attacker = {
+                    name: x.attacker.name,
+                    value: `${getWeaponName(x.weapon)} @ ${getDistance(x.distance)}`
+                };
+
+                return attacker;
+            })
+        }
+
+    }
 }
 
 module.exports = RustPlus;

@@ -162,11 +162,12 @@ module.exports = {
                     for (const order of vendingMachine.sellOrders) {
                         if (order.amountInStock === 0) continue;
 
-                        const orderItemId = (Object.keys(client.items.items).includes(order.itemId.toString())) ?
+                        var items = [{id: 0}];
+                        items = client.items.items;
+                        const orderItemId = items.find(x => x.id === order.itemId.toString()) !== undefined  ?
                             order.itemId : null;
                         const orderQuantity = order.quantity;
-                        const orderCurrencyId = (Object.keys(client.items.items)
-                            .includes(order.currencyId.toString())) ? order.currencyId : null;
+                        const orderCurrencyId = items.find(x => x.id === order.currencyId.toString()) !== undefined ? order.currencyId : null;
                         const orderCostPerItem = order.costPerItem;
                         const orderAmountInStock = order.amountInStock;
                         const orderItemIsBlueprint = order.itemIsBlueprint;

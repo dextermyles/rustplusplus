@@ -49,27 +49,16 @@ class Items {
     }
 
     itemExist(id) { 
-        for(let x = 0; x < this.items.length; x++) {
-            let item = this.items[x];
-            if (item.id === id) {
-                return true;
-            }    
-        }
-        return false;
+         return this.items.find(x => x.id === id) !== undefined;
     }
 
     getItem(id) {
-        for(let x = 0; x < this.items.length; x++) {
-            let item = this.items[x];
-            if (item.id === id) {
-                return item;
-            }    
-        }
-        return undefined;
+        return this.items.find(x => x.id === id);
     }
 
     getShortName(id) {
-        if (!this.itemExist(id)) return undefined;
+        if (!this.itemExist(id)) 
+            return undefined;
         let item = this.getItem(id);
         return item !== undefined ? item.shortname : '';
     }
@@ -96,7 +85,6 @@ class Items {
 
     getClosestItemIdByName(name) {
         const closestString = Utils.findClosestString(name, this.itemNames);
-        console.log('getClosestItemIdByName: ', name, ' result: ', closestString);
         if (closestString !== null) {
             const item = this.items.find(x => x.name ===  closestString);
             if (item !== undefined) {

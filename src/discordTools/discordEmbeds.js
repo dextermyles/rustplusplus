@@ -1149,6 +1149,15 @@ module.exports = {
         });
     },
 
+    getRusticatedEmbed: function(guildId, response) {
+        return module.exports.getEmbed({
+            title: `Rusticated API`,
+            color: Constants.COLOR_DEFAULT,
+            timestamp: true,
+            fields: response
+        });
+    },
+
     getRecycleEmbed: function (guildId, recycleDetails, quantity, recyclerType) {
         let title = quantity === 1 ? `${recycleDetails[1].name}` : `${recycleDetails[1].name} x${quantity}`;
         title += ` (${Client.client.intlGet(guildId, recyclerType)})`;

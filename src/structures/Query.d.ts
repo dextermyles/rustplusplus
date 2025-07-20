@@ -16,11 +16,17 @@ declare class Query {
     getUserAchievements(id: any): Promise<any>;
     getUserPlaytime(id: any): Promise<GetUserPlaytimeDto>;
     getUserStats(id: any): Promise<GetPlayerStatsDto>;
+    getRusticatedStats(id: any, type: RusticatedHistoryType = RusticatedHistoryType.Kills): Promise<RusticatedResponse>;
     httpGet(url: any): Promise<Axios.AxiosResponse<any, any> | {
         error: unknown;
     }>;
     request(api_call: any): Promise<any>;
     log(title: any, text: any, level?: string): void;
+}
+
+export enum RusticatedHistoryType {
+  Kills = 0,
+  Deaths = 1
 }
 
 export interface GetUserProfileDto {
@@ -100,4 +106,38 @@ export interface Game {
   rtime_last_played: number;
   content_descriptorids: number[];
   playtime_disconnected: number;
+}
+
+export interface RusticatedResponse {
+  success: boolean;
+  data: RusticatedData;
+}
+
+export interface RusticatedData {
+  limit: number;
+  total: number;
+  offset: number;
+  entries: Entry[];
+}
+
+export interface Entry {
+  id: string;
+  eventTime: string;
+  attackerSteamId: string;
+  attacker: Attacker;
+  victimSteamId: string;
+  victim: Attacker;
+  weapon: string;
+  bulletType: string;
+  distance: string;
+}
+
+export interface Attacker {
+  id: string;
+  steamId: string;
+  name: string;
+  avatar: string;
+  roleId: null;
+  roleName: null;
+  roleColor: null;
 }
