@@ -3701,29 +3701,40 @@ class RustPlus extends RustPlusLib {
             return `${distance}m`;
         }
 
+        var result = {
+            fields: [],
+            thumbnail: ''
+        }
+
         // History type
         if (type === 0) {
             // kill history
-            return entries.map(x => {
-                let victim = {
-                    name: x.victim.name,
-                    value: `${getWeaponName(x.weapon)} @ ${getDistance(x.distance)}`
-                };
-
-                return victim;
-            })
+            result = {
+                fields: entries.map(x => {
+                    let victim = {
+                        name: x.victim.name,
+                        value: `${getWeaponName(x.weapon)} @ ${getDistance(x.distance)}`
+                    };
+                    return victim;
+                }),
+                thumbnail: entries[entries.length - 1].attacker.avatar
+            }
         } else {
             // death history
-            return entries.map(x => {
-                let attacker = {
-                    name: x.attacker.name,
-                    value: `${getWeaponName(x.weapon)} @ ${getDistance(x.distance)}`
-                };
+            result = {
+                fields: entries.map(x => {
+                    let attacker = {
+                        name: x.attacker.name,
+                        value: `${getWeaponName(x.weapon)} @ ${getDistance(x.distance)}`
+                    };
 
-                return attacker;
-            })
+                    return attacker;
+                }),
+                thumbnail: entries[entries.length - 1].victim.avatar
+            }
         }
 
+        return result;
     }
 }
 
