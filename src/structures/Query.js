@@ -139,18 +139,17 @@ class Query {
             return 'failed to parse response: ' + e;
         }
 
-        var status = response.status;
-        var text = response.statusText;
-        var result = `rusticated response [${status}] (${text}): ${JSON.stringify(data)}`;
         this.log('RUSTICATED', JSON.stringify(data));
-        console.log(data);
+        
         return data;
     }
 
     async httpGet(url) {
-        let ax = new Axios.Axios({ headers: { 'Content-Type': 'application/json' } });
-        var result = await ax.get(url);
-        return result;
+        let ax = new Axios.Axios({ headers: { 'Accept': 'application/json' } });
+        return ax.get(url, { responseType: 'json ' })
+            .then((resp) => {
+                return resp.data;
+            });
     }
 
     /**
@@ -161,10 +160,10 @@ class Query {
     async #get(api_call) {
         try {
             let ax = new Axios.Axios();
-            return await ax.get(api_call);
+            return await ax.get(api_call, { responseType: 'json ' });
         }
         catch (e) {
-            return {};
+            return { error: e };
         }
     }
 

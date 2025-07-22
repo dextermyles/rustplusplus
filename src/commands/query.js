@@ -122,8 +122,9 @@ module.exports = {
 				break;
 			case 'rusticated':
 				const historyType = parseInt(interaction.options.getString('history'));
-				response = await rustplus.getRusticatedStats(id, historyType);
-				break;
+				var stats = await rustplus.getRusticatedStats(id, historyType);
+				await DiscordMessages.sendRustStatsMessage(interaction, stats);
+				return;
 			case 'entity':
 				var entityId = id;
 				response = await rustplus.getEntityInfoAsync(entityId, 30000);

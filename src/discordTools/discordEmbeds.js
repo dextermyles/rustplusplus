@@ -1150,12 +1150,11 @@ module.exports = {
     },
 
     getRusticatedEmbed: function(guildId, response) {
-        let responseFields = response.fields;
         return module.exports.getEmbed({
             title: `Rusticated Stats`,
             color: Constants.COLOR_DEFAULT,
             timestamp: true,
-            fields: response.fields,
+            fields: response.history,
             thumbnail: response.thumbnail
         });
     },
