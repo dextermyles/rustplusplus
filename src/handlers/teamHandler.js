@@ -20,6 +20,7 @@
 
 const Constants = require('../util/constants.js');
 const DiscordMessages = require('../discordTools/discordMessages.js');
+const moment = require('moment');
 
 module.exports = {
     handler: async function (rustplus, client, teamInfo) {
@@ -62,18 +63,37 @@ module.exports = {
         }
 
         for (const player of rustplus.team.players) {
-            if (leftPlayers.includes(player.steamId)) continue;
+            if (leftPlayers.includes(player.steamId)) 
+                continue;
             for (const playerUpdated of teamInfo.members) {
                 if (player.steamId === playerUpdated.steamId.toString()) {
                     if (player.isGoneDead(playerUpdated)) {
-                        const location = player.pos === null ? 'spawn' : player.pos.string;
-                        const str = client.intlGet(guildId, 'playerJustDied', {
+                        const location = player.pos === null
+                            ? 'spawn'
+                            : player.pos.string;
+
+                        let str = client.intlGet(guildId, 'playerJustDied', {
                             name: player.name,
                             location: location
                         });
+
+                        var deathTime = moment.unix(player.deathTime);
+                        var playerDeathHistory = await rustplus.getRusticatedStats(player.steamId, 1);
+
+                        if (playerDeathHistory && playerDeathHistory.history?.length) {
+                            var lastDeath = playerDeathHistory.history[0];
+                            var lastDeathPlayerName = lastDeath.name;
+                            if (lastDeathPlayerName && lastDeathPlayerName.length !== 0) {
+                                str += ` [Last killed by ${lastDeathPlayerName}]`
+                            }
+                        }
+
                         await DiscordMessages.sendActivityNotificationMessage(
                             guildId, serverId, Constants.COLOR_INACTIVE, str, player.steamId);
-                        if (instance.generalSettings.deathNotify) rustplus.sendInGameMessage(str);
+
+                        if (instance.generalSettings.deathNotify)
+                            rustplus.sendInGameMessage(str);
+
                         rustplus.log(client.intlGet(null, 'infoCap'), str);
                         rustplus.updateDeaths(player.steamId, {
                             name: player.name,
