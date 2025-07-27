@@ -370,7 +370,8 @@ class Map {
                 }
             }
             catch (e) {
-                /* Ignore */
+                this.rustplus.log('ERROR', `mapAppendMonuments error: ${e}`)
+                console.error(e);
             }
         }
     }
@@ -407,6 +408,8 @@ class Map {
                 );
             }
             catch (e) {
+                this.rustplus.log('ERROR', `mapAppendMonuments error: ${e}`)
+                console.error(e);
                 /* Ignore */
             }
         }

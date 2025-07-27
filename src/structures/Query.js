@@ -55,60 +55,80 @@ class Query {
         return this.request(this.GET_USER_BANNED(id))
             .then((resp) => {
                 // parse
-                if (typeof (resp) === 'string') {
-                    resp = JSON.parse(resp);
+                try {
+                    if (typeof (resp) === 'string') {
+                        resp = JSON.parse(resp);
+                    }
+                }
+                catch (ex) {
+                    console.error(ex);
                 }
                 return resp;
             })
-            .catch((err) => { return err });
     }
 
     getUserProfile(id) {
         return this.request(this.GET_USER_PROFILE(id))
             .then((resp) => {
                 // parse
-                if (typeof (resp) === 'string') {
-                    resp = JSON.parse(resp);
+                try {
+                    if (typeof (resp) === 'string') {
+                        resp = JSON.parse(resp);
+                    }
+                }
+                catch (ex) {
+                    console.error(ex);
                 }
                 return resp;
             })
-            .catch((err) => { return err });
     }
 
     getUserAchievements(id) {
         return this.request(this.GET_USER_ACHIEVEMENTS(id))
             .then((resp) => {
                 // parse
-                if (typeof (resp) === 'string') {
-                    resp = JSON.parse(resp);
+                try {
+                    if (typeof (resp) === 'string') {
+                        resp = JSON.parse(resp);
+                    }
+                }
+                catch (ex) {
+                    console.error(ex);
                 }
                 return resp;
             })
-            .catch((err) => { return err });
     }
 
     getUserPlaytime(id) {
         return this.request(this.GET_USER_PLAYTIME(id))
             .then((resp) => {
                 // parse
-                if (typeof (resp) === 'string') {
-                    resp = JSON.parse(resp);
+                try {
+                    if (typeof (resp) === 'string') {
+                        resp = JSON.parse(resp);
+                    }
+                }
+                catch (ex) {
+                    console.error(ex);
                 }
                 return resp;
             })
-            .catch((err) => { return err });
     }
 
     getUserStats(id) {
         return this.request(this.GET_USER_RUST_STATS(id))
             .then((resp) => {
                 // parse
-                if (typeof (resp) === 'string') {
-                    resp = JSON.parse(resp);
+                try {
+                    if (typeof (resp) === 'string') {
+                        resp = JSON.parse(resp);
+                    }
+                }
+                catch (ex) {
+                    console.error(ex);
                 }
                 return resp;
             })
-            .catch((err) => { return err });
     }
 
     async getServerBattleMetrics(serverId) {
@@ -140,16 +160,13 @@ class Query {
         }
 
         this.log('RUSTICATED', JSON.stringify(data));
-        
+
         return data;
     }
 
     async httpGet(url) {
         let ax = new Axios.Axios({ headers: { 'Accept': 'application/json' } });
-        return ax.get(url, { responseType: 'json ' })
-            .then((resp) => {
-                return resp.data;
-            });
+        return ax.get(url, { responseType: 'json ' });
     }
 
     /**
@@ -160,7 +177,7 @@ class Query {
     async #get(api_call) {
         try {
             let ax = new Axios.Axios();
-            return await ax.get(api_call, { responseType: 'json ' });
+            return await ax.get(api_call);
         }
         catch (e) {
             return { error: e };
@@ -171,6 +188,14 @@ class Query {
         try {
             var response = await this.httpGet(api_call);
             var retries = 0;
+
+            try {
+                var responseStr = JSON.stringify(response);
+                this.log('HTTP RESP', responseStr);
+            }
+            catch (ex) {
+                
+            }
 
             if (response.status !== 200) {
                 while (response.status === 429 && retries < 10) {
