@@ -608,10 +608,20 @@ module.exports = {
         await Client.client.interactionEditReply(interaction, content);
     },
 
-    sendRustStatsMessage: async function (interaction, response) {
+    sendRusticatedStatsMessage: async function (interaction, response) {
         const content = {
             embeds: [DiscordEmbeds.getRusticatedEmbed(interaction.guildId, response)]
         }
+        await Client.client.interactionEditReply(interaction, content);
+    },
+
+    sendRustStatsMessage: async function (interaction, response) {
+        const embed = module.exports.getEmbed({
+            title: 'Player Stats',
+            color: Constants.COLOR_DEFAULT,
+            timestamp: true,
+            content: response
+        });
         await Client.client.interactionEditReply(interaction, content);
     },
 }
