@@ -1161,10 +1161,10 @@ module.exports = {
 
     getRustStatsEmbed: function(guildId, response) {
         return module.exports.getEmbed({
-            title: `Player Stats`,
+            title: `Rust Stats`,
             color: Constants.COLOR_DEFAULT,
             timestamp: true,
-            content: response
+            description: response
         });
     },
 
