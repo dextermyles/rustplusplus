@@ -616,12 +616,9 @@ module.exports = {
     },
 
     sendRustStatsMessage: async function (interaction, response) {
-        const embed = module.exports.getEmbed({
-            title: 'Player Stats',
-            color: Constants.COLOR_DEFAULT,
-            timestamp: true,
-            content: response
-        });
+        const content = {
+            embeds: [DiscordEmbeds.getRustStatsEmbed(interaction.guildId, response)]
+        }
         await Client.client.interactionEditReply(interaction, content);
     },
 }

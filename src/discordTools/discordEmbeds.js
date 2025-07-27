@@ -1159,6 +1159,15 @@ module.exports = {
         });
     },
 
+    getRustStatsEmbed: function(guildId, response) {
+        return module.exports.getEmbed({
+            title: `Player Stats`,
+            color: Constants.COLOR_DEFAULT,
+            timestamp: true,
+            content: response
+        });
+    },
+
     getRecycleEmbed: function (guildId, recycleDetails, quantity, recyclerType) {
         let title = quantity === 1 ? `${recycleDetails[1].name}` : `${recycleDetails[1].name} x${quantity}`;
         title += ` (${Client.client.intlGet(guildId, recyclerType)})`;
