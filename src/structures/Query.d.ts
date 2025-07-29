@@ -1,27 +1,42 @@
+import { Axios, AxiosResponse } from "axios";
+
 export = Query;
 declare class Query {
-    constructor(guildId?: null);
-    guildId: any;
-    logger: Logger;
-    rustStatsURL: string;
-    GET_USER_RUST_STATS(id: any): string;
-    GET_USER_STATISTICS(id: any): string;
-    GET_USER_BANNED(id: any): string;
-    GET_USER_PROFILE(id: any): string;
-    GET_USER_PLAYTIME(id: any): string;
-    GET_USER_ACHIEVEMENTS(id: any): string;
-    getAllData(id: any): Promise<any>;
-    getUserBanned(id: any): Promise<any>;
-    getUserProfile(id: string): Promise<GetUserProfileDto>;
-    getUserAchievements(id: any): Promise<any>;
-    getUserPlaytime(id: any): Promise<GetUserPlaytimeDto>;
-    getUserStats(id: any): Promise<GetPlayerStatsDto>;
-    getRusticatedStats(id: any, type: RusticatedHistoryType = RusticatedHistoryType.Kills): Promise<RusticatedResponse>;
-    httpGet(url: any): Promise<Axios.AxiosResponse<any, any> | {
-        error: unknown;
-    }>;
-    request(api_call: any): Promise<any>;
-    log(title: any, text: any, level?: string): void;
+  constructor(guildId?: null);
+  guildId: any;
+  logger: Logger;
+  rustStatsURL: string;
+  GET_USER_RUST_STATS(id: any): string;
+  GET_USER_STATISTICS(id: any): string;
+  GET_USER_BANNED(id: any): string;
+  GET_USER_PROFILE(id: any): string;
+  GET_USER_PLAYTIME(id: any): string;
+  GET_USER_ACHIEVEMENTS(id: any): string;
+  GET_VANITY_URL(username: string): string;
+  getVanityUrl(username: string): Promise<{ response: VanityUrlResponseDto }>;
+  getAllData(id: any): Promise<any>;
+  getUserBanned(id: any): Promise<any>;
+  getUserProfile(id: string): Promise<GetUserProfileDto>;
+  getUserAchievements(id: any): Promise<any>;
+  getUserPlaytime(id: any): Promise<GetUserPlaytimeDto>;
+  getUserStats(id: any): Promise<GetPlayerStatsDto>;
+  getRusticatedStats(id: any, type: RusticatedHistoryType = RusticatedHistoryType.Kills): Promise<RusticatedResponse>;
+  httpGet(url: any): Promise<AxiosResponse<any, any> | {
+    error: unknown;
+  }>;
+  request(api_call: any): Promise<any>;
+  log(title: any, text: any, level?: string): void;
+  #get<T = any, R = AxiosResponse<T>, D = any>(api_call): Promise<R>;
+}
+
+export interface VanityUrlResponseDto {
+  /**
+   * 1 = success
+   * 42 = no match
+   */
+  success: number;
+  steamid?: string;
+  message?: string;
 }
 
 export enum RusticatedHistoryType {

@@ -3629,20 +3629,20 @@ class RustPlus extends RustPlusLib {
     }
 
     async getUserStats(query) {
-        if (this.query !== null) {
+        if (query !== null) {
             try {
+                let vanity = await this.query.getVanityUrl(query);
+                if (vanity?.response?.success === 1) {
+                    query = vanity.response.steamid;
+                    console.log(`VANITY URL UPDATED [${query}]`);
+                }
                 let profile = await this.query.getUserProfile(query);
                 let steam = await this.query.getUserStats(query);
                 let playtime = await this.query.getUserPlaytime(query);
 
-                console.log('profile: ', profile);
-                console.log('steam: ', steam);
-                console.log('playtime: ', playtime);
-
                 if (profile && steam && playtime) {
-
-                    this.log('STEAM', steam);
-                    this.log('PROFILE', profile);
+                    var rust = playtime.response.games.find(x => x.appid === 252490);
+                    var player = profile.response?.players[profile.response.players.length - 1];
                     var playerStats = steam.playerstats?.stats || [];
                     var deaths = parseInt(
                         playerStats.find((x) => x.name === "deaths")?.value || 0
@@ -3658,12 +3658,12 @@ class RustPlus extends RustPlusLib {
                     );
                     var hsr = Math.round(hs / bullet_hit_player * 100);
                     var kdr = Math.round(kills / deaths * 100) / 100;
-                    return `${profile.response.players[profile.response.players.length - 1].personaname} => players killed [${kills}] deaths [${deaths}] kdr [${kdr}] headshots [${hsr}%]`;
-
+                    var totalhrs = Math.round(rust.playtime_forever / 60);
+                    return `[${player?.personaname}](${player?.profileurl}) => players killed [${kills}] deaths [${deaths}] kdr [${kdr}] headshots [${hsr}%] time [${totalhrs} hrs]`;
                 }
             } catch (error) {
-                console.log(error);
-                return { error: `error occured: ${error}` }
+                console.error(error);
+                this.log('STATS ERROR', error, 'ERROR');
             }
         }
 
@@ -3685,6 +3685,10 @@ class RustPlus extends RustPlusLib {
             return response;
         }
         return { error: "Failed to make request." };
+    }
+
+    getVanityUrl(username) {
+        return this.query.getVanityUrl(username);
     }
 
     async getRusticatedStats(id, type) {

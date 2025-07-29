@@ -44,6 +44,14 @@ class Query {
         return `https://rusticated.com/api/v3/events/kills-minimal?victimSteamId=${id}&offset=0&orgId=1&serverId=uslong`
     }
 
+    GET_VANITY_URL(username) {
+        return `https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${Config.steam.apiKey}&vanityurl=${username}`
+    }
+
+    getVanityUrl(username) {
+        return this.#get(this.GET_VANITY_URL(username));
+    }
+
     getAllData(id) {
         return Promise.all([
             this.getUserProfile(id),
@@ -52,168 +60,68 @@ class Query {
         ]);
     }
     getUserBanned(id) {
-        return this.request(this.GET_USER_BANNED(id))
-            .then((resp) => {
-                // parse
-                try {
-                    if (typeof (resp) === 'string') {
-                        resp = JSON.parse(resp);
-                    }
-                }
-                catch (ex) {
-                    console.error(ex);
-                }
-                return resp;
-            })
+        return this.#get(this.GET_USER_BANNED(id));
     }
 
     getUserProfile(id) {
-        return this.request(this.GET_USER_PROFILE(id))
-            .then((resp) => {
-                // parse
-                try {
-                    if (typeof (resp) === 'string') {
-                        resp = JSON.parse(resp);
-                    }
-                }
-                catch (ex) {
-                    console.error(ex);
-                }
-                return resp;
-            })
+        return this.#get(this.GET_USER_PROFILE(id));
     }
 
     getUserAchievements(id) {
-        return this.request(this.GET_USER_ACHIEVEMENTS(id))
-            .then((resp) => {
-                // parse
-                try {
-                    if (typeof (resp) === 'string') {
-                        resp = JSON.parse(resp);
-                    }
-                }
-                catch (ex) {
-                    console.error(ex);
-                }
-                return resp;
-            })
+        return this.#get(this.GET_USER_ACHIEVEMENTS(id));
     }
 
     getUserPlaytime(id) {
-        return this.request(this.GET_USER_PLAYTIME(id))
-            .then((resp) => {
-                // parse
-                try {
-                    if (typeof (resp) === 'string') {
-                        resp = JSON.parse(resp);
-                    }
-                }
-                catch (ex) {
-                    console.error(ex);
-                }
-                return resp;
-            })
+        return this.#get(this.GET_USER_PLAYTIME(id));
     }
 
     getUserStats(id) {
-        return this.request(this.GET_USER_RUST_STATS(id))
-            .then((resp) => {
-                // parse
-                try {
-                    if (typeof (resp) === 'string') {
-                        resp = JSON.parse(resp);
-                    }
-                }
-                catch (ex) {
-                    console.error(ex);
-                }
-                return resp;
-            })
+        return this.#get(this.GET_USER_RUST_STATS(id));
     }
 
-    async getServerBattleMetrics(serverId) {
-        let bmResponse = await this.#get(`https://api.battlemetrics.com/servers/27286944?include=player`);
-        var data = bmResponse.data;
-        var status = bmResponse.status;
-        var text = bmResponse.statusText;
-        console.log(`getServerBattleMetrics [${serverId}] status [{${status}}] text [${text}] data: `)
-        console.log(data);
-        console.log('-----------------\n')
-        return data;
+    getServerBattleMetrics(serverId) {
+        return this.#get(`https://api.battlemetrics.com/servers/27286944?include=player`);
     }
 
-    async getRusticatedStats(id, type = 0) {
+    getRusticatedStats(id, type = 0) {
         let url = type === 0
             ? this.GET_RUSTICATED_KILL_HISTORY(id)
             : this.GET_RUSTICATED_DEATH_HISTORY(id);
 
-        let response = await this.#get(url);
-        var data = response.data;
-
-        try {
-            if (typeof data === 'string')
-                data = JSON.parse(data);
-        }
-
-        catch (e) {
-            return 'failed to parse response: ' + e;
-        }
-
-        this.log('RUSTICATED', JSON.stringify(data));
-
-        return data;
+        return this.#get(url);
     }
 
-    async httpGet(url) {
-        let ax = new Axios.Axios({ headers: { 'Accept': 'application/json' } });
-        return ax.get(url, { responseType: 'json ' });
+    httpGet(url) {
+        let ax = new Axios.Axios();
+        return ax.get(url)
+            .then((response) => {
+                console.log(response);
+                this.log('HTTP RESPONSE', JSON.stringify(response));
+                return response;
+            });
     }
+
 
     /**
-     *  Request a get call from the Axios library.
-     *  @param {string} api_call The request api call string.
-     *  @return {object} The response from Axios library.
+     * http get request
+     * @param {*} api_call 
+     * @returns 
      */
-    async #get(api_call) {
-        try {
-            let ax = new Axios.Axios();
-            return await ax.get(api_call);
-        }
-        catch (e) {
-            return { error: e };
-        }
-    }
+    #get(api_call) {
+        let ax = new Axios.Axios();
+        return ax.get(api_call)
+            .then((response) => {
+                if (response.status >= 400)
+                    return Promise.reject(response.data);
 
-    async request(api_call) {
-        try {
-            var response = await this.httpGet(api_call);
-            var retries = 0;
-
-            try {
-                var responseStr = JSON.stringify(response);
-                this.log('HTTP RESP', responseStr);
-            }
-            catch (ex) {
-                
-            }
-
-            if (response.status !== 200) {
-                while (response.status === 429 && retries < 10) {
-                    response = await this.httpGet(api_call);
-                    retries++;
+                var data = response?.data;
+                try {
+                    if (typeof (data) === 'string')
+                        data = JSON.parse(data);
                 }
-            }
-
-            if (response.status !== 200) {
-                var message = '';
-                message = response.data;
-                return { error: `Request failed [${response.status}]: ${message}` }
-            }
-            return response.data;
-        }
-        catch (ex) {
-            return { error: `request error [${response.status}]: ${ex}` }
-        }
+                catch (ex) { }
+                return data;
+            });
     }
 
     log(title, text, level = 'info') {
