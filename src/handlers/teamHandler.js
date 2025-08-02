@@ -63,7 +63,7 @@ module.exports = {
         }
 
         for (const player of rustplus.team.players) {
-            if (leftPlayers.includes(player.steamId)) 
+            if (leftPlayers.includes(player.steamId))
                 continue;
             for (const playerUpdated of teamInfo.members) {
                 if (player.steamId === playerUpdated.steamId.toString()) {
@@ -78,21 +78,25 @@ module.exports = {
                         });
 
                         var deathTime = moment.unix(player.deathTime);
-                        var playerDeathHistory = await rustplus.getRusticatedStats(player.steamId, 1);
-
-                        if (playerDeathHistory && playerDeathHistory.history?.length) {
-                            var lastDeath = playerDeathHistory.history[0];
-                            var lastDeathPlayerName = lastDeath.name;
-                            if (lastDeathPlayerName && lastDeathPlayerName.length !== 0) {
-                                str += ` [Last killed by ${lastDeathPlayerName}]`
-                            }
-                        }
 
                         await DiscordMessages.sendActivityNotificationMessage(
                             guildId, serverId, Constants.COLOR_INACTIVE, str, player.steamId);
 
-                        if (instance.generalSettings.deathNotify)
-                            rustplus.sendInGameMessage(str);
+                        if (instance.generalSettings.deathNotify) {
+                            this.sleep(5000, async () => {
+                                var playerDeathHistory = await rustplus.getRusticatedStats(player.steamId, 1);
+                                if (playerDeathHistory && playerDeathHistory.history?.length) {
+                                    var lastDeath = playerDeathHistory.history[0];
+                                    console.log(playerDeathHistory);
+                                    var lastDeathPlayerName = lastDeath.name;
+                                    if (lastDeathPlayerName && lastDeathPlayerName.length !== 0) {
+                                        str += ` [Last killed by ${lastDeathPlayerName}] ${lastDeath.value}`
+                                    }
+                                }
+                                rustplus.sendInGameMessage(str);
+                            });
+                        }
+
 
                         rustplus.log(client.intlGet(null, 'infoCap'), str);
                         rustplus.updateDeaths(player.steamId, {
@@ -151,4 +155,8 @@ module.exports = {
             }
         }
     },
+
+    sleep: async function (ms, callback) {
+        setTimeout(callback, ms);
+    }
 }

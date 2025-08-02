@@ -829,7 +829,7 @@ class RustPlus extends RustPlusLib {
         return response;
     }
 
-    async getCommandQuery(command) {
+    async getCommandQuery(command, source = 0) {
         const instance = Client.client.getInstance(this.guildId);
         const prefix = this.generalSettings.prefix;
         const commandQuery = `${prefix}${Client.client.intlGet(
@@ -3628,7 +3628,7 @@ class RustPlus extends RustPlusLib {
         return this.query.getUserStats(query);
     }
 
-    async getUserStats(query) {
+    async getUserStats(query, source = 0) {
         if (query !== null) {
             try {
                 let vanity = await this.query.getVanityUrl(query);
@@ -3659,7 +3659,12 @@ class RustPlus extends RustPlusLib {
                     var hsr = Math.round(hs / bullet_hit_player * 100);
                     var kdr = Math.round(kills / deaths * 100) / 100;
                     var totalhrs = Math.round(rust.playtime_forever / 60);
-                    return `[${player?.personaname}](${player?.profileurl}) => players killed [${kills}] deaths [${deaths}] kdr [${kdr}] headshots [${hsr}%] time [${totalhrs} hrs]`;
+
+                    var returnStr = source == 0
+                        ? `[${player?.personaname}](${player?.profileurl}) => players killed [${kills}] deaths [${deaths}] kdr [${kdr}] headshots [${hsr}%] time [${totalhrs} hrs]`
+                        : `${player?.personaname} => kills [${kills}] deaths [${deaths}] kdr [${kdr}] headshots [${hsr}%] played [${totalhrs} hrs]`;
+                    return returnStr;
+
                 }
             } catch (error) {
                 console.error(error);
@@ -3708,13 +3713,15 @@ class RustPlus extends RustPlusLib {
 
             var result = {
                 history: new Array(),
-                thumbnail: ''
+                thumbnail: '',
+                entries
             }
 
             // History type
             if (type === 0) {
                 // kill history
                 result = {
+                    ...result,
                     history: entries.map(x => {
                         var eventTime = moment(x.eventTime);
                         let victim = {
@@ -3728,6 +3735,7 @@ class RustPlus extends RustPlusLib {
             } else {
                 // death history
                 result = {
+                    ...result,
                     history: entries.map(x => {
                         var eventTime = moment(x.eventTime);
                         let attacker = {
