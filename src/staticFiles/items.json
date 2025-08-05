@@ -1113,7 +1113,7 @@
         "id": -593892112,
         "shortname": "clothing.mod.armorinsert_wood",
         "name": "Wooden Armor Insert",
-        "description": "Wood insert for crafted clothes and armor, provides some extra protection from bullets and melee. "
+        "description": "Wood insert for crafted clothes and armor, provides some extra protection from bullets and melee."
     },
     {
         "id": 204391461,
@@ -1300,12 +1300,6 @@
         "shortname": "cursedcauldron",
         "name": "Cursed Cauldron",
         "description": "A spooky cast iron cauldron with a green goo."
-    },
-    {
-        "id": -361911645,
-        "shortname": "dart.bone",
-        "name": "Bone Dart",
-        "description": "A basic damage dart."
     },
     {
         "id": -963819285,
@@ -1527,7 +1521,7 @@
         "id": 1588492232,
         "shortname": "drone",
         "name": "Drone",
-        "description": "A remote controlled drone operated from the Computer station with a limited range. Easily damaged from impacts. "
+        "description": "A remote controlled drone operated from the Computer station with a limited range. Easily damaged from impacts."
     },
     {
         "id": -1519126340,
@@ -2223,7 +2217,7 @@
         "id": -2107018088,
         "shortname": "fun.bass",
         "name": "Shovel Bass",
-        "description": "Use this stringed together shovel to play some deep, deep tunes.\r"
+        "description": "Use this stringed together shovel to play some deep, deep tunes."
     },
     {
         "id": 576509618,
@@ -2247,7 +2241,7 @@
         "id": -2040817543,
         "shortname": "fun.flute",
         "name": "Pan Flute",
-        "description": "A set of repurposed PVC pipes that can be used to play a variety of melodies.\r"
+        "description": "A set of repurposed PVC pipes that can be used to play a variety of melodies."
     },
     {
         "id": -2124352573,
@@ -2271,13 +2265,13 @@
         "id": 273172220,
         "shortname": "fun.trumpet",
         "name": "Plumber's Trumpet",
-        "description": "Toot your own horn with this brassy improvised Trumpet.\r"
+        "description": "Toot your own horn with this brassy improvised Trumpet."
     },
     {
         "id": 1784406797,
         "shortname": "fun.tuba",
         "name": "Sousaphone",
-        "description": "A collection of used piping that’s been converted into a Tuba. Probably not very hygienic.\r"
+        "description": "A collection of used piping that’s been converted into a Tuba. Probably not very hygienic."
     },
     {
         "id": -1999722522,
@@ -2302,12 +2296,6 @@
         "shortname": "gates.external.high.adobe",
         "name": "High External Adobe Gate",
         "description": "A high stone gate, allowing access in and out of your compound."
-    },
-    {
-        "id": 2137338174,
-        "shortname": "gates.external.high.frontier",
-        "name": "High External Frontier Gate",
-        "description": "A high wooden gate, allowing access in and out of your compound."
     },
     {
         "id": -1442339204,
@@ -3057,7 +3045,7 @@
         "id": 196784377,
         "shortname": "improvised.shield",
         "name": "Improvised Shield",
-        "description": "A makeshift metal shield, sturdy but only protects a small area. Usable with single handed weapons and tools. "
+        "description": "A makeshift metal shield, sturdy but only protects a small area. Usable with single handed weapons and tools."
     },
     {
         "id": 1538126328,
@@ -3891,7 +3879,7 @@
         "id": 1272430949,
         "shortname": "piano",
         "name": "Wheelbarrow Piano",
-        "description": "The Piano is a repurposed wheelbarrow that weighs a ton, but makes up for it with a wide range of notes. "
+        "description": "The Piano is a repurposed wheelbarrow that weighs a ton, but makes up for it with a wide range of notes."
     },
     {
         "id": -1302129395,
@@ -4059,7 +4047,7 @@
         "id": 1903654061,
         "shortname": "planter.small",
         "name": "Small Planter Box",
-        "description": "A small planter with enough room to plant 3 seeds.\r"
+        "description": "A small planter with enough room to plant 3 seeds."
     },
     {
         "id": -280812482,
@@ -5850,12 +5838,6 @@
         "description": "A high stone wall used to keep people off your property."
     },
     {
-        "id": 63265850,
-        "shortname": "wall.external.high.frontier",
-        "name": "High External Frontier Wall",
-        "description": "A high stone wall used to keep people off your property."
-    },
-    {
         "id": -985781766,
         "shortname": "wall.external.high.ice",
         "name": "High Ice Wall",
@@ -5992,12 +5974,6 @@
         "shortname": "wallpaper.flooring",
         "name": "Wallpaper Flooring",
         "description": ""
-    },
-    {
-        "id": -1501434104,
-        "shortname": "wallpaper",
-        "name": "Wallpaper",
-        "description": "Transform your base from a rusty shack to a cozy hideout with this sleek wallpaper. A nice touch of style - until the next raid, at least."
     },
     {
         "id": 1629564540,
