@@ -3697,63 +3697,58 @@ class RustPlus extends RustPlusLib {
     }
 
     async getRusticatedStats(id, type) {
-        try {
-            var response = await this.query.getRusticatedStats(id, type);
-            var entries = response.data.entries;
+        var response = await this.query.getRusticatedStats(id, type);
+        var entries = response.data.entries;
 
-            let getWeaponName = (entry) => {
-                return entry.substring(0, entry.indexOf('.'));
-            }
-
-            let getDistance = (entry) => {
-                let distance = parseFloat(entry)
-                    .toFixed(2);
-                return `${distance}m`;
-            }
-
-            var result = {
-                history: new Array(),
-                thumbnail: '',
-                entries
-            }
-
-            // History type
-            if (type === 0) {
-                // kill history
-                result = {
-                    ...result,
-                    history: entries.map(x => {
-                        var eventTime = moment(x.eventTime);
-                        let victim = {
-                            name: x.victim.name,
-                            value: `${getWeaponName(x.weapon)} @ ${getDistance(x.distance)} [${eventTime.fromNow()}]`
-                        };
-                        return victim;
-                    }),
-                    thumbnail: entries[entries.length - 1].attacker.avatar
-                }
-            } else {
-                // death history
-                result = {
-                    ...result,
-                    history: entries.map(x => {
-                        var eventTime = moment(x.eventTime);
-                        let attacker = {
-                            name: x.attacker.name,
-                            value: `${getWeaponName(x.weapon)} @ ${getDistance(x.distance)} [${eventTime.fromNow()}]`
-                        };
-
-                        return attacker;
-                    }),
-                    thumbnail: entries[entries.length - 1].victim.avatar
-                }
-            }
-
-            return result;
+        let getWeaponName = (entry) => {
+            return entry.substring(0, entry.indexOf('.'));
         }
-        catch (e) {
-            return "Failed to get stats: " + e;
+
+        let getDistance = (entry) => {
+            let distance = parseFloat(entry)
+                .toFixed(2);
+            return `${distance}m`;
         }
+
+        var result = {
+            history: new Array(),
+            thumbnail: '',
+            entries
+        }
+
+        // History type
+        if (type === 0) {
+            // kill history
+            result = {
+                ...result,
+                history: entries.map(x => {
+                    var eventTime = moment(x.eventTime);
+                    let victim = {
+                        name: x.victim.name,
+                        value: `${getWeaponName(x.weapon)} @ ${getDistance(x.distance)} [${eventTime.fromNow()}]`
+                    };
+                    return victim;
+                }),
+                thumbnail: entries[entries.length - 1].attacker.avatar
+            }
+        } else {
+            // death history
+            result = {
+                ...result,
+                history: entries.map(x => {
+                    var eventTime = moment(x.eventTime);
+                    let attacker = {
+                        name: x.attacker.name,
+                        value: `${getWeaponName(x.weapon)} @ ${getDistance(x.distance)} [${eventTime.fromNow()}]`
+                    };
+
+                    return attacker;
+                }),
+                thumbnail: entries[entries.length - 1].victim.avatar
+            }
+        }
+
+        return result;
     }
 }
 
