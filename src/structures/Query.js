@@ -110,6 +110,12 @@ class Query {
             return null;
         }
 
+        try {
+            if (typeof (response.data) === 'string')
+                return JSON.parse(response.data);
+        }
+        catch(e) { } 
+        
         return response.data;
     }
 
