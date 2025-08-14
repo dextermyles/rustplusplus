@@ -106,7 +106,7 @@ class Query {
 
         if (response.status !== 200) {
             Client.client.log(Client.client.intlGet(null, 'errorCap'),
-                Client.client.intlGet(null, 'apiRequestFailed', { api_call: api_call }), 'error');
+                Client.client.intlGet(null, 'apiRequestFailed', { api_call: response.message }), 'error');
             return null;
         }
 
