@@ -101,8 +101,8 @@ class Query {
             });
     }
 
-    async request(url, config) {
-        const response = await this.#request(api_call);
+    async request(url) {
+        const response = await this.#request(url, { responseType: 'json', headers: { "Content-Type": "application/json", "User-Agent": "BigRaidHunter Mozilla/5.0" } });
 
         if (response.status !== 200) {
             Client.client.log(Client.client.intlGet(null, 'errorCap'),
@@ -114,8 +114,8 @@ class Query {
     }
 
     async #request(url, config) {
-        let ax = new Axios.Axios({ responseType: 'json', headers: { "Content-Type": "application/json", "User-Agent": "BigRaidHunter Mozilla/5.0" } });
-        return await ax.get(url, config)
+        let ax = new Axios.Axios(config);
+        return await ax.get(url)
             .catch((error) => {
                 if (error.response) {
                     // The request was made and the server responded with a status code
