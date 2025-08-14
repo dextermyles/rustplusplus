@@ -829,6 +829,30 @@ class RustPlus extends RustPlusLib {
         return response;
     }
 
+    async getCommandMe(command) {
+        const instance = Client.client.getInstance(this.guildId);
+        const prefix = this.generalSettings.prefix;
+        const commandMe = `${prefix}${Client.client.intlGet(
+            this.guildId,
+            "commandSyntaxMe"
+        )}`;
+        const commandMeEn = `${prefix}${Client.client.intlGet(
+            "en",
+            "commandSyntaxMe"
+        )}`;
+
+        let query = null;
+
+        if (command.toLowerCase().startsWith(`${commandMe} `)) {
+            query = command.slice(`${commandMe} `.length).trim();
+        } else if (command.toLowerCase().startsWith(`${commandMeEn} `)) {
+            query = command.slice(`${commandMeEn} `.length).trim();
+        }
+
+        if (query === null)
+            return null;
+    }
+
     async getCommandQuery(command, source = 0) {
         const instance = Client.client.getInstance(this.guildId);
         const prefix = this.generalSettings.prefix;
@@ -2328,8 +2352,7 @@ class RustPlus extends RustPlusLib {
                         return Client.client.intlGet(this.guildId, "noItemFound");
                     }
 
-                    var response = locations.join("\n");
-                    return response;
+                    return locations;
                 }
                 break;
 

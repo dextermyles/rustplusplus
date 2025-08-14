@@ -115,7 +115,24 @@ module.exports = {
         }
         else if (commandLowerCase.startsWith(`${prefix}${client.intlGet('en', 'commandSyntaxMarket')} `) ||
             commandLowerCase.startsWith(`${prefix}${client.intlGet(guildId, 'commandSyntaxMarket')} `)) {
-            rustplus.sendInGameMessage(rustplus.getCommandMarket(command));
+            var locations = rustplus.getCommandMarket(command);
+            if (Array.isArray(locations)) {
+                let temp_locations = [""];
+                temp_locations = locations;
+                var max = 5;
+                var idx = 0;
+                for(var location of temp_locations) {
+                    await this.sleep(1000, () => {
+                        rustplus.sendInGameMessage(location);
+                    })
+                    idx++;
+                    if (idx >= 5)
+                        break;
+                }
+                return;
+            }
+
+            rustplus.sendInGameMessage(locations);
         }
         else if (commandLowerCase === `${prefix}${client.intlGet('en', 'commandSyntaxMute')}` ||
             commandLowerCase === `${prefix}${client.intlGet(guildId, 'commandSyntaxMute')}`) {
@@ -219,6 +236,10 @@ module.exports = {
             commandLowerCase === `${prefix}${client.intlGet(guildId, 'commandSyntaxTravelingVendor')}`) {
             rustplus.sendInGameMessage(rustplus.getCommandTravelingVendor());
         }
+        else if (commandLowerCase === `${prefix}${client.intlGet('en', 'commandMe')}` ||
+            commandLowerCase === `${prefix}${client.intlGet(guildId, 'commandMe')}`) {
+            rustplus.sendInGameMessage(await rustplus.getUserStats(callerSteamId));
+        }
         else {
             /* Maybe a custom command? */
 
@@ -244,4 +265,7 @@ module.exports = {
 
         return true;
     },
+    sleep: async function (ms, callback) {
+        setTimeout(callback, ms);
+    }
 };
