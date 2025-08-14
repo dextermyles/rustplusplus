@@ -102,11 +102,15 @@ class Query {
     }
 
     async request(url) {
-        const response = await this.#request(url, { responseType: 'json', headers: { "Content-Type": "application/json", "User-Agent": "BigRaidHunter Mozilla/5.0" } });
+        const response = await this.#request(url);
 
         if (response.status !== 200) {
             Client.client.log(Client.client.intlGet(null, 'errorCap'),
-                Client.client.intlGet(null, 'apiRequestFailed', { api_call: response.message }), 'error');
+                Client.client.intlGet(null, 'apiRequestFailed', { api_call: url }), 'error');
+
+            if (response.status === 401)
+                throw new Error('Access denied');
+
             return null;
         }
 
@@ -114,8 +118,8 @@ class Query {
             if (typeof (response.data) === 'string')
                 return JSON.parse(response.data);
         }
-        catch(e) { } 
-        
+        catch (e) { }
+
         return response.data;
     }
 

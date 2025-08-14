@@ -3657,7 +3657,7 @@ class RustPlus extends RustPlusLib {
                 let profile = await this.query.getUserProfile(query);
                 let steam = await this.query.getUserStats(query);
                 let playtime = await this.query.getUserPlaytime(query);
-
+                
                 if (profile && steam && playtime) {
                     var rust = playtime.response.games.find(x => x.appid === 252490);
                     var player = profile.response?.players[profile.response.players.length - 1];
