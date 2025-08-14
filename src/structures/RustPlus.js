@@ -2329,7 +2329,7 @@ class RustPlus extends RustPlusLib {
                     }
 
                     var response = locations.join("\n");
-                    return;
+                    return response;
                 }
                 break;
 

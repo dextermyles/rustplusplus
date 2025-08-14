@@ -83,7 +83,7 @@ module.exports = {
                             guildId, serverId, Constants.COLOR_INACTIVE, str, player.steamId);
 
                         if (instance.generalSettings.deathNotify) {
-                            this.sleep(5000, async () => {
+                            this.sleep(10000, async () => {
                                 var playerDeathHistory = await rustplus.getRusticatedStats(player.steamId, 1);
                                 if (playerDeathHistory && playerDeathHistory.history?.length) {
                                     var lastDeath = playerDeathHistory.history[0];
