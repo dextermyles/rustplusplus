@@ -236,9 +236,9 @@ module.exports = {
             commandLowerCase === `${prefix}${client.intlGet(guildId, 'commandSyntaxTravelingVendor')}`) {
             rustplus.sendInGameMessage(rustplus.getCommandTravelingVendor());
         }
-        else if (commandLowerCase === `${prefix}${client.intlGet('en', 'commandMe')}` ||
-            commandLowerCase === `${prefix}${client.intlGet(guildId, 'commandMe')}`) {
-            rustplus.sendInGameMessage(await rustplus.getUserStats(callerSteamId));
+        else if (commandLowerCase === `${prefix}${client.intlGet('en', 'commandSyntaxMe')}` ||
+            commandLowerCase === `${prefix}${client.intlGet(guildId, 'commandSyntaxMe')}`) {
+            rustplus.sendInGameMessage(await rustplus.getUserStats(callerSteamId, 1));
         }
         else {
             /* Maybe a custom command? */
