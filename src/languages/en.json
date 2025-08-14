@@ -22,6 +22,7 @@
     "ampersand": "Ampersand",
     "andMorePlayers": "... and {number} more players.",
     "any": "Any",
+    "apiRequestFailed": "API Request Failed: {api_call}.",
     "apostrophe": "Apostrophe",
     "arcticResearchBase": "Arctic Research Base",
     "asterisk": "Asterisk",
@@ -43,6 +44,7 @@
     "badGateway": "Bad Gateway: {error}",
     "banditCamp": "Bandit Camp",
     "baseIsUnderAttack": "Your base is under attack!",
+    
     "battlemetricsApiRequestFailed": "Battlemetrics API Request Failed: {api_call}.",
     "battlemetricsCap": "BATTLEMETRICS",
     "battlemetricsFailedToUpdate": "Battlemetrics Server {server} failed to update.",

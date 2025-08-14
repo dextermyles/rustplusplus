@@ -60,27 +60,27 @@ class Query {
         ]);
     }
     getUserBanned(id) {
-        return this.#get(this.GET_USER_BANNED(id));
+        return this.request(this.GET_USER_BANNED(id));
     }
 
     getUserProfile(id) {
-        return this.#get(this.GET_USER_PROFILE(id));
+        return this.request(this.GET_USER_PROFILE(id));
     }
 
     getUserAchievements(id) {
-        return this.#get(this.GET_USER_ACHIEVEMENTS(id));
+        return this.request(this.GET_USER_ACHIEVEMENTS(id));
     }
 
     getUserPlaytime(id) {
-        return this.#get(this.GET_USER_PLAYTIME(id));
+        return this.request(this.GET_USER_PLAYTIME(id));
     }
 
     getUserStats(id) {
-        return this.#get(this.GET_USER_RUST_STATS(id));
+        return this.request(this.GET_USER_RUST_STATS(id));
     }
 
     getServerBattleMetrics(serverId) {
-        return this.#get(`https://api.battlemetrics.com/servers/27286944?include=player`);
+        return this.request(`https://api.battlemetrics.com/servers/27286944?include=player`);
     }
 
     getRusticatedStats(id, type = 0) {
@@ -88,7 +88,7 @@ class Query {
             ? this.GET_RUSTICATED_KILL_HISTORY(id)
             : this.GET_RUSTICATED_DEATH_HISTORY(id);
 
-        return this.#get(url);
+        return this.request(url);
     }
 
     httpGet(url) {
@@ -101,6 +101,41 @@ class Query {
             });
     }
 
+    async request(url, config) {
+        const response = await this.#request(api_call);
+
+        if (response.status !== 200) {
+            Client.client.log(Client.client.intlGet(null, 'errorCap'),
+                Client.client.intlGet(null, 'apiRequestFailed', { api_call: api_call }), 'error');
+            return null;
+        }
+
+        return response.data;
+    }
+
+    async #request(url, config) {
+        let ax = new Axios.Axios({ responseType: 'json', headers: { "Content-Type": "application/json", "User-Agent": "BigRaidHunter Mozilla/5.0" } });
+        return await ax.get(url, config)
+            .catch((error) => {
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    this.log('HTTP.DATA', error.response.data);
+                    this.log('HTTP.STATUS', error.response.status);
+                    this.log('HTTP.HEADESR', error.response.headers);
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                    // http.ClientRequest in node.js
+                    console.log(error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+                return Promise.reject(error);
+            });
+    }
 
     /**
      * http get request

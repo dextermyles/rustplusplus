@@ -1,4 +1,4 @@
-import { Axios, AxiosResponse } from "axios";
+import { Axios, AxiosRequestConfig, AxiosResponse } from "axios";
 
 export = Query;
 declare class Query {
@@ -24,7 +24,8 @@ declare class Query {
   httpGet(url: any): Promise<AxiosResponse<any, any> | {
     error: unknown;
   }>;
-  request(api_call: any): Promise<any>;
+  request(url: string, config?: AxiosRequestConfig): Promise<any>;
+  #request(url: string, config?: AxiosRequestConfig): Promise<any>;
   log(title: any, text: any, level?: string): void;
   #get<T = any, R = AxiosResponse<T>, D = any>(api_call): Promise<R>;
 }

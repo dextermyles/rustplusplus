@@ -3654,11 +3654,6 @@ class RustPlus extends RustPlusLib {
     async getUserStats(query, source = 0) {
         if (query !== null) {
             try {
-                let vanity = await this.query.getVanityUrl(query);
-                if (vanity?.response?.success === 1) {
-                    query = vanity.response.steamid;
-                    console.log(`VANITY URL UPDATED [${query}]`);
-                }
                 let profile = await this.query.getUserProfile(query);
                 let steam = await this.query.getUserStats(query);
                 let playtime = await this.query.getUserPlaytime(query);
@@ -3689,9 +3684,8 @@ class RustPlus extends RustPlusLib {
                     return returnStr;
 
                 }
-            } catch (error) {
-                console.error(error);
-                this.log('STATS ERROR', error, 'ERROR');
+            } catch (e) {
+                return `Error: ${e}`;
             }
         }
 
