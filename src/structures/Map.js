@@ -76,7 +76,10 @@ class Map {
                 image:
                     Path.join(__dirname, '..', 'resources/images/markers/tunnels_link.png'), size: 35, type: 10,
                 jimp: null
-            }
+            },
+            stash: {
+                image: Path.join(__dirname, '..', 'resources/images/items/stash.small.png'), size: 20, type: 11, jimp: null
+            },
         }
 
         this._monumentInfo = {
@@ -401,17 +404,46 @@ class Map {
                 let size = this.mapMarkerImageMeta[markerImageMeta].size;
 
                 /* Rotate */
-                this.mapMarkerImageMeta[markerImageMeta].jimp.rotate(marker.rotation);
+                if (marker.rotation) {
+                    this.mapMarkerImageMeta[markerImageMeta].jimp.rotate(marker.rotation);
+                }
 
-                this.mapMarkerImageMeta.map.jimp.composite(
-                    this.mapMarkerImageMeta[markerImageMeta].jimp, x - (size / 2), y - (size / 2)
-                );
+                let xcord = x - (size / 2);
+                let ycord = y - (size / 2);
+                console.log(`drawing ${marker.type} [${xcord}, ${ycord}]`);
+                this.mapMarkerImageMeta.map.jimp.composite(this.mapMarkerImageMeta[markerImageMeta].jimp,
+                    xcord,
+                    ycord);
             }
             catch (e) {
                 this.rustplus.log('ERROR', `mapAppendMonuments error: ${e}`)
                 console.error(e);
                 /* Ignore */
             }
+        }
+
+        try {
+            let custommarkers = Object.keys(this.rustplus.markers) ?? [];
+
+            for (let markerName of custommarkers) {
+                let m = this.rustplus.markers[markerName];
+                let customCoords = this.calculateImageXY(m);
+                let _x = customCoords.x;
+                let _y = customCoords.y;
+
+                let customMeta = this.getMarkerImageMetaByType(11);
+                let customSize = this.mapMarkerImageMeta[customMeta].size;
+                let xcord = _x - (customSize / 2);
+                let ycord = _y - (customSize / 2);
+                console.log(`drawing ${markerName} [${xcord}, ${ycord}]`)
+                this.mapMarkerImageMeta.map.jimp.composite(this.mapMarkerImageMeta[customMeta].jimp,
+                    xcord,
+                    ycord);
+            }
+        }
+        catch (ex) {
+            this.rustplus.log('ERROR', `custom markers error: ${ex}`);
+            console.log(ex);
         }
     }
 
@@ -424,6 +456,7 @@ class Map {
         if (monuments) {
             await this.mapAppendMonuments();
         }
+
 
         await this.mapMarkerImageMeta.map.jimp.writeAsync(
             this.mapMarkerImageMeta.map.image.replace('clean.png', 'full.png'));
