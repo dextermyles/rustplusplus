@@ -121,7 +121,7 @@ module.exports = {
                 temp_locations = locations;
                 var max = 5;
                 var idx = 0;
-                for(var location of temp_locations) {
+                for (var location of temp_locations) {
                     await this.sleep(1000, () => {
                         rustplus.sendInGameMessage(location);
                     })
@@ -239,6 +239,13 @@ module.exports = {
         else if (commandLowerCase === `${prefix}${client.intlGet('en', 'commandSyntaxMe')}` ||
             commandLowerCase === `${prefix}${client.intlGet(guildId, 'commandSyntaxMe')}`) {
             rustplus.sendInGameMessage(await rustplus.getUserStats(callerSteamId, 1));
+        }
+        else if (commandLowerCase === `${prefix}${client.intlGet('en', 'commandSyntaxDegen')}` ||
+            commandLowerCase === `${prefix}${client.intlGet(guildId, 'commandSyntaxDegen')}`) {
+            let gamblingResponses = await rustplus.getGamblingStats(callerSteamId);
+            for (let response of gamblingResponses) {
+                rustplus.sendInGameMessage(response);
+            }
         }
         else {
             /* Maybe a custom command? */

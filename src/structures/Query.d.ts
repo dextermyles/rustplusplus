@@ -20,6 +20,7 @@ declare class Query {
   getUserAchievements(id: any): Promise<any>;
   getUserPlaytime(id: any): Promise<GetUserPlaytimeDto>;
   getUserStats(id: any): Promise<GetPlayerStatsDto>;
+  getGamblingStats(id): Promise<string>;
   getRusticatedStats(id: any, type: RusticatedHistoryType = RusticatedHistoryType.Kills): Promise<RusticatedResponse>;
   httpGet(url: any): Promise<AxiosResponse<any, any> | {
     error: unknown;
@@ -29,6 +30,46 @@ declare class Query {
   log(title: any, text: any, level?: string): void;
   #get<T = any, R = AxiosResponse<T>, D = any>(api_call): Promise<R>;
 }
+
+export interface RusticatedResponse {
+  success: boolean
+  data: RusticatedResponseData
+}
+
+export interface RusticatedResponseData {
+  orgId: number
+  serverId: string
+  serverWipeId: number
+  type: string
+  sortBy: string
+  sortDir: string
+  group: string
+  total: number
+  limit: number
+  offset: number
+  entries: RusticatedEntry[]
+  userEntry: any
+}
+
+export interface RusticatedEntry {
+  rank: number
+  steamId: string
+  username: string
+  avatarUrl: string
+  stats: RusticatedStats
+}
+
+export interface RusticatedStats {
+  gambling_pokerwon: number
+  gambling_pokerdeposited: number
+  gambling_slotwon: number
+  gambling_slotdeposited: number
+  gambling_wheelwon: number
+  gambling_wheeldeposited: number
+  gambling_blackjackdeposited: number
+  gambling_blackjackwon: number
+}
+
 
 export interface VanityUrlResponseDto {
   /**

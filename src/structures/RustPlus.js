@@ -3651,6 +3651,11 @@ class RustPlus extends RustPlusLib {
         return this.query.getUserStats(query);
     }
 
+    async getGamblingStats(query) {
+        let response = await this.query.getGamblingStats(query);
+        return response;
+    }
+
     async getUserStats(query, source = 0) {
         if (query !== null) {
             try {

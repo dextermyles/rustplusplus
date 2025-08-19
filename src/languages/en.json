@@ -125,6 +125,7 @@
     "commandSyntaxDeath": "death",
     "commandSyntaxDeaths": "deaths",
     "commandSyntaxDecay": "decay",
+    "commandSyntaxDegen": "degen",
     "commandSyntaxDespawn": "despawn",
     "commandSyntaxEvents": "events",
     "commandSyntaxHeli": "heli",

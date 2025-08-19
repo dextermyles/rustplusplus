@@ -20,6 +20,10 @@ class Query {
         return `https://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v2/?appid=252490&key=${Config.steam.apiKey}&steamid=${id}`
     }
 
+    GET_USER_GAMBLING_STATS(id) {
+        return `https://rusticated.com/api/v3/leaderboard?hidden=false&limit=10&offset=0&group=gambling&sortBy=gambling_pokerwon&sortDir=desc&type=player&eventType=kill_player&filter=${id}&serverId=uslong&serverWipeId=3623&attackerSteamId=&orgId=1`
+    }
+
     GET_USER_BANNED(id) {
         return `${Config.ruststats.baseUrl}/public-api/user/banned?steam_id=${id}`
     }
@@ -77,6 +81,38 @@ class Query {
 
     getUserStats(id) {
         return this.request(this.GET_USER_RUST_STATS(id));
+    }
+
+    async getGamblingStats(id) {
+        let statsResponse = await this.request(this.GET_USER_GAMBLING_STATS(id));
+        console.log(statsResponse);
+        let data, entries = [{
+            rank: 0, steamId: '', username: '', stats: {
+                gambling_pokerwon: 0,
+                gambling_pokerdeposited: 0,
+                gambling_slotwon: 0,
+                gambling_slotdeposited: 0,
+                gambling_wheelwon: 0,
+                gambling_wheeldeposited: 0,
+                gambling_blackjackdeposited: 0,
+                gambling_blackjackwon: 0
+            }
+        }];
+        data = statsResponse.data;
+        entries = data.entries;
+
+        let firstEntry = entries.find(X => X.steamId === id);
+        let slotsNet = firstEntry.stats.gambling_slotwon - firstEntry.stats.gambling_slotdeposited;
+        let bjNet = firstEntry.stats.gambling_blackjackwon - firstEntry.stats.gambling_blackjackdeposited;
+        let wheelNet = firstEntry.stats.gambling_wheelwon - firstEntry.stats.gambling_wheeldeposited;
+        let netProfits = slotsNet + bjNet + wheelNet;
+
+        let slotsStr = `Slots: W [${firstEntry.stats.gambling_slotwon}] NET [${slotsNet}]`
+        let bjStr = `BJ: W [${firstEntry.stats.gambling_blackjackwon}] NET [${bjNet}]`;
+        let wheelStr = `Wheel: W [${firstEntry.stats.gambling_wheeldeposited}] NET [${wheelNet}]`;
+        let finalStr = `Profits: ${ netProfits }`;
+    
+        return [slotsStr, bjStr, wheelStr, finalStr];
     }
 
     getServerBattleMetrics(serverId) {
