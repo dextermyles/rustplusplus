@@ -6,3 +6,5 @@ maps
 logs
 temp
 dist
+src/staticFiles/rusthelp_itemlist.json
+src/staticFiles/test.png
