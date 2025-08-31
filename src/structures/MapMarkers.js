@@ -469,6 +469,7 @@ class MapMarkers {
                     this.client.intlGet(null, 'chinook47LeftMap', { location: marker.location.string }));
             }
 
+            this.ch47LockedCrateNotified = this.ch47LockedCrateNotified.filter(e => e !== marker.id);
             this.ch47s = this.ch47s.filter(e => e.id !== marker.id);
         }
 

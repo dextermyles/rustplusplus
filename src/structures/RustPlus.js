@@ -40,7 +40,8 @@ const TeamHandler = require("../handlers/teamHandler.js");
 const Timer = require("../util/timer.js");
 const Ai = require("./Ai.js");
 const Query = require("./Query.js");
-const moment = require('moment')
+const moment = require('moment');
+const RustHelp = require("./RustHelp.js");
 
 const TOKENS_LIMIT = 24; /* Per player */
 const TOKENS_REPLENISH = 3; /* Per second */
@@ -120,10 +121,14 @@ class RustPlus extends RustPlusLib {
 
         /* AI chat assistant */
         this.ai = new Ai(guildId);
+        this.rusthelp = new RustHelp();
 
         /* Query (Rust stats, Companion app testing, rust+, etc) */
         this.query = new Query(guildId);
         this.loadRustPlusEvents();
+
+        // this.loadRustHelp()
+        //     .then(() => { console.log('rust help loaded')});
     }
 
     loadRustPlusEvents() {
@@ -136,6 +141,22 @@ class RustPlus extends RustPlusLib {
                 event.execute(this, Client.client, ...args)
             );
         }
+    }
+
+    async loadRustHelp() {
+        await this.rusthelp.fetch();
+        this.sleep(1000, async () => {
+            await this.rusthelp.fetchItem('mlrs rocket')
+                    .then((data) => {
+                        console.log('fetchItem completed');
+                    });
+        })
+
+        
+    }
+
+    async sleep (ms, callback) {
+        return setTimeout(callback, ms);
     }
 
     loadMarkers() {
