@@ -84,6 +84,7 @@
     "cargoShipLeftSetting": "When Cargo Ship left the map, send a notification.",
     "cargoShipLocated": "Cargo Ship is located at {location}.",
     "cargoship": "Cargoship",
+    "categoryName": "BigRaidHunter",
     "ceilingLight": "Ceiling Light",
     "channelNameActivity": "activity",
     "channelNameAlarms": "alarms",

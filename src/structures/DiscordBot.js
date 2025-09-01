@@ -236,7 +236,8 @@ class DiscordBot extends Discord.Client {
 
         await require('../discordTools/SetupSettingsMenu')(this, guild);
 
-        if (firstTime) await PermissionHandler.resetPermissionsAllChannels(this, guild);
+        if (firstTime) 
+            await PermissionHandler.resetPermissionsAllChannels(this, guild);
 
         this.resetRustplusVariables(guild.id);
     }

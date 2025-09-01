@@ -191,7 +191,7 @@ module.exports = {
                     type: Discord.ChannelType.GuildCategory,
                     permissionOverwrites: [{
                         id: guild.roles.everyone.id,
-                        deny: [Discord.PermissionFlagsBits.SendMessages]
+                        deny: [Discord.PermissionFlagsBits.SendMessages],
                     }]
                 });
             }

@@ -3641,6 +3641,17 @@ class RustPlus extends RustPlusLib {
         return { error: "Failed to ask Rust bot." };
     }
 
+    async getProfile(steamId) {
+        var profile = await this.query.getUserProfile(steamId);
+        if (profile) {
+            var response = profile.response;
+            var players = response.players;
+            var player = players[0];
+            return player;
+        }
+        return null;
+    }
+
     async getUserProfile(query) {
         var profile = await this.query.getUserProfile(query);
         if (profile) {

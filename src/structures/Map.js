@@ -390,28 +390,49 @@ class Map {
         if (!(await this.rustplus.isResponseValid(mapMarkers))) return;
 
         for (let marker of mapMarkers.mapMarkers.markers) {
+
             let x = marker.x * ((this.width - 2 * this.oceanMargin) / this.rustplus.info.mapSize) + this.oceanMargin;
             let n = this.height - 2 * this.oceanMargin;
             let y = this.height - (marker.y * (n / this.rustplus.info.mapSize) + this.oceanMargin);
             try {
+                let markerImageMeta = this.getMarkerImageMetaByType(marker.type);
+                let size = markerImageMeta.size;
+
+                if (marker.type === this.rustplus.mapMarkers?.types?.Player) {
+                    let hasSteamId = (marker.hasOwnProperty('steamId')) ? true : false;
+                    if (hasSteamId) {
+                        const steamIdStr = marker.steamId.toString();
+                        console.log('marker.steamId', marker.steamId, steamIdStr);
+                        const player = this.rustplus.team.getPlayer(steamIdStr);
+                        if (player) {
+                            const steamProfile = await this.rustplus.getProfile(steamIdStr);
+                            let avatarUrl = steamProfile.avatar;
+                            markerImageMeta.image = avatarUrl;
+                            markerImageMeta.jimp = await Jimp.read(markerImageMeta.image);
+                            markerImageMeta.jimp.resize(markerImageMeta.size, markerImageMeta.size);
+                            markerImageMeta.jimp.circle();
+                            console.log('player about to be drawn on map', steamProfile.personaname);
+                        }
+                    }
+                }
+
+                /* Rotate */
+                if (marker.rotation) {
+                    markerImageMeta.jimp.rotate(marker.rotation);
+                }
+
                 /* Compensate rotations */
                 if (marker.type === this.rustplus.mapMarkers?.types?.CargoShip) {
                     x -= 20;
                     y -= 20;
-
-                }
-                let markerImageMeta = this.getMarkerImageMetaByType(marker.type);
-                let size = this.mapMarkerImageMeta[markerImageMeta].size;
-
-                /* Rotate */
-                if (marker.rotation) {
-                    this.mapMarkerImageMeta[markerImageMeta].jimp.rotate(marker.rotation);
                 }
 
                 let xcord = x - (size / 2);
                 let ycord = y - (size / 2);
+
                 console.log(`drawing ${marker.type} [${xcord}, ${ycord}]`);
-                this.mapMarkerImageMeta.map.jimp.composite(this.mapMarkerImageMeta[markerImageMeta].jimp,
+
+                this.mapMarkerImageMeta.map.jimp.composite(markerImageMeta.jimp,
                     xcord,
                     ycord);
             }
@@ -420,30 +441,6 @@ class Map {
                 console.error(e);
                 /* Ignore */
             }
-        }
-
-        try {
-            let custommarkers = Object.keys(this.rustplus.markers) ?? [];
-
-            for (let markerName of custommarkers) {
-                let m = this.rustplus.markers[markerName];
-                let customCoords = this.calculateImageXY(m);
-                let _x = customCoords.x;
-                let _y = customCoords.y;
-
-                let customMeta = this.getMarkerImageMetaByType(11);
-                let customSize = this.mapMarkerImageMeta[customMeta].size;
-                let xcord = _x - (customSize / 2);
-                let ycord = _y - (customSize / 2);
-                console.log(`drawing ${markerName} [${xcord}, ${ycord}]`)
-                this.mapMarkerImageMeta.map.jimp.composite(this.mapMarkerImageMeta[customMeta].jimp,
-                    xcord,
-                    ycord);
-            }
-        }
-        catch (ex) {
-            this.rustplus.log('ERROR', `custom markers error: ${ex}`);
-            console.log(ex);
         }
     }
 
@@ -516,7 +513,7 @@ class Map {
     getMarkerImageMetaByType(type) {
         for (const [marker, content] of Object.entries(this.mapMarkerImageMeta)) {
             if (content.type === type) {
-                return marker;
+                return content;
             }
         }
         return null;
