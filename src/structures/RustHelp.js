@@ -34,7 +34,7 @@ class RustHelp {
         try {
             // Fetch page
             let ax = new Axios.Axios();
-            const { data } = await ax.get(this.url, {});
+            const { data } = await ax.get(this.url, {responseType: 'json'});
 
 
             // Load HTML

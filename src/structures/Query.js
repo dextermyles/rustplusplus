@@ -5,8 +5,11 @@ const Logger = require('./Logger');
 const Axios = require('axios');
 const Client = require('../..');
 const Config = require('../../config');
+const SteamAPI = require('steamapi');
+
 
 class Query {
+    steam = new SteamAPI(Config.steam.apiKey);
 
     constructor(guildId = null) {
         this.guildId = guildId;
@@ -83,6 +86,39 @@ class Query {
         return this.request(this.GET_USER_RUST_STATS(id));
     }
 
+    async getUserSummary(id) {
+        try {
+            if (typeof id !== 'string' || !id)
+                throw new Error('Invalid Steam ID');
+
+            const resp = await this.steam.getUserSummary(id);
+            console.log('user summary', JSON.stringify(resp));
+            return resp;
+        }
+        catch (e) {
+            console.error(e);
+            this.log('STEAMAPI', e, 'error');
+            return Promise.reject(e);
+        }
+    }
+
+    async getUserStatsV2(id) {
+        try {
+            if (typeof id !== 'string' || !id)
+                throw new Error('Invalid Steam ID');
+
+            const resp = await this.steam.getUserStats(id, Config.general.rustAppId);
+            console.log('user stats v2', JSON.stringify(resp));
+            return resp;
+        }
+        catch (e) {
+            console.error(e);
+            this.log('STEAMAPI', e, 'error');
+            return Promise.reject(e);
+        }
+
+    }
+
     async getGamblingStats(id) {
         let statsResponse = await this.request(this.GET_USER_GAMBLING_STATS(id));
         console.log(statsResponse);
@@ -110,8 +146,8 @@ class Query {
         let slotsStr = `Slots: W [${firstEntry.stats.gambling_slotwon}] NET [${slotsNet}]`
         let bjStr = `BJ: W [${firstEntry.stats.gambling_blackjackwon}] NET [${bjNet}]`;
         let wheelStr = `Wheel: W [${firstEntry.stats.gambling_wheeldeposited}] NET [${wheelNet}]`;
-        let finalStr = `Profits: ${ netProfits }`;
-    
+        let finalStr = `Profits: ${netProfits}`;
+
         return [slotsStr, bjStr, wheelStr, finalStr];
     }
 

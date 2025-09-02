@@ -127,6 +127,23 @@ class RustPlus extends RustPlusLib {
         this.query = new Query(guildId);
         this.loadRustPlusEvents();
 
+        this.ai.create({
+            model: "moonshotai/kimi-k2-instruct",
+            messages: [
+                {
+                    role: "system",
+                    content: "You are my assistant for the survival game Rust, developed by Face Punch.\n"
+                },
+                {
+                    role: 'user',
+                    content: "how much HP does an armored door have?"
+                }
+            ]
+        }).then((resp) => {
+            console.log("AI test response: ", resp);
+        });
+
+
         // this.loadRustHelp()
         //     .then(() => { console.log('rust help loaded')});
     }
@@ -147,15 +164,15 @@ class RustPlus extends RustPlusLib {
         await this.rusthelp.fetch();
         this.sleep(1000, async () => {
             await this.rusthelp.fetchItem('mlrs rocket')
-                    .then((data) => {
-                        console.log('fetchItem completed');
-                    });
+                .then((data) => {
+                    console.log('fetchItem completed');
+                });
         })
 
-        
+
     }
 
-    async sleep (ms, callback) {
+    async sleep(ms, callback) {
         return setTimeout(callback, ms);
     }
 
@@ -3691,10 +3708,13 @@ class RustPlus extends RustPlusLib {
     async getUserStats(query, source = 0) {
         if (query !== null) {
             try {
+                let test = await this.query.getUserStatsV2(query);
+                let test2 = await this.query.getUserSummary(query);
+
                 let profile = await this.query.getUserProfile(query);
-                let steam = await this.query.getUserStats(query);
                 let playtime = await this.query.getUserPlaytime(query);
-                
+                let steam = await this.query.getUserStats(query);
+
                 if (profile && steam && playtime) {
                     var rust = playtime.response.games.find(x => x.appid === 252490);
                     var player = profile.response?.players[profile.response.players.length - 1];

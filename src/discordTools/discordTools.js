@@ -225,10 +225,9 @@ module.exports = {
                 return await guild.channels.create({
                     name: name,
                     type: Discord.ChannelType.GuildText,
-                    permissionOverwrites: [{
-                        id: guild.roles.everyone.id,
-                        deny: [Discord.PermissionFlagsBits.SendMessages]
-                    }],
+                    permissionOverwrites: [
+                        { id: guild.roles.everyone.id, deny: [Discord.PermissionFlagsBits.SendMessages]}
+                    ],
                 });
             }
             catch (e) {
