@@ -8,9 +8,7 @@
       "request": "launch",
       "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node",
       "runtimeArgs": [
-        "--transpile-only",
-        // if you use esm
-        "--esm" 
+        "--transpile-only"
       ],
       "program": "index.ts",
       "cwd": "${workspaceRoot}",

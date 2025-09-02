@@ -1,5 +1,5 @@
 import { Axios, AxiosRequestConfig, AxiosResponse } from "axios";
-import { UserStats, UserSummary } from "steamapi";
+import * as Steam from "steamapi";
 
 export = Query;
 declare class Query {
@@ -21,8 +21,8 @@ declare class Query {
   getUserAchievements(id: any): Promise<any>;
   getUserPlaytime(id: any): Promise<GetUserPlaytimeDto>;
   getUserStats(id: any): Promise<GetPlayerStatsDto>;
-  getUserStatsV2(id): Promise<UserStats>;
-  getUserSummary(id): Promise<UserSummary>;
+  getUserStatsV2(id): Promise<Steam.UserStats>;
+  getUserSummary(id): Promise<Steam.UserSummary>;
   getGamblingStats(id): Promise<string[]>;
   getRusticatedStats(id: any, type: RusticatedHistoryType = RusticatedHistoryType.Kills): Promise<RusticatedResponse>;
   httpGet(url: any): Promise<AxiosResponse<any, any> | {

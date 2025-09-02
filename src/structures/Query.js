@@ -5,17 +5,17 @@ const Logger = require('./Logger');
 const Axios = require('axios');
 const Client = require('../..');
 const Config = require('../../config');
-const SteamAPI = require('steamapi');
-
+const Steam = require('steamapi');
 
 class Query {
-    steam = new SteamAPI(Config.steam.apiKey);
+    
 
     constructor(guildId = null) {
         this.guildId = guildId;
         this.logger = new Logger(Path.join(__dirname, '..', '..', 'logs/query.log'), 'default');
         this.logger.setGuildId(this.guildId);
         this.rustStatsURL = Config.ruststats.baseUrl;
+        this.steam = new Steam.default(Config.steam.apiKey);
     }
 
 
@@ -114,7 +114,7 @@ class Query {
         catch (e) {
             console.error(e);
             this.log('STEAMAPI', e, 'error');
-            return Promise.reject(e);
+            return Promise.reject(e );
         }
 
     }
