@@ -182,8 +182,8 @@
     {
         "id": 550753330,
         "shortname": "ammo.snowballgun",
-        "name": "",
-        "description": ""
+        "name": "Snowball Gun Ammo",
+        "description": null
     },
     {
         "id": -1432674913,
@@ -447,7 +447,7 @@
         "id": -479314201,
         "shortname": "batteringram.head.repair",
         "name": "Battering Ram Head",
-        "description": ""
+        "description": null
     },
     {
         "id": -187304968,
@@ -490,6 +490,18 @@
         "shortname": "beachtowel",
         "name": "Beach Towel",
         "description": "A colourful beach towel. Placing this will give you a location to respawn."
+    },
+    {
+        "id": -576866254,
+        "shortname": "beanbagseatfabric",
+        "name": "Fabric Beanbag Seat",
+        "description": "A cozy fabric beanbag seat to sink in to."
+    },
+    {
+        "id": -1220928936,
+        "shortname": "beanbagseatleather",
+        "name": "Leather Beanbag Seat",
+        "description": "A cozy leather beanbag seat to sink in to."
     },
     {
         "id": -989755543,
@@ -1098,6 +1110,12 @@
         "description": "Cloth from an animal or a Hemp Bush. Used in many clothing items, weapons, and more."
     },
     {
+        "id": -606898372,
+        "shortname": "clothing.mannequin",
+        "name": "#clothingmannequin",
+        "description": "#clothing.mannequin.desc"
+    },
+    {
         "id": -903796529,
         "shortname": "clothing.mod.armorinsert_asbestos",
         "name": "Asbestos Armor Insert",
@@ -1461,7 +1479,7 @@
         "id": -1151332840,
         "shortname": "door.double.hinged.bardoors",
         "name": "Wooden Frontier Bar Doors",
-        "description": "Hand-carved, rugged bar doors embody the spirit of the frontier. A must-have for any survivor."
+        "description": "A Cheap door to secure your base. Its vulnerability to fire and weak explosive resistance makes the door a temporary solution to securing your base. Due to its flaws you should look at upgrading to a higher tier door such as Sheet Metal.\n\nThe Wooden Door can take two kinds of locks the basic Key Lock and the Code Lock. To pick up the door, remove any locks and open, hold down the E (USE) key and select 'Pickup'."
     },
     {
         "id": 1390353317,
@@ -1632,6 +1650,12 @@
         "description": "This object prevents passthrough while power is received through its second input."
     },
     {
+        "id": 104856514,
+        "shortname": "electric.bulbstringlights",
+        "name": "Bulb String Lights",
+        "description": "A string of glowing bulbs, can be deployed point by point to light up your base."
+    },
+    {
         "id": -1778897469,
         "shortname": "electric.button",
         "name": "Button",
@@ -1642,6 +1666,12 @@
         "shortname": "electric.cabletunnel",
         "name": "Cable Tunnel",
         "description": "Allows you to pass a cable through a wall. Each input will forward the amount it receives to the corresponding output on the other side."
+    },
+    {
+        "id": -1510616686,
+        "shortname": "electric.chandelier",
+        "name": "Chandelier",
+        "description": "A large adjustable electric chandelier. Very fancy."
     },
     {
         "id": -216999575,
@@ -1662,10 +1692,28 @@
         "description": "A Door Controller. Will manipulate the state of the closest door when it receives power"
     },
     {
+        "id": 54436981,
+        "shortname": "electric.fairylights",
+        "name": "Fairy Lights",
+        "description": "A wire of small fairy bulbs, can be deployed point by point to light up your base."
+    },
+    {
         "id": -939424778,
         "shortname": "electric.flasherlight",
         "name": "Flasher Light",
         "description": "A flashing blue light"
+    },
+    {
+        "id": 640470230,
+        "shortname": "electric.fluorescentlight.ceiling",
+        "name": "Ceiling Fluorescent Light",
+        "description": "A flicker-free fluorescent light."
+    },
+    {
+        "id": 1892536031,
+        "shortname": "electric.fluorescentlight",
+        "name": "Fluorescent Light",
+        "description": "Bright enough to see what you’re doing."
     },
     {
         "id": 1849887541,
@@ -1770,6 +1818,18 @@
         "description": "Splits an electrical signal into 3 multiple signals. the amount passed through is equal to the input amount divided by the number of used output slots."
     },
     {
+        "id": -1258821205,
+        "shortname": "electric.spotlight",
+        "name": "Spot Light",
+        "description": "A spotlight you can orient with a hammer."
+    },
+    {
+        "id": -2134097299,
+        "shortname": "electric.spotlight.tripod",
+        "name": "Tripod Spot Light",
+        "description": "A spotlight you can orient with a hammer."
+    },
+    {
         "id": -781014061,
         "shortname": "electric.sprinkler",
         "name": "Sprinkler",
@@ -1782,6 +1842,12 @@
         "description": "A simple electric switch."
     },
     {
+        "id": 1717250161,
+        "shortname": "electric.tablelight",
+        "name": "Electric Table Lamp",
+        "description": "A small light source made out of an old oil can."
+    },
+    {
         "id": 1371909803,
         "shortname": "electric.teslacoil",
         "name": "Tesla Coil",
@@ -1792,6 +1858,12 @@
         "shortname": "electric.timer",
         "name": "Timer",
         "description": "A Timer switch, will pass power through for duration."
+    },
+    {
+        "id": 656829501,
+        "shortname": "electric.wallcabinet",
+        "name": "Wall Cabinet",
+        "description": "A cabinet with a shelf for small items."
     },
     {
         "id": 1293102274,
@@ -3321,7 +3393,7 @@
         "id": -73195037,
         "shortname": "legacy bow",
         "name": "Legacy bow",
-        "description": "Legacy Bow, useful for short to medium range combat and hunting."
+        "description": "Hunting Bow, useful for short to medium range combat and hunting."
     },
     {
         "id": 607400343,
@@ -3480,6 +3552,12 @@
         "description": "A Mailbox that accepts notes. Only you can access the mail due to a one way slit."
     },
     {
+        "id": -1035206446,
+        "shortname": "mannequin",
+        "name": "Clothing Mannequin",
+        "description": "Displays a set of clothing, quickly remove items off your player onto the Mannequin. Goes by Manny."
+    },
+    {
         "id": 696029452,
         "shortname": "map",
         "name": "Paper Map",
@@ -3615,7 +3693,7 @@
         "id": 625599716,
         "shortname": "metal.shield",
         "name": "Metal Shield",
-        "description": "A large sturdy metal shield, keeps arrows and bullets at bay. Usable\r with single handed weapons and tools."
+        "description": "A large sturdy metal shield, keeps arrows and bullets at bay. Usable with single handed weapons and tools."
     },
     {
         "id": 1882709339,
@@ -3675,7 +3753,7 @@
         "id": 1426574435,
         "shortname": "minihelicopter.repair",
         "name": "Minicopter",
-        "description": ""
+        "description": null
     },
     {
         "id": -1130709577,
@@ -4269,7 +4347,7 @@
         "id": -92315244,
         "shortname": "revolver.hc",
         "name": "High Caliber Revolver",
-        "description": "A powerful six-shot revolver using 5.56 rounds. High damage and accuracy, but slow fire rate and even slower to reload."
+        "description": "High Caliber Revolver"
     },
     {
         "id": 596469572,
@@ -4287,7 +4365,7 @@
         "id": 1394042569,
         "shortname": "rhib",
         "name": "RHIB",
-        "description": ""
+        "description": null
     },
     {
         "id": -139037392,
@@ -4407,7 +4485,7 @@
         "id": 442886268,
         "shortname": "rocket.launcher",
         "name": "Rocket Launcher",
-        "description": "Shoots rockets slightly farther than North Korea."
+        "description": "Unmatched craftsmanship meets devastating firepower."
     },
     {
         "id": -1863063690,
@@ -4419,13 +4497,13 @@
         "id": 1758333838,
         "shortname": "rockingchair.rockingchair2",
         "name": "Teal",
-        "description": ""
+        "description": "A rocking chair that responds to your input. Don't fire whilst seated."
     },
     {
         "id": 192249897,
         "shortname": "rockingchair.rockingchair3",
         "name": "Green",
-        "description": ""
+        "description": "A rocking chair that responds to your input. Don't fire whilst seated."
     },
     {
         "id": 1414245522,
@@ -4443,7 +4521,7 @@
         "id": 1878053256,
         "shortname": "rowboat",
         "name": "Rowboat",
-        "description": ""
+        "description": null
     },
     {
         "id": -1104881824,
@@ -4635,7 +4713,7 @@
         "id": -1884328185,
         "shortname": "scraptransportheli.repair",
         "name": "Scrap Transport Helicopter",
-        "description": ""
+        "description": null
     },
     {
         "id": 504109620,
@@ -5073,25 +5151,25 @@
         "id": -1770889433,
         "shortname": "skylantern.skylantern.green",
         "name": "Sky Lantern - Green",
-        "description": ""
+        "description": "#skylantern.skylantern.green.desc"
     },
     {
         "id": -1824770114,
         "shortname": "skylantern.skylantern.orange",
         "name": "Sky Lantern - Orange",
-        "description": ""
+        "description": "#skylantern.skylantern.orange.desc"
     },
     {
         "id": 831955134,
         "shortname": "skylantern.skylantern.purple",
         "name": "Sky Lantern - Purple",
-        "description": ""
+        "description": "#skylantern.skylantern.purple.desc"
     },
     {
         "id": -1433390281,
         "shortname": "skylantern.skylantern.red",
         "name": "Sky Lantern - Red",
-        "description": ""
+        "description": "#skylantern.skylantern.red.desc"
     },
     {
         "id": -333406828,
@@ -5331,7 +5409,7 @@
         "id": -1366326648,
         "shortname": "spraycandecal",
         "name": "Spray Can Decal",
-        "description": ""
+        "description": null
     },
     {
         "id": -369760990,
@@ -5667,7 +5745,7 @@
         "id": -561148628,
         "shortname": "tugboat",
         "name": "Tugboat",
-        "description": ""
+        "description": null
     },
     {
         "id": -1478445584,
@@ -5847,7 +5925,7 @@
         "id": 198438816,
         "shortname": "vending.machine",
         "name": "Vending Machine",
-        "description": "Trade your goods with other players safely by creating sell and buy orders.  \r\n\r\nIf a raider gains access to the rear panel, they will have free reign over all of your goodies. Keep it safe."
+        "description": "Trade your goods with other players safely by creating sell and buy orders.  \n\nIf a raider gains access to the rear panel, they will have free reign over all of your goodies. Keep it safe."
     },
     {
         "id": -870140677,
@@ -5936,13 +6014,13 @@
     {
         "id": -450890885,
         "shortname": "wall.frame.lunar2025_b",
-        "name": "Lunar Wall Frame Swirling",
+        "name": "Lunar Wall Frame Inlay",
         "description": "A Lunar New Year themed decorative wall divider with swirling inlay"
     },
     {
         "id": -2016974826,
         "shortname": "wall.frame.lunar2025_c",
-        "name": "Lunar Wall Frame Floral",
+        "name": "Lunar Wall Frame Inlay",
         "description": "A Lunar New Year themed decorative wall divider with floral inlay"
     },
     {
@@ -5997,19 +6075,19 @@
         "id": -1614955425,
         "shortname": "wall.window.glass.reinforced",
         "name": "Strengthened Glass Window",
-        "description": "Bulletproof glass insert"
+        "description": "Strengthened Glass Window"
     },
     {
         "id": 1730664641,
         "shortname": "wallpaper.ceiling",
         "name": "Wallpaper Ceiling",
-        "description": ""
+        "description": null
     },
     {
         "id": -551431036,
         "shortname": "wallpaper.flooring",
         "name": "Wallpaper Flooring",
-        "description": ""
+        "description": null
     },
     {
         "id": 1629564540,
@@ -6021,7 +6099,7 @@
         "id": 553967074,
         "shortname": "wallpaper.wall",
         "name": "Wallpaper Wall",
-        "description": ""
+        "description": null
     },
     {
         "id": -1344017968,
@@ -6351,13 +6429,13 @@
         "id": -1497205569,
         "shortname": "woodmirror.small",
         "name": "Wood Mirror Small",
-        "description": "A small wooden mirror"
+        "description": "A small wooden frame"
     },
     {
         "id": 723407026,
         "shortname": "woodmirror.standing",
         "name": "Wood Mirror Standing",
-        "description": "A standing wooden mirror"
+        "description": "A standing wooden frontier themed mirror"
     },
     {
         "id": -541206665,
@@ -6483,7 +6561,7 @@
         "id": -151387974,
         "shortname": "xmas.lightstring.advanced",
         "name": "Deluxe Christmas Lights",
-        "description": "Colored, Animated, Powered Lights. Requires 5 electricity. Click to start placement, right click to end. Each unit is 0.5m long."
+        "description": "Colored, animated, powered Lights that can be deployed point by point to light up your base."
     },
     {
         "id": 1058261682,
