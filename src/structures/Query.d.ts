@@ -168,18 +168,6 @@ export interface Game {
   playtime_disconnected: number;
 }
 
-export interface RusticatedResponse {
-  success: boolean;
-  data: RusticatedData;
-}
-
-export interface RusticatedData {
-  limit: number;
-  total: number;
-  offset: number;
-  entries: Entry[];
-}
-
 export interface Entry {
   id: string;
   eventTime: string;

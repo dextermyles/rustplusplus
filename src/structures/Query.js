@@ -3,7 +3,7 @@ const Path = require('path');
 const Logger = require('./Logger');
 
 const Axios = require('axios');
-const Client = require('../..');
+const Client = require('../../index.ts');
 const Config = require('../../config');
 const Steam = require('steamapi');
 
@@ -16,6 +16,7 @@ class Query {
         this.logger.setGuildId(this.guildId);
         this.rustStatsURL = Config.ruststats.baseUrl;
         this.steam = new Steam.default(Config.steam.apiKey);
+        this.instance = Client.client.getInstance(guildId);
     }
 
 
@@ -53,6 +54,10 @@ class Query {
 
     GET_VANITY_URL(username) {
         return `https://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/?key=${Config.steam.apiKey}&vanityurl=${username}`
+    }
+
+    GET_RUSTICATED_US_LONG_HEATMAP() {
+        return `https://rusticated.com/api/v3/heatmap?serverId=uslong&serverWipeId=&eventType=kill_player`
     }
 
     getVanityUrl(username) {

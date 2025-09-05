@@ -18,15 +18,15 @@
 
 */
 
-const Discord = require('discord.js');
-const Fs = require('fs');
-const Path = require('path');
+import DiscordBot from "src/structures/DiscordBot";
 
-const DiscordBot = require('./src/structures/DiscordBot');
+import Discord from  'discord.js';
+import Fs from 'fs';
+import Path from 'path';
 
 createMissingDirectories();
 
-const client = new DiscordBot({
+const discordClient = new DiscordBot({
     intents: [
         Discord.GatewayIntentBits.Guilds,
         Discord.GatewayIntentBits.GuildMessages,
@@ -38,7 +38,7 @@ const client = new DiscordBot({
     disableEveryone: false
 });
 
-client.build();
+discordClient.build();
 
 function createMissingDirectories() {
     if (!Fs.existsSync(Path.join(__dirname, 'logs'))) {
@@ -59,10 +59,10 @@ function createMissingDirectories() {
 }
 
 process.on('unhandledRejection', error => {
-    client.log(client.intlGet(null, 'errorCap'), client.intlGet(null, 'unhandledRejection', {
+    discordClient.log(discordClient.intlGet(null, 'errorCap'), discordClient.intlGet(null, 'unhandledRejection', {
         error: error
     }), 'error');
     console.log(error);
 });
 
-exports.client = client;
+exports.client = discordClient;
