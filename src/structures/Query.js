@@ -24,7 +24,7 @@ class Query {
     }
 
     GET_USER_GAMBLING_STATS(id) {
-        return `https://rusticated.com/api/v3/leaderboard?hidden=false&limit=10&offset=0&group=gambling&sortBy=gambling_pokerwon&sortDir=desc&type=player&eventType=kill_player&filter=${id}&serverId=uslong&serverWipeId=3623&attackerSteamId=&orgId=1`
+        return `https://rusticated.com/api/v3/leaderboard?hidden=false&limit=10&offset=0&group=gambling&sortBy=gambling_pokerwon&sortDir=desc&type=player&eventType=kill_player&filter=${id}&serverId=uslong&serverWipeId=3729&attackerSteamId=&orgId=1`
     }
 
     GET_USER_BANNED(id) {
