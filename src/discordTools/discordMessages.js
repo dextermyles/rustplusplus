@@ -603,7 +603,7 @@ module.exports = {
 
     sendAiMessage: async function (interaction, response) {
         const content = {
-            embeds: [DiscordEmbeds.getAiEmbed(interaction.guildId, response)]
+            embeds: [DiscordEmbeds.getAiEmbed(response)]
         }
         await Client.client.interactionEditReply(interaction, content);
     },

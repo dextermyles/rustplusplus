@@ -37,20 +37,32 @@ class Ai {
         }
 
         try {
-            const resp = await this.openai.chat.completions.create({
+            // const resp = await this.openai.chat.completions.create({
+            //     model: "moonshotai/kimi-k2-instruct",
+            //     messages: [sysMsg, userMsg],
+            //     // stream: false,
+            //     // max_completion_tokens: 2048,
+            //     // temperature: 1,
+            //     // top_p: 0.77,
+            //     // stop: null,
+            //     // reasoning_format: 'hidden',
+            // });
+
+            const resp = await this.create({
                 model: "moonshotai/kimi-k2-instruct",
-                messages: [sysMsg, userMsg],
-                // stream: false,
-                // max_completion_tokens: 2048,
-                // temperature: 1,
-                // top_p: 0.77,
-                // stop: null,
-                // reasoning_format: 'hidden',
+                messages: [
+                    {
+                        role: "system",
+                        content: "You are my assistant for the survival game Rust, developed by Face Punch.\nYou can search for items at rusthelp.com for stats and item lookups.\nOnly provide the final answer to the user, do not show your reasoning steps"
+                    },
+                    userMsg
+                ]
+            }).then((resp) => {
+                this.log('AI Answer', JSON.stringify(resp));
+                return resp.choices[0].message.content
             });
 
-            this.log('AI Answer', JSON.stringify(resp.choices));
-
-            this.lastAnswer = resp.choices[0].message.content;
+            this.lastAnswer = resp;
 
             return this.lastAnswer;
         }

@@ -647,6 +647,15 @@ module.exports = {
         };
     },
 
+    getAiEmbed: function (body) {
+        return module.exports.getEmbed({
+            color: Constants.COLOR_DEFAULT,
+            title: 'Rust AI Assistant',
+            description: body,
+            timestamp: true
+        });
+    },
+
     getServerChangedStateEmbed: function (guildId, serverId, state) {
         const instance = Client.client.getInstance(guildId);
         const server = instance.serverList[serverId];

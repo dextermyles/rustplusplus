@@ -140,7 +140,7 @@ class RustPlus extends RustPlusLib {
                 }
             ]
         }).then((resp) => {
-            console.log("AI test response: ", resp);
+            console.log("AI test response: ", JSON.stringify(resp));
         });
 
 

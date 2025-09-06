@@ -18,7 +18,7 @@
 
 */
 
-import DiscordBot from "src/structures/DiscordBot";
+import DiscordBot from './src/structures/DiscordBot.js';
 
 import Discord from  'discord.js';
 import Fs from 'fs';
