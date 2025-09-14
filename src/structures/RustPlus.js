@@ -121,31 +121,14 @@ class RustPlus extends RustPlusLib {
 
         /* AI chat assistant */
         this.ai = new Ai(guildId);
-        this.rusthelp = new RustHelp();
+        //this.rusthelp = new RustHelp(guildId);
 
         /* Query (Rust stats, Companion app testing, rust+, etc) */
         this.query = new Query(guildId);
         this.loadRustPlusEvents();
 
-        this.ai.create({
-            model: "moonshotai/kimi-k2-instruct",
-            messages: [
-                {
-                    role: "system",
-                    content: "You are my assistant for the survival game Rust, developed by Face Punch.\n"
-                },
-                {
-                    role: 'user',
-                    content: "how much HP does an armored door have?"
-                }
-            ]
-        }).then((resp) => {
-            console.log("AI test response: ", JSON.stringify(resp));
-        });
-
-
         // this.loadRustHelp()
-        //     .then(() => { console.log('rust help loaded')});
+        //     .then(() => { console.log('rust help loaded') });
     }
 
     loadRustPlusEvents() {
@@ -160,17 +143,10 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async loadRustHelp() {
-        await this.rusthelp.fetch();
-        this.sleep(1000, async () => {
-            await this.rusthelp.fetchItem('mlrs rocket')
-                .then((data) => {
-                    console.log('fetchItem completed');
-                });
-        })
+    // async loadRustHelp() {
+    //     this.sleep(5000, () => await this.rusthelp.fetch());
 
-
-    }
+    // }
 
     async sleep(ms, callback) {
         return setTimeout(callback, ms);
@@ -889,6 +865,46 @@ class RustPlus extends RustPlusLib {
 
         if (query === null)
             return null;
+    }
+
+    async getCommandRusticatedKills(steamId) {
+        let resp = await this.query.getRusticatedStats(steamId, 0);
+        let entries = resp.data.entries.sort((a, b) => b.eventTime - a.eventTime);
+        let temp = entries.map((e) => {
+            return {
+                victimName: e.victim.name,
+                victimId: e.victim.id,
+                attackerName: e.attacker.name,
+                attackerId: e.attacker.id,
+                weapon: e.weapon,
+                distance: e.distance,
+                eventTime: moment(e.eventTime).format("YYYY-MM-DD HH:mm:ss"),
+            }
+        });
+        if (temp.length > 3)
+            temp = temp.slice(0, 3);
+        
+        return temp.map(a=> a.victimName).join(', ');
+    }
+
+    async getCommandRusticatedDeaths(steamId) {
+        let resp = await this.query.getRusticatedStats(steamId, 1);
+        let entries = resp.data.entries.sort((a, b) => b.eventTime - a.eventTime);
+        let temp = entries.map((e) => {
+            return {
+                victimName: e.victim.name,
+                victimId: e.victim.id,
+                attackerName: e.attacker.name,
+                attackerId: e.attacker.id,
+                weapon: e.weapon,
+                distance: e.distance,
+                eventTime: moment(e.eventTime).format("YYYY-MM-DD HH:mm:ss"),
+            }
+        });
+        if (temp.length > 3)
+            temp = temp.slice(0, 3);
+        
+        return temp.map(a=> a.attackerName).join(', ');
     }
 
     async getCommandQuery(command, source = 0) {

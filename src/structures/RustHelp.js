@@ -1,7 +1,7 @@
 const cheerio = require('cheerio');
-const fs = require('fs');
-const path = require('path');
-
+const Fs = require('fs');
+const Path = require('path');
+const Logger = require('./Logger');
 const Axios = require('axios');
 const { setupCache } = require('axios-cache-interceptor');
 const { default: puppeteer } = require('puppeteer');
@@ -20,7 +20,10 @@ class RustHelp {
     /**
      *  Constructor for the RustLabs Class.
      */
-    constructor() {
+    constructor(guidId = null) {
+        this.guildId = guildId;
+        this.logger = new Logger(Path.join(__dirname, '..', '..', 'logs/rusthelp.log'), 'default');
+        this.logger.setGuildId(this.guildId);
     }
 
     getItemUrl(name) {
@@ -42,10 +45,9 @@ class RustHelp {
 
             // Save to JSON file
             fs.writeFileSync(`${this.directory}/rusthelp_itemlist.json`, JSON.stringify(items, null, 2), "utf-8");
-
-            console.log(`Extracted ${items.length} items → saved to ${this.directory}/rusthelp_itemlist.json`);
+            this.log(`Extracted ${items.length} items → saved to ${this.directory}/rusthelp_itemlist.json`);
         } catch (error) {
-            console.error("Error fetching or parsing data:", error);
+            this.logError("Error fetching or parsing data:", error);
         }
     }
 
@@ -62,11 +64,19 @@ class RustHelp {
             await browser.close();
             const $ = cheerio.load(pageHtml);
             const testStr = $.html();
-            console.log(testStr);
+            this.log(testStr);
             return $;
         } catch (error) {
-            console.error("Error fetching or parsing data:", error);
+            this.logError("Error fetching or parsing data: " + error);
         }
+    }
+
+    log(text, title = 'RustHelp', level = 'info') {
+        this.logger.log(title, message, level);
+    }
+
+    logError(text, title = 'RustHelp Error') {
+        this.logger.log(title, message, 'error');
     }
 }
 

@@ -138,6 +138,8 @@
     "commandSyntaxMarkers": "markers",
     "commandSyntaxMarket": "market",
     "commandSyntaxMe": "me",
+    "commandSyntaxRusticatedKills": "rkills",
+    "commandSyntaxRusticatedDeaths": "rdeaths",
     "commandSyntaxMetal": "metal",
     "commandSyntaxMute": "mute",
     "commandSyntaxNote": "note",

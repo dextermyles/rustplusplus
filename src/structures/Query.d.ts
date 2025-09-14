@@ -50,7 +50,7 @@ export interface RusticatedResponseData {
   total: number
   limit: number
   offset: number
-  entries: RusticatedEntry[]
+  entries: Entry[]
   userEntry: any
 }
 

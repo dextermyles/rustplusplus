@@ -21,6 +21,8 @@
 const SmartAlarmHandler = require('./smartAlarmHandler.js');
 const SmartSwitchGroupHandler = require('./smartSwitchGroupHandler.js');
 const SmartSwitchHandler = require('./smartSwitchHandler.js');
+const RP = require('../structures/RustPlus.js');
+const RustPlus = require('../structures/RustPlus.js');
 
 module.exports = {
     inGameCommandHandler: async function (rustplus, client, message) {
@@ -239,6 +241,16 @@ module.exports = {
         else if (commandLowerCase === `${prefix}${client.intlGet('en', 'commandSyntaxMe')}` ||
             commandLowerCase === `${prefix}${client.intlGet(guildId, 'commandSyntaxMe')}`) {
             rustplus.sendInGameMessage(await rustplus.getUserStats(callerSteamId, 1));
+        }
+        else if (commandLowerCase === `${prefix}${client.intlGet('en', 'commandSyntaxRusticatedKills')}` ||
+            commandLowerCase === `${prefix}${client.intlGet(guildId, 'commandSyntaxRusticatedKills')}`) {
+            let chatResponse = await rustplus.getCommandRusticatedKills(callerSteamId)
+            rustplus.sendInGameMessage(chatResponse);
+        }
+        else if (commandLowerCase === `${prefix}${client.intlGet('en', 'commandSyntaxRusticatedDeaths')}` ||
+            commandLowerCase === `${prefix}${client.intlGet(guildId, 'commandSyntaxRusticatedDeaths')}`) {
+            let chatResponse = await rustplus.getCommandRusticatedDeaths(callerSteamId)
+            rustplus.sendInGameMessage(chatResponse);
         }
         else if (commandLowerCase === `${prefix}${client.intlGet('en', 'commandSyntaxDegen')}` ||
             commandLowerCase === `${prefix}${client.intlGet(guildId, 'commandSyntaxDegen')}`) {

@@ -1,6 +1,6 @@
 export = DiscordBot;
 declare class DiscordBot extends Discord.Client<boolean> {
-    constructor(props: any);
+    constructor(props: Discord.ClientOptions);
     logger: Logger;
     commands: Discord.Collection<any, any>;
     fcmListeners: Object;
