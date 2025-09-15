@@ -867,6 +867,13 @@ class RustPlus extends RustPlusLib {
             return null;
     }
 
+    cleanChatMessage(message) {
+        let tempMsg = '';
+        tempMsg = message;
+        tempMsg = tempMsg.replace(/[^a-zA-Z0-9.,\s*:_@()-]/g, "");
+        return tempMsg;
+    }
+
     async getCommandRusticatedKills(steamId) {
         let resp = await this.query.getRusticatedStats(steamId, 0);
         let entries = resp.data.entries.sort((a, b) => b.eventTime - a.eventTime);
@@ -884,12 +891,12 @@ class RustPlus extends RustPlusLib {
         if (temp.length > 3)
             temp = temp.slice(0, 3);
         
-        return temp.map(a=> a.victimName).join(', ');
+        return temp.map(a=> this.cleanChatMessage(a.victimName)).join(', ');
     }
 
     async getCommandRusticatedDeaths(steamId) {
         let resp = await this.query.getRusticatedStats(steamId, 1);
-        let entries = resp.data.entries.sort((a, b) => b.eventTime - a.eventTime);
+        let entries = resp.data.entries.sort((a, b) => new Date(b.eventTime) - new Date(a.eventTime));
         let temp = entries.map((e) => {
             return {
                 victimName: e.victim.name,
@@ -904,7 +911,7 @@ class RustPlus extends RustPlusLib {
         if (temp.length > 3)
             temp = temp.slice(0, 3);
         
-        return temp.map(a=> a.attackerName).join(', ');
+        return temp.map(a=> this.cleanChatMessage(a.attackerName)).join(', ');
     }
 
     async getCommandQuery(command, source = 0) {
