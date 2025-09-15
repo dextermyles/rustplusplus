@@ -945,7 +945,7 @@ class RustPlus extends RustPlusLib {
                 response = await this.getUserBanned(query);
                 break;
             case "stats":
-                response = await this.getUserStats(query);
+                response = await this.getUserStats(query, source);
                 break;
             case "achivements":
                 response = await this.getUserAchievements(query);
