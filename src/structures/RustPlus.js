@@ -890,8 +890,8 @@ class RustPlus extends RustPlusLib {
         });
         if (temp.length > 3)
             temp = temp.slice(0, 3);
-        
-        return temp.map(a=> this.cleanChatMessage(a.victimName)).join(', ');
+
+        return temp.map(a => this.cleanChatMessage(a.victimName)).join(', ');
     }
 
     async getCommandRusticatedDeaths(steamId) {
@@ -910,8 +910,8 @@ class RustPlus extends RustPlusLib {
         });
         if (temp.length > 3)
             temp = temp.slice(0, 3);
-        
-        return temp.map(a=> this.cleanChatMessage(a.attackerName)).join(', ');
+
+        return temp.map(a => this.cleanChatMessage(a.attackerName)).join(', ');
     }
 
     async getCommandQuery(command, source = 0) {
@@ -3795,7 +3795,16 @@ class RustPlus extends RustPlusLib {
 
     async getRusticatedStats(id, type) {
         var response = await this.query.getRusticatedStats(id, type);
-        var entries = response.data.entries;
+        var entries = response.data.entries
+            .map(x => {
+                let temp = {
+                    ...x,
+                    eventTime: new Date(x.eventTime)
+                }
+                return temp;
+            })
+            .sort((a, b) =>
+                 b.eventTime - a.eventTime); // Sort by eventTime descending
 
         let getWeaponName = (entry) => {
             return entry.substring(0, entry.indexOf('.'));
