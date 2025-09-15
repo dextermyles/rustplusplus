@@ -35,6 +35,10 @@ class Info {
         this._seed = info.seed;
         this._salt = info.salt;
 
+        this._wipeId = null; // Only used in RustPlus
+        if (info.wipeId) 
+            this._wipeId = info.wipeId;
+
         this._correctedMapSize = Map.getCorrectedMapSize(info.mapSize);
     }
 
@@ -63,6 +67,8 @@ class Info {
     set salt(salt) { this._salt = salt; }
     get correctedMapSize() { return this._correctedMapSize; }
     set correctedMapSize(correctedMapSize) { this._correctedMapSize = correctedMapSize; }
+    get wipeId() { return this._wipeId; }
+    set wipeId(wipeId) { this._wipeId = wipeId; }
 
     /* Change checkers */
     isNameChanged(info) { return ((this.name) !== (info.name)); }
@@ -82,6 +88,12 @@ class Info {
     isMaxPlayersDecreased(info) { return ((this.maxPlayers) > (info.maxPlayers)); }
     isQueue() { return (this.queuedPlayers !== 0); }
 
+    isWipeIdChanged(info){
+        if(this.wipeId === null && info.wipeId === null) 
+            return false;
+        return ((this.wipeId) !== (info.wipeId));
+    }
+
     updateInfo(info) {
         this.name = info.name;
         this.headerImage = info.headerImage;
@@ -94,8 +106,10 @@ class Info {
         this.queuedPlayers = info.queuedPlayers;
         this.seed = info.seed;
         this.salt = info.salt;
-
         this.correctedMapSize = Map.getCorrectedMapSize(info.mapSize);
+
+        if (info.wipeId)
+            this.wipeId = info.wipeId;
     }
 
     getSecondsSinceWipe() { return (new Date() - new Date(this.wipeTime * 1000)) / 1000; }
