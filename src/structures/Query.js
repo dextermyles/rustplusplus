@@ -45,11 +45,11 @@ class Query {
     }
 
     GET_RUSTICATED_KILL_HISTORY(id) {
-        return `https://rusticated.com/api/v3/events/kills-minimal?attackerSteamId=${id}&offset=0&orgId=1&serverId=uslong`
+        return `https://rusticated.com/api/v3/events/kills-minimal?attackerSteamId=${id}&orgId=1&serverId=uslong`
     }
 
     GET_RUSTICATED_DEATH_HISTORY(id) {
-        return `https://rusticated.com/api/v3/events/kills-minimal?victimSteamId=${id}&offset=0&orgId=1&serverId=uslong`
+        return `https://rusticated.com/api/v3/events/kills-minimal?victimSteamId=${id}&orgId=1&serverId=uslong`
     }
 
     GET_VANITY_URL(username) {

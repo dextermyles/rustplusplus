@@ -3830,7 +3830,7 @@ class RustPlus extends RustPlusLib {
                 history: entries.map(x => {
                     var eventTime = moment(x.eventTime);
                     let victim = {
-                        name: x.victim.name,
+                        name: `${x.victim.name} [${x.victim.steamId}]`,
                         value: `${getWeaponName(x.weapon)} @ ${getDistance(x.distance)} [${eventTime.fromNow()}]`
                     };
                     return victim;
@@ -3844,7 +3844,7 @@ class RustPlus extends RustPlusLib {
                 history: entries.map(x => {
                     var eventTime = moment(x.eventTime);
                     let attacker = {
-                        name: x.attacker.name,
+                        name: `${x.attacker.name} [${x.attacker.steamId}]`,
                         value: `${getWeaponName(x.weapon)} @ ${getDistance(x.distance)} [${eventTime.fromNow()}]`
                     };
 
