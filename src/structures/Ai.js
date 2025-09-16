@@ -128,8 +128,10 @@ class Ai {
             });
 
 
-            this.lastAnswer = finalResponse.choices[0].message.content;
-            this.log('Final Answer', JSON.stringify(finalResponse));
+            this.lastAnswer = finalResponse.choices[0].message.content !== ''
+                ? finalResponse.choices[0].message.content
+                : responseMessage.content;
+            this.log('Final Answer', JSON.stringify(this.lastAnswer));
             return this.lastAnswer;
         }
         catch (e) {
