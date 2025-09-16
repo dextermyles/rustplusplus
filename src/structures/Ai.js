@@ -45,8 +45,9 @@ class Ai {
         const sysMsg = {
             role: "system",
             content: "You are my assistant for the survival game Rust.\n"
-                + "Assume Vanilla game mode for item and building stats. \n"
+                + "Assume Vanilla game settings when calculating item and building stats in calculations for damage, health, durability, decay, despawn, recycle.\n"
                 + "Assume all questions about Rust refer to the PC game developed by Facepunch (https://rust.facepunch.com/), not the programming language.\n"
+                + "The only exception is if the user asks a gambling question for the Casino games in Rust (blackjack, slots, spinning  wheel).\n"
                 + "Provide final answers for the user, keep conversations brief to prevent spam.\n"
         };
 
@@ -80,13 +81,9 @@ class Ai {
         try {
             const resp = await this.create({
                 model: "moonshotai/kimi-k2-instruct",
-                messages: [
-                    sysMsg,
-                    userMsg,
-
-                ],
-                tool_choice: "auto",
-                tools
+                messages,
+                temperature: 0.5,
+                max_completion_tokens: 4096
             });
 
             this.log('AI Response', JSON.stringify(resp));
@@ -118,20 +115,17 @@ class Ai {
             // }
 
             // Make the final request with tool call results
-            const finalResponse = await this.create({
-                model: "moonshotai/kimi-k2-instruct",
-                messages,
-                tools,
-                temperature: 0.5,
-                tool_choice: "auto",
-                max_completion_tokens: 4096
-            });
+            // const finalResponse = await this.create({
+            //     model: "moonshotai/kimi-k2-instruct",
+            //     messages,
+            //     tools,
+            //     temperature: 0.5,
+            //     tool_choice: "auto",
+            //     max_completion_tokens: 4096
+            // });
 
+            this.lastAnswer = responseMessage.content.trim();
 
-            this.lastAnswer = finalResponse.choices[0].message.content !== ''
-                ? finalResponse.choices[0].message.content
-                : responseMessage.content;
-            this.log('Final Answer', JSON.stringify(this.lastAnswer));
             return this.lastAnswer;
         }
         catch (e) {
