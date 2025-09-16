@@ -3,6 +3,8 @@ const Logger = require('./Logger');
 const Path = require('path');
 const Config = require('../../config');
 const Groq = require("groq-sdk");
+const Client = require('../../index.ts');
+
 class Ai {
 
     constructor(guildId = null) {
@@ -12,10 +14,27 @@ class Ai {
         this.logger = new Logger(Path.join(__dirname, '..', '..', 'logs/ai.log'), 'default');
         this.logger.setGuildId(this.guildId);
         this.openai = new Groq.Groq({ apiKey: Config.groq.token });
+
+
+        this.instance = this.getInstance();
+        this.items = Client.client.items;
     }
 
-    async create(params) {
-        return await this.openai.chat.completions.create(params);
+    getInstance() {
+        return Client.client.getInstance(this.guildId);
+    }
+
+    getItem(name) {
+        let itemId = Client.client.items.getClosestItemIdByName(name);
+        if (itemId) {
+            let item = Client.client.items.getItem(itemId);
+            return item;
+        }
+        return null;
+    }
+
+    async create(body) {
+        return await this.openai.chat.completions.create(body);
     }
 
     async askAiBot(query) {
@@ -25,9 +44,9 @@ class Ai {
 
         const sysMsg = {
             role: "system",
-            content: "You are my assistant for the survival game Rust, developed by Face Punch.\n"
-                + "Assume I play on official servers. \n"
-                + "Any  mention of Rust refers to the PC game developed by Facepunch (https://rust.facepunch.com/)."
+            content: "You are my assistant for the survival game Rust.\n"
+                + "Assume Vanilla game mode for item and building stats. \n"
+                + "Assume all questions about Rust refer to the PC game developed by Facepunch (https://rust.facepunch.com/), not the programming language.\n"
                 + "Provide final answers for the user, keep conversations brief to prevent spam.\n"
         };
 
@@ -36,39 +55,86 @@ class Ai {
             content: this.lastQuestion
         }
 
-        try {
-            // const resp = await this.openai.chat.completions.create({
-            //     model: "moonshotai/kimi-k2-instruct",
-            //     messages: [sysMsg, userMsg],
-            //     // stream: false,
-            //     // max_completion_tokens: 2048,
-            //     // temperature: 1,
-            //     // top_p: 0.77,
-            //     // stop: null,
-            //     // reasoning_format: 'hidden',
-            // });
+        const tools = [
+            {
+                "type": "function",
+                "function": {
+                    "name": "getItem",
+                    "description": "Get item by name",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "description": "The name of item",
+                            }
+                        },
+                        "required": ["name"],
+                    },
+                },
+            }
+        ];
 
+        const messages = [sysMsg, userMsg];
+
+        try {
             const resp = await this.create({
                 model: "moonshotai/kimi-k2-instruct",
                 messages: [
-                    {
-                        role: "system",
-                        content: "You are my assistant for the survival game Rust, developed by Face Punch.\nYou can search for items at rusthelp.com for stats and item lookups.\nOnly provide the final answer to the user, do not show your reasoning steps"
-                    },
-                    userMsg
-                ]
-            }).then((resp) => {
-                this.log('AI Answer', JSON.stringify(resp));
-                return resp.choices[0].message.content
+                    sysMsg,
+                    userMsg,
+
+                ],
+                tool_choice: "auto",
+                tools
             });
 
-            this.lastAnswer = resp;
+            this.log('AI Response', JSON.stringify(resp));
 
+            const responseMessage = resp.choices[0].message;
+            const toolCalls = responseMessage.tool_calls || [];
+
+            // Process tool calls
+            messages.push(responseMessage);
+
+            const availableFunctions = {
+                getItem: this.getItem
+            };
+
+            // for (const toolCall of toolCalls) {
+            //     const functionName = toolCall.function.name;
+            //     const functionToCall = availableFunctions[functionName];
+            //     const functionArgs = JSON.parse(toolCall.function.arguments);
+            //     // Call corresponding tool function if it exists
+            //     const functionResponse = functionToCall?.(functionArgs.name);
+
+            //     if (functionResponse) {
+            //         messages.push({
+            //             role: "tool",
+            //             content: functionResponse,
+            //             tool_call_id: toolCall.id,
+            //         });
+            //     }
+            // }
+
+            // Make the final request with tool call results
+            const finalResponse = await this.create({
+                model: "moonshotai/kimi-k2-instruct",
+                messages,
+                tools,
+                temperature: 0.5,
+                tool_choice: "auto",
+                max_completion_tokens: 4096
+            });
+
+
+            this.lastAnswer = finalResponse.choices[0].message.content;
+            this.log('Final Answer', JSON.stringify(finalResponse));
             return this.lastAnswer;
         }
         catch (e) {
-            this.log('ai failed', e, 'error');
-            return { error: e };
+            console.error(e);
+            return e;
         }
 
     }

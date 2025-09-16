@@ -122,6 +122,10 @@ class RustPlus extends RustPlusLib {
         /* AI chat assistant */
         this.ai = new Ai(guildId);
         //this.rusthelp = new RustHelp(guildId);
+        // this.ai.askAiBot("How many propane explosive bombs to raid a wooden door?")
+        //     .then((response) => {
+        //         this.log('AI test', response);
+        //     });
 
         /* Query (Rust stats, Companion app testing, rust+, etc) */
         this.query = new Query(guildId);
