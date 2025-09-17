@@ -47,9 +47,9 @@ class Ai {
             content: "You are my assistant for the survival game Rust.\n"
                 + "Assume Vanilla game settings when calculating item and building stats in calculations for damage, health, durability, decay, despawn, recycle.\n"
                 + "Assume all questions about Rust refer to the PC game developed by Facepunch (https://rust.facepunch.com/), not the programming language.\n"
-                + "The only exception is if the user asks a gambling question for the Casino games in Rust (blackjack, slots, spinning  wheel).\n"
-                + "Provide final answers for the user, keep conversations brief to prevent spam.\n"
-                + "Respond using plain text (no special characters), with line breaks to separate answers."
+                + "The only exception is if the user asks a gambling question about Casino games in Rust (black jack, slot machine, big wheel).\n"
+                + "Provide final answers, keep conversations brief to prevent spam.\n"
+                + "Respond using plain text only (no special character encodings except math symbols)."
         };
 
         const userMsg = {
