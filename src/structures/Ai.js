@@ -49,6 +49,7 @@ class Ai {
                 + "Assume all questions about Rust refer to the PC game developed by Facepunch (https://rust.facepunch.com/), not the programming language.\n"
                 + "The only exception is if the user asks a gambling question for the Casino games in Rust (blackjack, slots, spinning  wheel).\n"
                 + "Provide final answers for the user, keep conversations brief to prevent spam.\n"
+                + "Respond using plain text (no special characters), with line breaks to separate answers."
         };
 
         const userMsg = {
@@ -123,6 +124,9 @@ class Ai {
             //     tool_choice: "auto",
             //     max_completion_tokens: 4096
             // });
+
+            let content = responseMessage.content.trim();
+            const strings = content.match(new RegExp(`.{1,80}(\\s|$)`, 'g'));
 
             this.lastAnswer = responseMessage.content.trim();
 

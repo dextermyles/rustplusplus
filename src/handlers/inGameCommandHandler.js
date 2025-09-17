@@ -23,6 +23,7 @@ const SmartSwitchGroupHandler = require('./smartSwitchGroupHandler.js');
 const SmartSwitchHandler = require('./smartSwitchHandler.js');
 const RP = require('../structures/RustPlus.js');
 const RustPlus = require('../structures/RustPlus.js');
+const utils = require('../util/utils.js');
 
 module.exports = {
     inGameCommandHandler: async function (rustplus, client, message) {
@@ -47,7 +48,13 @@ module.exports = {
         }
         else if (commandLowerCase.startsWith(`${prefix}${client.intlGet('en', 'commandSyntaxAi')}`) ||
             commandLowerCase.startsWith(`${prefix}${client.intlGet(guildId, 'commandSyntaxAi')}`)) {
-            rustplus.sendInGameMessage(await rustplus.getCommandAi(command));
+            const chatResponse = await rustplus.getCommandAi(command);
+            const responseLines = chatResponse.split('\n');
+            for (let line of responseLines) {
+                if (line.trim() !== '') {
+                    rustplus.sendInGameMessage(line.trim());
+                }
+            }
         }
         else if (commandLowerCase.startsWith(`${prefix}${client.intlGet('en', 'commandSyntaxQuery')}`) ||
             commandLowerCase.startsWith(`${prefix}${client.intlGet(guildId, 'commandSyntaxQuery')}`)) {
