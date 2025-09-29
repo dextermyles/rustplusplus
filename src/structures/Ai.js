@@ -48,8 +48,8 @@ class Ai {
                 + "Assume Vanilla game settings when calculating item and building stats in calculations for damage, health, durability, decay, despawn, recycle.\n"
                 + "Assume all questions about Rust refer to the PC game developed by Facepunch (https://rust.facepunch.com/), not the programming language.\n"
                 + "The only exception is if the user asks a gambling question about Casino games in Rust (black jack, slot machine, big wheel).\n"
-                + "Provide final answers, keep conversations brief to prevent spam.\n"
-                + "Respond using plain text only (no special character encodings except math symbols)."
+                + "Provide a concise, brief, final answer only, without any additional commentary or preamble.\n"
+                + "Use Plain Text format only, no Markdown, no code blocks.\n"
         };
 
         const userMsg = {
@@ -84,7 +84,10 @@ class Ai {
                 model: "moonshotai/kimi-k2-instruct",
                 messages,
                 temperature: 0.5,
-                max_completion_tokens: 4096
+                max_completion_tokens: 4096,
+                search_settings:{
+                    include_domains: ["rusthelp.com", "wiki.rustclash.com"]
+                }
             });
 
             this.log('AI Response', JSON.stringify(resp));
@@ -99,36 +102,10 @@ class Ai {
                 getItem: this.getItem
             };
 
-            // for (const toolCall of toolCalls) {
-            //     const functionName = toolCall.function.name;
-            //     const functionToCall = availableFunctions[functionName];
-            //     const functionArgs = JSON.parse(toolCall.function.arguments);
-            //     // Call corresponding tool function if it exists
-            //     const functionResponse = functionToCall?.(functionArgs.name);
-
-            //     if (functionResponse) {
-            //         messages.push({
-            //             role: "tool",
-            //             content: functionResponse,
-            //             tool_call_id: toolCall.id,
-            //         });
-            //     }
-            // }
-
-            // Make the final request with tool call results
-            // const finalResponse = await this.create({
-            //     model: "moonshotai/kimi-k2-instruct",
-            //     messages,
-            //     tools,
-            //     temperature: 0.5,
-            //     tool_choice: "auto",
-            //     max_completion_tokens: 4096
-            // });
-
             let content = responseMessage.content.trim();
             const strings = content.match(new RegExp(`.{1,80}(\\s|$)`, 'g'));
 
-            this.lastAnswer = responseMessage.content.trim();
+            this.lastAnswer = strings;
 
             return this.lastAnswer;
         }

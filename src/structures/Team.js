@@ -52,7 +52,7 @@ class Team {
     /* Change checkers */
     isLeaderSteamIdChanged(team) { return (this.leaderSteamId !== team.leaderSteamId.toString()); }
 
-    updateTeam(team) {
+    async updateTeam(team) {
         const instance = Client.client.getInstance(this.rustplus.guildId);
 
         if (this.isLeaderSteamIdChanged(team)) {
@@ -116,6 +116,13 @@ class Team {
             player.teamLeader = true;
         }
 
+        await this.players.filter(p => p.isOnline)
+            .forEach(async (p, index) => {
+                let statsResponse = await this.rustplus.getRusticatedStats(p.steamId, 0);
+                console.log(statsResponse)
+            });
+
+
         Client.client.setInstance(this.rustplus.guildId, instance);
     }
 
@@ -132,7 +139,7 @@ class Team {
 
     getPlayer(steamId) {
         for (let player of this.players) {
-            if (player.steamId === steamId) 
+            if (player.steamId === steamId)
                 return player;
         }
         return null;

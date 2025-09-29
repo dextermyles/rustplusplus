@@ -49,10 +49,20 @@ module.exports = {
         else if (commandLowerCase.startsWith(`${prefix}${client.intlGet('en', 'commandSyntaxAi')}`) ||
             commandLowerCase.startsWith(`${prefix}${client.intlGet(guildId, 'commandSyntaxAi')}`)) {
             const chatResponse = await rustplus.getCommandAi(command);
-            const responseLines = chatResponse.split('\n');
-            for (let line of responseLines) {
-                if (line.trim() !== '') {
-                    rustplus.sendInGameMessage(line.trim());
+
+            if (typeof chatResponse === 'string') {
+                let message = "";
+                message = chatResponse;
+                rustplus.sendInGameMessage(message.trim());
+            }
+            else if (Array.isArray(chatResponse)) {
+                let messages = [""];
+                messages = chatResponse;
+                for (let line of messages) {
+                    if (line.trim() !== '') {
+                        let newString = line.replace(/([^a-z0-9 \.\-_]+)/gi, '');
+                        rustplus.sendInGameMessage(newString);
+                    }
                 }
             }
         }
