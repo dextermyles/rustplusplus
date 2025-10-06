@@ -18,6 +18,12 @@
         "description": "Vertical Abyss container taken from the depths of the ocean"
     },
     {
+        "id": -1896395719,
+        "shortname": "advancedblueprintfragment",
+        "name": "Advanced Blueprint Fragment",
+        "description": "Precision schematics with complex information, multiple fragments are necessary for crafting a Tier 3 Workbench."
+    },
+    {
         "id": -1498613415,
         "shortname": "advancedcoolingtea",
         "name": "Advanced Cooling Tea",
@@ -436,6 +442,12 @@
         "shortname": "barricade.woodwire",
         "name": "Barbed Wooden Barricade",
         "description": "A wooden barricade with barbed wire, made of Wood and Metal Fragments. The barbed wire causes damage and will also slow player movement."
+    },
+    {
+        "id": -143481979,
+        "shortname": "basicblueprintfragment",
+        "name": "Basic Blueprint Fragment",
+        "description": "Damaged diagrams containing partial information to constuct a Tier 2 Workbench for advanced crafting. Several fragments are needed.\n\n20 Basic Fragments can be pieced together to make an Advanced Fragment."
     },
     {
         "id": -1274093662,
@@ -861,7 +873,7 @@
         "id": 1524980732,
         "shortname": "carvable.pumpkin",
         "name": "Carvable Pumpkin",
-        "description": "A pumpkin that you can carve. \n\nRequires wood as a fuel source."
+        "description": "A pumpkin you can carve any design you'd like into and light up at night. Requires wood as a fuel source."
     },
     {
         "id": 476066818,
@@ -939,7 +951,7 @@
         "id": -1944704288,
         "shortname": "chair.icethrone",
         "name": "Ice Throne",
-        "description": "Every home needs a chair. A decorative item which provides comfort while seated."
+        "description": "An Ice Throne. Fit for the one true arctic warlord."
     },
     {
         "id": 1534542921,
@@ -952,6 +964,18 @@
         "shortname": "charcoal",
         "name": "Charcoal",
         "description": "Byproduct from campfires and furnaces used for crafting gunpowder."
+    },
+    {
+        "id": 2130820932,
+        "shortname": "charity.plushy.01",
+        "name": "Cancer Research UK Plushie",
+        "description": "A soft and squishy plush that provides comfort in your base. First sold on the Rust store in October 2025 to support Cancer Research UK, each purchase helped fund real-world cancer research.\n\nwww.cancerresearchuk.org"
+    },
+    {
+        "id": 2130820933,
+        "shortname": "charity.plushy.02",
+        "name": "Ronald McDonald House UK Plushie",
+        "description": "A soft and squishy plush that provides comfort in your base. First sold on the Rust store in October 2025 to support Ronald McDonald House Charities UK, helping ease the burden on families by providing free ‘home away from home’ accommodation near hospitals.\n\nwww.rmhc.org.uk"
     },
     {
         "id": 1973684065,
@@ -1503,7 +1527,7 @@
         "id": 818733919,
         "shortname": "door.hinged.industrial.a",
         "name": "Industrial Door",
-        "description": "Medium strength door, vulnerable to explosives."
+        "description": "A red industrial door with a window."
     },
     {
         "id": -2067472972,
@@ -1533,7 +1557,7 @@
         "id": -258574361,
         "shortname": "draculacape",
         "name": "Dracula Cape",
-        "description": "A robustly thick outer garment providing ample protection to the wearer."
+        "description": "A Halloween themed replacement for the Vagabond Jacket which flows in the wind."
     },
     {
         "id": 1865253052,
@@ -2685,7 +2709,7 @@
         "id": -1785231475,
         "shortname": "halloween.surgeonsuit",
         "name": "Surgeon Scrubs",
-        "description": "A Surgeon Suit"
+        "description": "A bloody surgeon outfit. Protects your entire body and provides good protection while giving off a creepy halloween vibe."
     },
     {
         "id": 200773292,
@@ -2775,7 +2799,7 @@
         "id": 271048478,
         "shortname": "hat.ratmask",
         "name": "Rat Mask",
-        "description": "A Beautifully crafted bronze and gold Rat mask to celebrate the 2020 Lunar New Year"
+        "description": "A Beautifully crafted bronze and gold Rat mask to celebrate the 2020 Lunar New Year. This item replaces the wolf headdress."
     },
     {
         "id": -1314079879,
@@ -2822,8 +2846,8 @@
     {
         "id": -797592358,
         "shortname": "hazmatsuit.diver",
-        "name": "Abyss Divers Suit",
-        "description": "A divers suit found in the abyss, doubles as a reliable hazmat suit"
+        "name": "Abyss Pack",
+        "description": "A damaged deep-water survival suit was found in the abyss. Although it may no longer serve its original purpose, it functions reliably as a Hazmat suit. Owning this suit also grants access to the Abyss Pickaxe, Abyss Hatchet, Abyss Torch, and Abyss AR."
     },
     {
         "id": -105415879,
@@ -3392,7 +3416,7 @@
     {
         "id": -73195037,
         "shortname": "legacy bow",
-        "name": "Legacy bow",
+        "name": "Legacy Bow",
         "description": "Hunting Bow, useful for short to medium range combat and hunting."
     },
     {
@@ -3813,7 +3837,7 @@
         "id": -2047081330,
         "shortname": "movembermoustache",
         "name": "Movember Moustache",
-        "description": "A magnificent moustache for Movember"
+        "description": "A magnificent moustache (it acts as a hairy bandana) - all proceeds go to Movember, a charity promoting men's health awareness,"
     },
     {
         "id": 3380160,
@@ -4052,8 +4076,8 @@
     {
         "id": 537946062,
         "shortname": "pilot.hazmat.box.wooden",
-        "name": "Black Box",
-        "description": "Keep your things in this Black Box. Stores up to 18 items."
+        "name": "Flight Recorder Box",
+        "description": "Keep your things in this Flight Recorder box. Stores up to 18 items."
     },
     {
         "id": -1442496789,
@@ -4394,7 +4418,7 @@
     {
         "id": 472505338,
         "shortname": "rifle.ak.med",
-        "name": "Medieval Assault Rifle",
+        "name": "Medieval AR",
         "description": "Medieval themed high damage machine rifle."
     },
     {
@@ -4605,7 +4629,7 @@
         "id": 2126889441,
         "shortname": "santabeard",
         "name": "Santa Beard",
-        "description": "A santa beard. Ho Ho ho."
+        "description": "A santa beard. Ho Ho ho. This item acts as a hairy bandana."
     },
     {
         "id": -575483084,
@@ -5115,7 +5139,7 @@
         "id": -216116642,
         "shortname": "skulldoorknocker",
         "name": "Skull Door Knocker",
-        "description": "A spooky skull door knocker"
+        "description": "A spooky heavy iron door knocker. Its haunted skull will produce flames when distrubed."
     },
     {
         "id": -25740268,
@@ -5145,7 +5169,7 @@
         "id": 1819863051,
         "shortname": "skylantern",
         "name": "Sky Lantern",
-        "description": "A beautiful sky lantern. Can be launched in any direction. Has one inventory slot. Can be Ignited with a lit torch."
+        "description": "A set of beautiful sky lanterns. Comes in 5 colors. Can be launched in any direction. Has one inventory slot. Can be Ignited with a lit torch."
     },
     {
         "id": -1770889433,
@@ -5380,6 +5404,12 @@
         "shortname": "spikes.floor",
         "name": "Wooden Floor Spikes",
         "description": "A set of spikes that will slow down and hurt anyone that walks over them."
+    },
+    {
+        "id": -1850297170,
+        "shortname": "spikes.trap",
+        "name": "Small Spike Trap",
+        "description": "A small improvised trap that injures and slows anyone who steps on it."
     },
     {
         "id": -1100422738,
@@ -5775,7 +5805,7 @@
         "id": 20489901,
         "shortname": "twitchsunglasses",
         "name": "Purple Sunglasses",
-        "description": "Sunglasses - Gained from Rust's first Twitch drop event."
+        "description": "Sunglasses - Gained from Rust's first Twitch drop."
     },
     {
         "id": -1683726934,
@@ -6008,19 +6038,19 @@
     {
         "id": 1115193056,
         "shortname": "wall.frame.lunar2025_a",
-        "name": "Lunar Wall Frame Inlay",
+        "name": "Wall Divider Pack",
         "description": "A Lunar New Year themed decorative wall divider with geometric inlay"
     },
     {
         "id": -450890885,
         "shortname": "wall.frame.lunar2025_b",
-        "name": "Lunar Wall Frame Inlay",
+        "name": "Wall Divider Pack",
         "description": "A Lunar New Year themed decorative wall divider with swirling inlay"
     },
     {
         "id": -2016974826,
         "shortname": "wall.frame.lunar2025_c",
-        "name": "Lunar Wall Frame Inlay",
+        "name": "Wall Divider Pack",
         "description": "A Lunar New Year themed decorative wall divider with floral inlay"
     },
     {

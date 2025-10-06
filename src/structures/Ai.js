@@ -4,8 +4,17 @@ const Path = require('path');
 const Config = require('../../config');
 const Groq = require("groq-sdk");
 const Client = require('../../index.ts');
+const Items = require('./Items');
 
 class Ai {
+
+    set items(value) {
+        this._items = value;
+    }
+    
+    get items() {
+        return this._items;
+    }
 
     constructor(guildId = null) {
         this.guildId = guildId;
@@ -17,7 +26,7 @@ class Ai {
 
 
         this.instance = this.getInstance();
-        this.items = Client.client.items;
+        this._items = new Items();
     }
 
     getInstance() {
@@ -25,16 +34,32 @@ class Ai {
     }
 
     getItem(name) {
-        let itemId = Client.client.items.getClosestItemIdByName(name);
+        let itemId = this.getTtemIdByName(name);
         if (itemId) {
-            let item = Client.client.items.getItem(itemId);
+            let item = this.items.getItem(itemId);
             return item;
         }
         return null;
     }
 
+    getTtemIdByName(name) {
+        return this.items.getClosestItemIdByName(name);
+    }
+
     async create(body) {
         return await this.openai.chat.completions.create(body);
+    }
+
+    async askRaidQuestion() {
+    
+    }
+
+    async askGamblingQuestion(question) {
+        this.items.getItemByName('stone');
+    }
+
+    async askCostQuestion(question) {
+    
     }
 
     async askAiBot(query) {
@@ -48,8 +73,8 @@ class Ai {
                 + "Assume Vanilla game settings when calculating item and building stats in calculations for damage, health, durability, decay, despawn, recycle.\n"
                 + "Assume all questions about Rust refer to the PC game developed by Facepunch (https://rust.facepunch.com/), not the programming language.\n"
                 + "The only exception is if the user asks a gambling question about Casino games in Rust (black jack, slot machine, big wheel).\n"
-                + "Provide a concise, brief, final answer only, without any additional commentary or preamble.\n"
-                + "Use Plain Text format only, no Markdown, no code blocks.\n"
+                + "Provide a concise final answer.\n"
+                + "Use Plain Text in your output, do not use any special characters that require encoding.\n"
         };
 
         const userMsg = {
@@ -83,10 +108,10 @@ class Ai {
             const resp = await this.create({
                 model: "moonshotai/kimi-k2-instruct",
                 messages,
-                temperature: 0.5,
+                temperature: 0.8,
                 max_completion_tokens: 4096,
                 search_settings:{
-                    include_domains: ["rusthelp.com", "wiki.rustclash.com"]
+                    include_domains: ["rusthelp.com", "wiki.rustclash.com", "https://rust.facepunch.com/news/"]
                 }
             });
 
