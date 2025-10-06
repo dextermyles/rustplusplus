@@ -87,7 +87,6 @@ module.exports = {
                                 var playerDeathHistory = await rustplus.getRusticatedStats(player.steamId, 1);
                                 if (playerDeathHistory && playerDeathHistory.history?.length) {
                                     var lastDeath = playerDeathHistory.history[0];
-                                    console.log(playerDeathHistory);
                                     var lastDeathPlayerName = lastDeath.name;
                                     if (lastDeathPlayerName && lastDeathPlayerName.length !== 0) {
                                         str += ` [Last killed by ${lastDeathPlayerName}] ${lastDeath.value}`

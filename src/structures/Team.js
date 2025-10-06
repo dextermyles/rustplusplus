@@ -119,7 +119,6 @@ class Team {
         await this.players.filter(p => p.isOnline)
             .forEach(async (p, index) => {
                 let statsResponse = await this.rustplus.getRusticatedStats(p.steamId, 0);
-                console.log(statsResponse)
             });
 
 
