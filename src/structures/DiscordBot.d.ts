@@ -1,4 +1,3 @@
-export = DiscordBot;
 declare class DiscordBot extends Discord.Client<boolean> {
     constructor(props: Discord.ClientOptions);
     logger: Logger;
@@ -39,8 +38,8 @@ declare class DiscordBot extends Discord.Client<boolean> {
     syncCredentialsWithUsers(guild: any): Promise<void>;
     getInstance(guildId: any): any;
     setInstance(guildId: any, instance: any): void;
-    readNotificationSettingsTemplate(): any;
-    readGeneralSettingsTemplate(): any;
+    readNotificationSettingsTemplate(): NotificationSettingsTemplate;
+    readGeneralSettingsTemplate(): GeneralSettingsTemplate;
     createRustplusInstance(guildId: any, serverIp: any, appPort: any, steamId: any, playerToken: any): RustPlus;
     createRustplusInstancesFromConfig(): void;
     resetRustplusVariables(guildId: any): void;
@@ -66,4 +65,7 @@ import FormatJS = require("@formatjs/intl");
 import Items = require("./Items");
 import RustLabs = require("../structures/RustLabs");
 import Cctv = require("./Cctv");
-import RustPlus = require("../structures/RustPlus");
+import RustPlus = require("../structures/RustPlus");import { GeneralSettingsTemplate } from "../templates/GeneralSettingsTemplate.js";
+import { NotificationSettingsTemplate } from "../templates/notificationSettingsTemplate.js";
+
+export default DiscordBot;

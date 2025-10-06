@@ -295,7 +295,8 @@ class DiscordBot extends Discord.Client {
             Path.join(__dirname, '..', 'templates/notificationSettingsTemplate.json'), 'utf8'));
     }
 
-    readGeneralSettingsTemplate() {
+    readGeneralSettingsTemplate()
+     {
         return JSON.parse(Fs.readFileSync(
             Path.join(__dirname, '..', 'templates/generalSettingsTemplate.json'), 'utf8'));
     }

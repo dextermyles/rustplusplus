@@ -67,3 +67,5 @@ process.on('unhandledRejection', error => {
 });
 
 exports.client = discordClient;
+
+export default discordClient;
