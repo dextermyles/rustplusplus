@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022 Alexander Emanuelsson (alexemanuelol)
+    Copyright (C) 2025 BigRageHunters.com
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-    https://github.com/alexemanuelol/rustplusplus
+    https://github.com/dextermyles/rustplusplus
 
 */
 
@@ -24,9 +24,10 @@ import Discord from  'discord.js';
 import Fs from 'fs';
 import Path from 'path';
 
+
 createMissingDirectories();
 
-const discordClient = new DiscordBot({
+const client = new DiscordBot({
     intents: [
         Discord.GatewayIntentBits.Guilds,
         Discord.GatewayIntentBits.GuildMessages,
@@ -39,7 +40,7 @@ const discordClient = new DiscordBot({
         }
 });
 
-discordClient.build();
+client.build();
 
 function createMissingDirectories() {
     if (!Fs.existsSync(Path.join(__dirname, 'logs'))) {
@@ -60,12 +61,13 @@ function createMissingDirectories() {
 }
 
 process.on('unhandledRejection', error => {
-    discordClient.log(discordClient.intlGet(null, 'errorCap'), discordClient.intlGet(null, 'unhandledRejection', {
+    client.log(client.intlGet(null, 'errorCap'), client.intlGet(null, 'unhandledRejection', {
         error: error
     }), 'error');
     console.log(error);
 });
 
-exports.client = discordClient;
 
-export default discordClient;
+exports.client = client;
+
+export default client;

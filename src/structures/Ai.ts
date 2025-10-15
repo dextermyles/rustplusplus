@@ -7,7 +7,7 @@ import Items from "./Items";
 import client from '../../index';
 import { ChatCompletionCreateParamsNonStreaming, ChatCompletionMessageParam, ChatCompletionSystemMessageParam } from "groq-sdk/resources/chat/completions";
 
-export class Ai {
+class Ai {
 
     _items: any;
     guildId = 0;
@@ -159,3 +159,5 @@ export class Ai {
 }
 
 exports.Ai = Ai;
+
+export default Ai;
