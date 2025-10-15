@@ -42,6 +42,9 @@ class Items {
     }
 
     removeItem(id) { 
+        if (typeof id === 'number')
+            id = id.toString();
+        
         let index = this.items.findIndex(x => x.id === id);
         if (index !== -1) {
             this.items.splice(index, 1);
@@ -49,10 +52,16 @@ class Items {
     }
 
     itemExist(id) { 
+        if (typeof id === 'number')
+            id = id.toString();
+
          return this.items.find(x => x.id === id) !== undefined;
     }
 
     getItem(id) {
+        if (typeof id === 'number')
+            id = id.toString();
+        
         return this.items.find(x => x.id === id);
     }
 
@@ -64,7 +73,8 @@ class Items {
     }
 
     getName(id) {
-        if (!this.itemExist(id)) return undefined;
+        if (!this.itemExist(id)) 
+            return undefined;
         let item = this.getItem(id);
         return item !== undefined ? item.name : '';
     }
