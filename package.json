@@ -1,11 +1,10 @@
 {
     "name": "rustplusplus",
-    "version": "1.22.1",
+    "version": "1.22.2",
     "description": "A NodeJS Discord Bot that uses the rustplus.js library to utilize the power of the Rust+ Companion App with additional Quality-of-Life features.",
     "main": "index.ts",
     "scripts": {
         "start": "ts-node .",
-        "preinstall": "npx npm-force-resolutions",
         "test": "tsc --noEmit -p .",
         "assets": "node update_assets.js \"C:\\Program Files (x86)\\Steam\\steamapps\\common\\Rust\""
     },
