@@ -24,7 +24,6 @@ import Discord from  'discord.js';
 import Fs from 'fs';
 import Path from 'path';
 
-
 createMissingDirectories();
 
 const client = new DiscordBot({
@@ -66,7 +65,6 @@ process.on('unhandledRejection', error => {
     }), 'error');
     console.log(error);
 });
-
 
 exports.client = client;
 

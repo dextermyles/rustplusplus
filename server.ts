@@ -61,6 +61,15 @@ export class RppServer {
         });
 
         this.createMissingDirectories();
+
+        process.on('unhandledRejection', error => {
+            this.client.log(this.client.intlGet(null, 'errorCap'), this.client.intlGet(null, 'unhandledRejection', {
+                error: error
+            }), 'error');
+            console.log(typeof error);
+            console.log(error);
+            console.error(error);
+        });
     }
 
 
@@ -86,3 +95,7 @@ export class RppServer {
         this.client.build();
     }
 }
+
+exports.RppServer = RppServer;
+
+export default RppServer;
