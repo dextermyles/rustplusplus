@@ -148,3 +148,5 @@ class Ai {
 }
 
 module.exports = Ai;
+
+export default Ai;

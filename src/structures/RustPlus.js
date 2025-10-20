@@ -38,7 +38,7 @@ const Map = require("../util/map.js");
 const RustPlusLite = require("../structures/RustPlusLite");
 const TeamHandler = require("../handlers/teamHandler.js");
 const Timer = require("../util/timer.js");
-const Ai = require("./Ai.ts");
+const Ai = require("./Ai.js");
 const Query = require("./Query.js");
 const moment = require('moment');
 const RustHelp = require("./RustHelp.js");
@@ -120,7 +120,7 @@ class RustPlus extends RustPlusLib {
         this.mapMarkers = null; /* Stores the MapMarkers structure. */
 
         /* AI chat assistant */
-        this.ai = new Ai.Ai(guildId);
+        this.ai = new Ai(guildId);
         //this.rusthelp = new RustHelp(guildId);
         // this.ai.askAiBot("How many propane explosive bombs to raid a wooden door?")
         //     .then((response) => {
