@@ -108,11 +108,11 @@ class Ai {
             const resp = await this.create({
                 model: "moonshotai/kimi-k2-instruct",
                 messages,
-                temperature: 0.8,
-                max_completion_tokens: 4096,
+                temperature: 0.4,
+                max_completion_tokens: 2048,
                 search_settings:{
-                    include_domains: ["rusthelp.com", "wiki.rustclash.com", "https://rust.facepunch.com/news/"]
-                }
+                    include_domains: ["rusthelp.com", "https://rust.facepunch.com/news/", "https://rust.facepunch.com/changes"]
+                },
             });
 
             this.log('AI Response', JSON.stringify(resp));
