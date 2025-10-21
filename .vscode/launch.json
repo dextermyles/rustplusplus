@@ -14,6 +14,17 @@
       "cwd": "${workspaceRoot}",
       "internalConsoleOptions": "openOnSessionStart",
       "skipFiles": ["<node_internals>/**", "node_modules/**"]
+    },
+    {
+      "name": "Assets",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "node",
+      "program": "update_assets.js",
+      "args": ["C:\\Program Files (x86)\\Steam\\steamapps\\common\\Rust\\"],
+      "cwd": "${workspaceRoot}",
+      "internalConsoleOptions": "openOnSessionStart",
+      "skipFiles": ["<node_internals>/**", "node_modules/**"]
     }
   ]
 }

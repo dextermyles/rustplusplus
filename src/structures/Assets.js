@@ -7,7 +7,8 @@ module.exports = {
             id: '',
             name: '',
             shortname: '',
-            description: ''
+            description: '',
+            image: ''
         }];
 
         var itemsLoaded = JSON.parse(Fs.readFileSync(
@@ -20,7 +21,8 @@ module.exports = {
                 id: x.id.toString(),
                 name: x.name,
                 description: x.description,
-                shortname: x.shortname
+                shortname: x.shortname,
+                image: Path.join(__dirname, '..', `resources/images/items/${x.shortname}.png`)
             }
         });
 

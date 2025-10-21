@@ -56,6 +56,7 @@ class RustAssetManager {
                 shortname: item.shortname,
                 name: item.Name,
                 description: item.Description,
+                image: path.join(__dirname, '..', `src/resources/images/items/${item.shortname}.png`)
             });
 
         });
