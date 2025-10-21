@@ -111,7 +111,7 @@ class Ai {
                 temperature: 0.4,
                 max_completion_tokens: 2048,
                 search_settings:{
-                    include_domains: ["rusthelp.com", "https://rust.facepunch.com/news/", "https://rust.facepunch.com/changes"]
+                    include_domains: ["rusthelp.com", "https://rust.facepunch.com/news/", "https://rust.facepunch.com/changes", "https://commits.facepunch.com/"]
                 },
             });
 
