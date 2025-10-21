@@ -8,5 +8,4 @@ temp
 dist
 src/staticFiles/rusthelp_itemlist.json
 src/staticFiles/test.png
-src/resources/images/items
 .github
