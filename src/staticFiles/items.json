@@ -3304,6 +3304,13 @@
         "image": "C:\\git\\forks\\rustplusplus\\src\\resources\\images\\items\\hatchet.png"
     },
     {
+        "id": -902423513,
+        "shortname": "hazmat.krieg",
+        "name": "Krieg Hazmat",
+        "description": "A Krieg Hazmat Suit, standard issue for those who never retreat.",
+        "image": "C:\\git\\forks\\rustplusplus\\src\\resources\\images\\items\\hazmat.krieg.png"
+    },
+    {
         "id": 1578317134,
         "shortname": "hazmat.plushy",
         "name": "Hazmat Plushy",
@@ -3925,6 +3932,41 @@
         "name": "Knights armour cuirass",
         "description": "A well made collection of scrap metal formed into a knights armour.",
         "image": "C:\\git\\forks\\rustplusplus\\src\\resources\\images\\items\\knighttorso.armour.png"
+    },
+    {
+        "id": -1770281406,
+        "shortname": "krieg.chainsword",
+        "name": "Krieg chainsword",
+        "description": "A brutal tool of war, roaring to life with every swing.",
+        "image": "C:\\git\\forks\\rustplusplus\\src\\resources\\images\\items\\krieg.chainsword.png"
+    },
+    {
+        "id": -420889602,
+        "shortname": "krieg.shotgun",
+        "name": "Krieg Shotgun",
+        "description": "Heavy, reliable, and unforgiving. A weapon that never hesitates.",
+        "image": "C:\\git\\forks\\rustplusplus\\src\\resources\\images\\items\\krieg.shotgun.png"
+    },
+    {
+        "id": 652793345,
+        "shortname": "krieg.storage.horizontal",
+        "name": "Krieg Storage Crates",
+        "description": "Military-grade crates designed for efficient storage and durability. A staple of any well-supplied outpost.",
+        "image": "C:\\git\\forks\\rustplusplus\\src\\resources\\images\\items\\krieg.storage.horizontal.png"
+    },
+    {
+        "id": 1305765685,
+        "shortname": "krieg.storage.vertical",
+        "name": "Krieg Storage Barrel",
+        "description": "Industrial barrels repurposed for the front lines. Sturdy, disciplined, and unmistakably Krieg.",
+        "image": "C:\\git\\forks\\rustplusplus\\src\\resources\\images\\items\\krieg.storage.vertical.png"
+    },
+    {
+        "id": -874650016,
+        "shortname": "kriegbackpack",
+        "name": "Krieg Large Backpack",
+        "description": "Carry your essentials in a rugged military pack, built for endurance and practicality.",
+        "image": "C:\\git\\forks\\rustplusplus\\src\\resources\\images\\items\\kriegbackpack.png"
     },
     {
         "id": -316250604,
@@ -5715,7 +5757,7 @@
         "id": 795371088,
         "shortname": "shotgun.pump",
         "name": "Pump Shotgun",
-        "description": "A Shotgun. Fires six rounds.",
+        "description": "A Shotgun. Fires 8 rounds.",
         "image": "C:\\git\\forks\\rustplusplus\\src\\resources\\images\\items\\shotgun.pump.png"
     },
     {

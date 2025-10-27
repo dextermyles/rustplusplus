@@ -39,7 +39,10 @@ class RustAssetManager {
      */
     compileItemsMetadata() {
 
-        const items = [];
+        const items = new Array();
+        const itemsNorm = new Object();
+        const itemKeys = new Array();
+        const itemsOld = new Array();
 
         // iterate metadata files
         this.getMetadataFiles().forEach(filename => {
@@ -48,21 +51,47 @@ class RustAssetManager {
             const filepath = path.join(this.getBundleItemsDirectory(), filename);
 
             // read item metadata
-            const item = JSON.parse(fs.readFileSync(filepath));
+            let rawItem = JSON.parse(fs.readFileSync(filepath));
+            let keys = Object.keys(rawItem);
+            
+            for(let k of keys) {
+                if (!itemKeys.includes(k))
+                    itemKeys.push(k);
+            }
 
             // push item meta we want to keep
-            items.push({
-                id: item.itemid,
-                shortname: item.shortname,
-                name: item.Name,
-                description: item.Description,
-                image: path.join(__dirname, '..', `src/resources/images/items/${item.shortname}.png`)
+            items.push(rawItem);
+        });
+
+        console.log(typeof itemKeys);
+        console.log(itemKeys);
+
+        console.log(typeof items);
+        console.log(items);
+
+        items.forEach(x => {
+            let itemIdStr = new String(x.itemid);
+            let itemid = parseInt(itemIdStr);
+
+            itemsNorm[itemid] = {
+                ...x,
+                image: path.join(__dirname, '..', `src/resources/images/items/${x.shortname}.png`)
+            }
+
+            itemsOld.push({
+                id: x.itemid,
+                shortname: x.shortname,
+                name: x.Name,
+                description: x.Description,
+                image: path.join(__dirname, '..', `src/resources/images/items/${x.shortname}.png`)
             });
 
         });
 
-        return JSON.stringify(items, null, 4);
+        console.log(typeof itemsNorm);
+        console.log(itemsNorm);
 
+        return JSON.stringify(itemsOld, null, 4);
     }
 
     /**
@@ -70,7 +99,10 @@ class RustAssetManager {
      * @param destination
      */
     writeItemsMetadata(destination) {
-        fs.writeFileSync(destination, this.compileItemsMetadata());
+        let metadata = this.compileItemsMetadata();
+        console.log(typeof metadata);
+        console.log(metadata);
+        fs.writeFileSync(destination, metadata);
     }
 
     /**

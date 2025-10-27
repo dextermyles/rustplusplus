@@ -10,10 +10,11 @@ const args = process.argv.slice(2);
 const RustAssetManager = require('./tools/RustAssetManager');
 
 // make sure rust path is provided
-const rustPath = args[0];
+let rustPath = args[0];
 if(rustPath == null || typeof(rustPath) !== "string"){
-   console.error("Please provide the path to your Rust installation when running this script.");
-   return;
+   rustPath = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Rust";
+   console.warn("Please provide the path to your Rust installation when running this script.");
+   console.warn(`Falling back to '${rustPath}'`)
 }
 
 // setup rust asset manager
