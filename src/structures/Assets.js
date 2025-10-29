@@ -11,8 +11,7 @@ module.exports = {
                 id: x.itemid.toString(),
                 name: x.name,
                 description: x.description,
-                shortname: x.shortname,
-                image: Path.join(__dirname, '..', `resources/images/items/${x.shortname}.png`)
+                shortname: x.shortname
             }
         });
     }
