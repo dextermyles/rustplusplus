@@ -24,4 +24,4 @@ const rustAssetManager = new RustAssetManager(rustPath);
 rustAssetManager.writeItemsMetadata('./src/staticFiles/items.json');
 
 // copy item images
-rustAssetManager.copyItemImages('./src/resources/images/items/');
+// rustAssetManager.copyItemImages('./src/resources/images/items/');

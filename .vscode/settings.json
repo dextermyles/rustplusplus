@@ -1,0 +1,21 @@
+{
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "accessibility.verbosity.debug": false,
+    "accessibility.verbosity.comments": false,
+    "accessibility.verbosity.diffEditor": false,
+    "accessibility.verbosity.hover": false,
+    "accessibility.verbosity.inlineChat": false,
+    "accessibility.verbosity.inlineCompletions": false,
+    "accessibility.verbosity.keybindingsEditor": false,
+    "accessibility.verbosity.emptyEditorHint": false,
+    "accessibility.verbosity.notebook": false,
+    "accessibility.verbosity.panelChat": false,
+    "accessibility.verbosity.replEditor": false,
+    "accessibility.verbosity.terminal": true,
+    "accessibility.verbosity.notification": false,
+    "accessibility.verbosity.walkthrough": false,
+    "gitlens.statusBar.tooltipFormat": "__${author}__ &nbsp;$(history) ${ago} _(${date})_${' via  'pullRequest} ${message}${\n\n---\n\nfootnotes}\n\n${commands}",
+    "git.blame.editorDecoration.enabled": true,
+    "eslint.format.enable": true
+}
