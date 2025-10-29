@@ -1,51 +1,51 @@
 {
-    "name": "rustplusplus",
-    "version": "1.22.10",
-    "description": "A NodeJS Discord Bot that uses the rustplus.js library to utilize the power of the Rust+ Companion App with additional Quality-of-Life features.",
-    "main": "index.ts",
-    "scripts": {
-        "start": "ts-node .",
-        "test": "tsc --noEmit -p .",
-        "assets": "node update_assets.js \"C:\\Program Files (x86)\\Steam\\steamapps\\common\\Rust\""
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/dextermyles/rustplusplus.git"
-    },
-    "author": "dextermyles",
-    "license": "SEE LICENSE IN LICENSE",
-    "bugs": {
-        "url": "https://github.com/dextermyles/rustplusplus/issues"
-    },
-    "homepage": "https://github.com/dextermyles/rustplusplus#readme",
-    "dependencies": {
-        "@discordjs/rest": "^2.5.1",
-        "@discordjs/voice": "^0.18.0",
-        "@formatjs/intl": "^2.6.9",
-        "@liamcottle/push-receiver": "^0.0.4",
-        "@liamcottle/rustplus.js": "git+https://github.com/alexemanuelol/rustplus.js.git#089cfd3db1b04709911948bce669273139c6a124",
-        "axios": "^1.11.0",
-        "axios-cache-interceptor": "^1.8.2",
-        "cheerio": "^1.1.2",
-        "colors": "^1.4.0",
-        "discord-api-types": "^0.38.14",
-        "discord.js": "^14.21.0",
-        "ffmpeg-static": "^5.1.0",
-        "gm": "^1.25.0",
-        "groq-sdk": "^0.22.0",
-        "jimp": "^0.22.7",
-        "libsodium-wrappers": "^0.7.11",
-        "lodash": "^4.17.21",
-        "moment": "^2.30.1",
-        "puppeteer": "^24.17.1",
-        "steamapi": "^3.1.3",
-        "translate": "^1.4.1",
-        "ts-node": "^10.9.2",
-        "typescript": "^5.8.3",
-        "winston": "^3.8.2"
-    },
-    "resolutions": {
-        "jpeg-js": "0.4.4",
-        "protobufjs": "7.2.4"
-    }
+  "name": "rustplusplus",
+  "version": "1.22.11",
+  "description": "A NodeJS Discord Bot that uses the rustplus.js library to utilize the power of the Rust+ Companion App with additional Quality-of-Life features.",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node .",
+    "test": "tsc --noEmit -p .",
+    "assets": "node update_assets.js \"C:\\Program Files (x86)\\Steam\\steamapps\\common\\Rust\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dextermyles/rustplusplus.git"
+  },
+  "author": "dextermyles",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/dextermyles/rustplusplus/issues"
+  },
+  "homepage": "https://github.com/dextermyles/rustplusplus#readme",
+  "dependencies": {
+    "@discordjs/rest": "^2.5.1",
+    "@discordjs/voice": "^0.18.0",
+    "@formatjs/intl": "^2.6.9",
+    "@liamcottle/push-receiver": "^0.0.4",
+    "@liamcottle/rustplus.js": "git+https://github.com/alexemanuelol/rustplus.js.git#089cfd3db1b04709911948bce669273139c6a124",
+    "axios": "^1.11.0",
+    "axios-cache-interceptor": "^1.8.2",
+    "cheerio": "^1.1.2",
+    "colors": "^1.4.0",
+    "discord-api-types": "^0.38.14",
+    "discord.js": "^14.21.0",
+    "ffmpeg-static": "^5.1.0",
+    "gm": "^1.25.0",
+    "groq-sdk": "^0.22.0",
+    "jimp": "^0.22.7",
+    "libsodium-wrappers": "^0.7.11",
+    "lodash": "^4.17.21",
+    "moment": "^2.30.1",
+    "puppeteer": "^24.17.1",
+    "steamapi": "^3.1.3",
+    "translate": "^1.4.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "winston": "^3.8.2"
+  },
+  "resolutions": {
+    "jpeg-js": "0.4.4",
+    "protobufjs": "7.2.4"
+  }
 }
