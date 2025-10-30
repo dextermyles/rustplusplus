@@ -78,7 +78,7 @@ class Map {
                 jimp: null
             },
             stash: {
-                image: Path.join(__dirname, '..', 'resources/images/items/stash.small.png'), size: 20, type: 11, jimp: null
+                image: Path.join(__dirname, '..', 'resources/images/rocket.png'), size: 20, type: 11, jimp: null
             },
         }
 
