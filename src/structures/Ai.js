@@ -11,7 +11,7 @@ class Ai {
     set items(value) {
         this._items = value;
     }
-    
+
     get items() {
         return this._items;
     }
@@ -51,7 +51,7 @@ class Ai {
     }
 
     async askRaidQuestion() {
-    
+
     }
 
     async askGamblingQuestion(question) {
@@ -59,94 +59,127 @@ class Ai {
     }
 
     async askCostQuestion(question) {
-    
+
     }
 
     async askAiBot(query) {
-        this.lastQuestion = query;
-
-        this.log('AI Question', query);
-
-        const sysMsg = {
-            role: "system",
-            content: "You are my assistant for the survival game Rust.\n"
-                + "Assume Vanilla game settings when calculating item and building stats in calculations for damage, health, durability, decay, despawn, recycle.\n"
-                + "Assume all questions about Rust refer to the PC game developed by Facepunch (https://rust.facepunch.com/), not the programming language.\n"
-                + "The only exception is if the user asks a gambling question about Casino games in Rust (black jack, slot machine, big wheel).\n"
-                + "Provide a concise final answer.\n"
-                + "Use Plain Text in your output, do not use any special characters that require encoding.\n"
-        };
-
-        const userMsg = {
-            role: "user",
-            content: this.lastQuestion
-        }
-
-        const tools = [
-            {
-                "type": "function",
-                "function": {
-                    "name": "getItem",
-                    "description": "Get item by name",
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "type": "string",
-                                "description": "The name of item",
-                            }
-                        },
-                        "required": ["name"],
-                    },
-                },
-            }
-        ];
-
-        const messages = [sysMsg, userMsg];
-
         try {
-            const resp = await this.create({
-                model: "moonshotai/kimi-k2-instruct",
-                messages,
-                temperature: 0.4,
-                max_completion_tokens: 2048,
-                search_settings:{
-                    include_domains: ["rusthelp.com", "https://rust.facepunch.com/news/", "https://rust.facepunch.com/changes", "https://commits.facepunch.com/"]
-                },
-            });
-
-            this.log('AI Response', JSON.stringify(resp));
-
-            const responseMessage = resp.choices[0].message;
-            const toolCalls = responseMessage.tool_calls || [];
-
-            // Process tool calls
-            messages.push(responseMessage);
-
-            const availableFunctions = {
-                getItem: this.getItem
-            };
-
-            let content = responseMessage.content.trim();
-            const strings = content.match(new RegExp(`.{1,80}(\\s|$)`, 'g'));
-
-            this.lastAnswer = strings;
-
-            return this.lastAnswer;
+            this.lastQuestion = query;
+            this.log('AI Question', query);
+            return await this.askWithItemTokens(query);
         }
         catch (e) {
-            console.error(e);
+            this.log('askAitBot failed', e, 'Error');
+            console.log(e);
             return e;
         }
-
     }
 
     log(title, text, level = 'info') {
         this.logger.log(title, text, level);
     }
 
+
+    escapeRegExp(str) {
+        return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    /**
+     * Load items.json and build a tokenizer that replaces occurrences of item.Name
+     * with a compact token containing the itemid (so you can send tokenized text
+     * to Groq chat completions).
+     *
+     * Token format used: <ITEM:123456789>
+     *
+     * Exports:
+     *  - createItemTokenizer(itemsJsonPath)
+     *     -> { tokenize(text), detokenize(text), nameToId, idToName }
+     */
+    createItemTokenizer(itemsJsonPath) {
+        const jsonPath = Path.resolve(itemsJsonPath);
+        const raw = Fs.readFileSync(jsonPath, 'utf8');
+        const items = JSON.parse(raw);
+
+        const nameToId = new Map();
+        const idToName = new Map();
+
+        // Build mappings; prefer the "Name" field if present, fall back to shortname
+        for (const [id, item] of Object.entries(items)) {
+            const name = (item && (item.Name || item.Name === '') ? item.Name : item.shortname);
+            if (!name) continue;
+            const canonical = name.trim();
+            nameToId.set(canonical.toLowerCase(), id);
+            idToName.set(id, canonical);
+        }
+
+        // Build a regex that matches any item name. We sort by length desc to prefer longest match.
+        const names = Array.from(nameToId.keys()).sort((a, b) => b.length - a.length);
+        const escaped = names.map(this.escapeRegExp);
+        // We do a case-insensitive global search without requiring \b since names include spaces/punctuation.
+        const namesRegex = new RegExp(escaped.join('|'), 'gi');
+
+        function tokenize(text) {
+            if (!text || typeof text !== 'string') return text;
+            return text.replace(namesRegex, (match) => {
+                const id = nameToId.get(match.toLowerCase());
+                if (!id) return match;
+                return `<ITEM:${id}>`;
+            });
+        }
+
+        function detokenize(text) {
+            if (!text || typeof text !== 'string') return text;
+            return text.replace(/<ITEM:(-?\d+)>/g, (_m, id) => {
+                return idToName.get(String(id)) || `<ITEM:${id}>`;
+            });
+        }
+
+        return {
+            tokenize,
+            detokenize,
+            nameToId,
+            idToName,
+            rawItems: items
+        };
+    }
+
+    async askWithItemTokens(userQuery) {
+
+        // create tokenizer pointing at your items.json
+        const tokenizer = this.createItemTokenizer(Path.join(__dirname, '..', 'staticFiles', 'items.json'));
+
+        // Replace human-readable item names with itemid tokens
+        const tokenizedQuery = tokenizer.tokenize(userQuery);
+
+        const messages = [
+            {
+                role: "system",
+                content: "You are my assistant for the survival game Rust.\n"
+                    + "Use item tokens like <ITEM:123> as opaque IDs.\n"
+                    + "Assume Vanilla game settings when calculating item and building stats in calculations for damage, health, durability, decay, despawn, recycle.\n"
+                    + "Assume all questions about Rust refer to the PC game developed by Facepunch (https://rust.facepunch.com/), not the programming language.\n"
+                    + "The only exception is if the user asks a gambling question about Casino games in Rust (black jack, slot machine, big wheel).\n"
+                    + "Provide a concise final answer.\n"
+                    + "Use Plain Text in your output, do not use any special characters that require encoding.\n"
+            },
+            { role: 'user', content: tokenizedQuery }
+        ];
+
+
+        const resp = await this.create({
+            model: "moonshotai/kimi-k2-instruct",
+            messages,
+            temperature: 0.3,
+            max_completion_tokens: 512,
+        });
+
+        // the model reply may contain item tokens; convert back to friendly names
+        const modelText = (resp.choices && resp.choices[0] && resp.choices[0].message && resp.choices[0].message.content) || '';
+        const detokenized = tokenizer.detokenize(modelText);
+
+        return detokenized;
+    }
+
 }
 
 module.exports = Ai;
-
-export default Ai;

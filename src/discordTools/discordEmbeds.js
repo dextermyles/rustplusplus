@@ -650,7 +650,7 @@ module.exports = {
     getAiEmbed: function (body) {
         let description = '';
         if (Array.isArray(body)) {
-            description = body.join('\n');
+            description = body;
         }
 
         return module.exports.getEmbed({
@@ -1163,7 +1163,7 @@ module.exports = {
         });
     },
 
-    getRusticatedEmbed: function(guildId, response) {
+    getRusticatedEmbed: function (guildId, response) {
         return module.exports.getEmbed({
             title: `Rusticated Stats`,
             color: Constants.COLOR_DEFAULT,
@@ -1173,7 +1173,7 @@ module.exports = {
         });
     },
 
-    getRustStatsEmbed: function(guildId, response) {
+    getRustStatsEmbed: function (guildId, response) {
         return module.exports.getEmbed({
             title: `Rust Stats`,
             color: Constants.COLOR_DEFAULT,

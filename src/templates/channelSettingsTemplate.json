@@ -1,0 +1,7 @@
+{
+  "showTeamChatChannel": false,
+  "showSwitchesChannel": false,
+  "showSwitchGroupsChannel": false,
+  "showStorageMonitorsChannel": false,
+  "showCommandsChannel": true
+}
