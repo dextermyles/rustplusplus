@@ -8,7 +8,7 @@ const Config = require('../../config');
 const Steam = require('steamapi');
 
 class Query {
-    
+
 
     constructor(guildId = null) {
         this.guildId = guildId;
@@ -25,7 +25,7 @@ class Query {
     }
 
     GET_USER_GAMBLING_STATS(id) {
-        return `https://rusticated.com/api/v3/leaderboard?hidden=false&limit=10&offset=0&group=gambling&sortBy=gambling_pokerwon&sortDir=desc&type=player&eventType=kill_player&filter=${id}&serverId=uslong&serverWipeId=3833&attackerSteamId=&orgId=1`
+        return `https://rusticated.com/api/v3/leaderboard?hidden=false&limit=10&offset=0&group=gambling&sortBy=gambling_pokerwon&sortDir=desc&type=player&eventType=kill_player&filter=${id}&serverId=uslong&serverWipeId=4080&attackerSteamId=&orgId=1`
     }
 
     GET_USER_BANNED(id) {
@@ -119,7 +119,7 @@ class Query {
         catch (e) {
             console.error(e);
             this.log('STEAMAPI', e, 'error');
-            return Promise.reject(e );
+            return Promise.reject(e);
         }
 
     }
