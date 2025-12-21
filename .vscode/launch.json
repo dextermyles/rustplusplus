@@ -6,9 +6,9 @@
       "name": "TS-Node",
       "type": "node",
       "request": "launch",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/ts-node",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/nodemon",
       "runtimeArgs": [
-        "--transpile-only"
+        "--inspect=5858 -e ts,tsx --exec node -r ${workspaceRoot}/node_modules/.bin/ts-node/register ./index.ts --transpile-only"
       ],
       "program": "index.ts",
       "cwd": "${workspaceRoot}",

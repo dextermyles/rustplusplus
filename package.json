@@ -1,6 +1,6 @@
 {
   "name": "rustplusplus",
-  "version": "1.22.11",
+  "version": "1.22.12",
   "description": "A NodeJS Discord Bot that uses the rustplus.js library to utilize the power of the Rust+ Companion App with additional Quality-of-Life features.",
   "main": "index.ts",
   "scripts": {
@@ -12,6 +12,7 @@
     "type": "git",
     "url": "https://github.com/dextermyles/rustplusplus.git"
   },
+  "watch:debug": "nodemon --inspect=5858 -e ts,tsx --exec node -r ts-node/register ./index.ts",
   "author": "dextermyles",
   "license": "SEE LICENSE IN LICENSE",
   "bugs": {
@@ -47,5 +48,8 @@
   "resolutions": {
     "jpeg-js": "0.4.4",
     "protobufjs": "7.2.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }

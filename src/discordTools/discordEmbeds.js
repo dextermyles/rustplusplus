@@ -648,15 +648,10 @@ module.exports = {
     },
 
     getAiEmbed: function (body) {
-        let description = '';
-        if (Array.isArray(body)) {
-            description = body;
-        }
-
         return module.exports.getEmbed({
             color: Constants.COLOR_DEFAULT,
             title: 'Rust AI Assistant',
-            description: description,
+            description: body,
             timestamp: true
         });
     },
