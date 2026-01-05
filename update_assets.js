@@ -11,7 +11,7 @@ const RustAssetManager = require('./tools/RustAssetManager');
 
 // make sure rust path is provided
 let rustPath = args[0];
-if(rustPath == null || typeof(rustPath) !== "string"){
+if (rustPath == null || typeof (rustPath) !== "string") {
    rustPath = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Rust";
    console.warn("Please provide the path to your Rust installation when running this script.");
    console.warn(`Falling back to '${rustPath}'`)
@@ -24,4 +24,4 @@ const rustAssetManager = new RustAssetManager(rustPath);
 rustAssetManager.writeItemsMetadata('./src/staticFiles/items.json');
 
 // copy item images
-// rustAssetManager.copyItemImages('./src/resources/images/items/');
+rustAssetManager.copyItemImages('./src/resources/images/items/');
