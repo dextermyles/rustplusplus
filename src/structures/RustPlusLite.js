@@ -48,7 +48,7 @@ class RustPlusLite extends RustPlusLib {
         this.logger.log(`${title} LITE`, text, level);
     }
 
-    async getInfoAsync(timeout = 10000) {
+    async getInfoAsync(timeout = 20000) {
         try {
             return await this.sendRequestAsync({
                 getInfo: {}

@@ -557,7 +557,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async getInfoAsync(timeout = 10000) {
+    async getInfoAsync(timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(1))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -3808,7 +3808,7 @@ class RustPlus extends RustPlusLib {
                 return temp;
             })
             .sort((a, b) =>
-                 b.eventTime - a.eventTime); // Sort by eventTime descending
+                b.eventTime - a.eventTime); // Sort by eventTime descending
 
         let getWeaponName = (entry) => {
             return entry.substring(0, entry.indexOf('.'));
