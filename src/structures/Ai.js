@@ -153,7 +153,7 @@ class Ai {
                     + "Rust changes can be found at https://rust.facepunch.com/changes" + "\n"
                     + "The only exception is if the user asks a gambling question about Casino games in Rust (black jack, slot machine, big wheel).\n"
                     + "Provide a concise final answer.\n"
-                    + "Use Plain Text in your output, do not use any special characters (A-zA-Z0-0.+=<>:).\n"
+                    + "Use Plain Text in your output, do not use any special characters (A-zA-Z0-9.+=<>:).\n"
             },
             { role: 'user', content: userQuery }
         ];
