@@ -152,8 +152,8 @@ class Ai {
                     + "Assume all questions about Rust refer to the PC game developed by Facepunch (https://rust.facepunch.com/), not the programming language.\n"
                     + "Rust changes can be found at https://rust.facepunch.com/changes" + "\n"
                     + "The only exception is if the user asks a gambling question about Casino games in Rust (black jack, slot machine, big wheel).\n"
-                    + "Provide a concise final answer, do not show the equation only the total (when answering a raid question).\n"
-                    + "Use Plain Text in your output, do not use any special characters that require encoding.\n"
+                    + "Provide a concise final answer.\n"
+                    + "Use Plain Text in your output, do not use any special characters (A-zA-Z0-0.+=<>:).\n"
             },
             { role: 'user', content: userQuery }
         ];
