@@ -144,40 +144,31 @@ class Ai {
     }
 
     async askWithItemTokens(userQuery) {
-
-        // create tokenizer pointing at your items.json
-        const tokenizer = this.createItemTokenizer(Path.join(__dirname, '..', 'staticFiles', 'items.json'));
-
-        // Replace human-readable item names with itemid tokens
-        const tokenizedQuery = tokenizer.tokenize(userQuery);
-
         const messages = [
             {
                 role: "system",
                 content: "You are my assistant for the survival game Rust.\n"
-                    + "Use item tokens like <ITEM:123> as opaque IDs.\n"
                     + "Assume Vanilla game settings when calculating item and building stats in calculations for damage, health, durability, decay, despawn, recycle.\n"
                     + "Assume all questions about Rust refer to the PC game developed by Facepunch (https://rust.facepunch.com/), not the programming language.\n"
+                    + "Rust changes can be found at https://rust.facepunch.com/changes" + "\n"
                     + "The only exception is if the user asks a gambling question about Casino games in Rust (black jack, slot machine, big wheel).\n"
                     + "Provide a concise final answer.\n"
                     + "Use Plain Text in your output, do not use any special characters that require encoding.\n"
             },
-            { role: 'user', content: tokenizedQuery }
+            { role: 'user', content: userQuery }
         ];
-
 
         const resp = await this.create({
             model: "moonshotai/kimi-k2-instruct",
             messages,
-            temperature: 0.3,
-            max_completion_tokens: 512,
+            temperature: 0.2,
+            max_completion_tokens: 4096,
         });
 
         // the model reply may contain item tokens; convert back to friendly names
         const modelText = (resp.choices && resp.choices[0] && resp.choices[0].message && resp.choices[0].message.content) || '';
-        const detokenized = tokenizer.detokenize(modelText);
-
-        return detokenized;
+        this.log('AI Answer', modelText);
+        return modelText;
     }
 
 }
