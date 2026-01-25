@@ -25,7 +25,7 @@ class Query {
     }
 
     GET_USER_GAMBLING_STATS(id) {
-        return `https://rusticated.com/api/v3/leaderboard?hidden=false&limit=10&offset=0&group=gambling&sortBy=gambling_pokerwon&sortDir=desc&type=player&eventType=kill_player&filter=${id}&serverId=uslong&serverWipeId=4080&attackerSteamId=&orgId=1`
+        return `https://rusticated.com/api/v3/leaderboard?hidden=false&limit=10&offset=0&group=gambling&sortBy=gambling_pokerwon&sortDir=desc&type=player&eventType=kill_player&filter=${id}&serverId=uslong&serverWipeId=4190&attackerSteamId=&orgId=1`
     }
 
     GET_USER_BANNED(id) {
@@ -45,11 +45,11 @@ class Query {
     }
 
     GET_RUSTICATED_KILL_HISTORY(id) {
-        return `https://rusticated.com/api/v3/events/kills-minimal?attackerSteamId=${id}&orgId=1&serverId=uslong`
+        return `https://rusticated.com/api/v3/events/kills-minimal?attackerSteamId=${id}&orgId=1&serverId=uslong&serverWipeId=4190`
     }
 
     GET_RUSTICATED_DEATH_HISTORY(id) {
-        return `https://rusticated.com/api/v3/events/kills-minimal?victimSteamId=${id}&orgId=1&serverId=uslong`
+        return `https://rusticated.com/api/v3/events/kills-minimal?victimSteamId=${id}&orgId=1&serverId=uslong&serverWipeId=4190`
     }
 
     GET_VANITY_URL(username) {
@@ -57,7 +57,7 @@ class Query {
     }
 
     GET_RUSTICATED_US_LONG_HEATMAP() {
-        return `https://rusticated.com/api/v3/heatmap?serverId=uslong&serverWipeId=&eventType=kill_player`
+        return `https://rusticated.com/api/v3/heatmap?serverId=uslong&serverWipeId=4190&eventType=kill_player`
     }
 
     getVanityUrl(username) {
