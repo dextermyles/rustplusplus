@@ -3,7 +3,7 @@
     "voiceGender": "male",
     "prefix": "!",
     "muteInGameBotMessages": false,
-    "trademark": "rustplusplus",
+    "trademark": "NOT SHOWING",
     "inGameCommandsEnabled": true,
     "fcmAlarmNotificationEnabled": false,
     "fcmAlarmNotificationEveryone": false,
@@ -12,9 +12,9 @@
     "leaderCommandEnabled": true,
     "leaderCommandOnlyForPaired": false,
     "commandDelay": 0,
-    "connectionNotify": false,
-    "afkNotify": false,
-    "deathNotify": false,
+    "connectionNotify": true,
+    "afkNotify": true,
+    "deathNotify": true,
     "mapWipeNotifyEveryone": false,
     "itemAvailableInVendingMachineNotifyInGame": true,
     "displayInformationBattlemetricsAllOnlinePlayers": false,
@@ -23,5 +23,5 @@
     "battlemetricsGlobalNameChanges": false,
     "battlemetricsGlobalLogin": false,
     "battlemetricsGlobalLogout": false,
-    "rusticatedWipeId": 3729
+    "rusticatedWipeId": 4190
 }
