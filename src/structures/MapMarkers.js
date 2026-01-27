@@ -17,9 +17,6 @@
     https://github.com/alexemanuelol/rustplusplus
 
 */
-/**
- * @type {MapMarkers}
- */
 
 const Constants = require('../util/constants.js');
 const Map = require('../util/map.js');

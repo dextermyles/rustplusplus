@@ -76,10 +76,7 @@ class Map {
                 image:
                     Path.join(__dirname, '..', 'resources/images/markers/tunnels_link.png'), size: 35, type: 10,
                 jimp: null
-            },
-            stash: {
-                image: Path.join(__dirname, '..', 'resources/images/rocket.png'), size: 20, type: 11, jimp: null
-            },
+            }
         }
 
         this._monumentInfo = {
@@ -373,8 +370,7 @@ class Map {
                 }
             }
             catch (e) {
-                this.rustplus.log('ERROR', `mapAppendMonuments error: ${e}`)
-                console.error(e);
+                /* Ignore */
             }
         }
     }
@@ -390,55 +386,28 @@ class Map {
         if (!(await this.rustplus.isResponseValid(mapMarkers))) return;
 
         for (let marker of mapMarkers.mapMarkers.markers) {
-
             let x = marker.x * ((this.width - 2 * this.oceanMargin) / this.rustplus.info.mapSize) + this.oceanMargin;
             let n = this.height - 2 * this.oceanMargin;
             let y = this.height - (marker.y * (n / this.rustplus.info.mapSize) + this.oceanMargin);
+
+            /* Compensate rotations */
+            if (marker.type === this.rustplus.mapMarkers.types.CargoShip) {
+                x -= 20;
+                y -= 20;
+            }
+
             try {
                 let markerImageMeta = this.getMarkerImageMetaByType(marker.type);
-                let size = markerImageMeta.size;
-
-                if (marker.type === this.rustplus.mapMarkers?.types?.Player) {
-                    let hasSteamId = (marker.hasOwnProperty('steamId')) ? true : false;
-                    if (hasSteamId) {
-                        const steamIdStr = marker.steamId.toString();
-                        console.log('marker.steamId', marker.steamId, steamIdStr);
-                        const player = this.rustplus.team.getPlayer(steamIdStr);
-                        if (player) {
-                            const steamProfile = await this.rustplus.getProfile(steamIdStr);
-                            let avatarUrl = steamProfile.avatar;
-                            markerImageMeta.image = avatarUrl;
-                            markerImageMeta.jimp = await Jimp.read(markerImageMeta.image);
-                            markerImageMeta.jimp.resize(markerImageMeta.size, markerImageMeta.size);
-                            markerImageMeta.jimp.circle();
-                            console.log('player about to be drawn on map', steamProfile.personaname);
-                        }
-                    }
-                }
+                let size = this.mapMarkerImageMeta[markerImageMeta].size;
 
                 /* Rotate */
-                if (marker.rotation) {
-                    markerImageMeta.jimp.rotate(marker.rotation);
-                }
+                this.mapMarkerImageMeta[markerImageMeta].jimp.rotate(marker.rotation);
 
-                /* Compensate rotations */
-                if (marker.type === this.rustplus.mapMarkers?.types?.CargoShip) {
-                    x -= 20;
-                    y -= 20;
-                }
-
-                let xcord = x - (size / 2);
-                let ycord = y - (size / 2);
-
-                console.log(`drawing ${marker.type} [${xcord}, ${ycord}]`);
-
-                this.mapMarkerImageMeta.map.jimp.composite(markerImageMeta.jimp,
-                    xcord,
-                    ycord);
+                this.mapMarkerImageMeta.map.jimp.composite(
+                    this.mapMarkerImageMeta[markerImageMeta].jimp, x - (size / 2), y - (size / 2)
+                );
             }
             catch (e) {
-                this.rustplus.log('ERROR', `mapAppendMonuments error: ${e}`)
-                console.error(e);
                 /* Ignore */
             }
         }
@@ -454,7 +423,6 @@ class Map {
             await this.mapAppendMonuments();
         }
 
-
         await this.mapMarkerImageMeta.map.jimp.writeAsync(
             this.mapMarkerImageMeta.map.image.replace('clean.png', 'full.png'));
 
@@ -467,8 +435,7 @@ class Map {
                 return;
             }
 
-            if (!markers)
-                return;
+            if (!markers) return;
 
             /* Tracer for CargoShip */
             image.stroke(Constants.COLOR_CARGO_TRACER, 2);
@@ -513,7 +480,7 @@ class Map {
     getMarkerImageMetaByType(type) {
         for (const [marker, content] of Object.entries(this.mapMarkerImageMeta)) {
             if (content.type === type) {
-                return content;
+                return marker;
             }
         }
         return null;
