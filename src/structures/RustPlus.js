@@ -394,7 +394,7 @@ class RustPlus extends RustPlusLib {
         return true;
     }
 
-    async turnSmartSwitchAsync(id, value, timeout = 10000) {
+    async turnSmartSwitchAsync(id, value, timeout = 20000) {
         if (value) {
             return await this.turnSmartSwitchOnAsync(id, timeout);
         } else {
@@ -402,7 +402,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async turnSmartSwitchOnAsync(id, timeout = 10000) {
+    async turnSmartSwitchOnAsync(id, timeout = 20000) {
         try {
             return await this.setEntityValueAsync(id, true, timeout);
         } catch (e) {
@@ -410,7 +410,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async turnSmartSwitchOffAsync(id, timeout = 10000) {
+    async turnSmartSwitchOffAsync(id, timeout = 20000) {
         try {
             return await this.setEntityValueAsync(id, false, timeout);
         } catch (e) {
@@ -418,7 +418,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async setEntityValueAsync(id, value, timeout = 10000) {
+    async setEntityValueAsync(id, value, timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(1))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -457,7 +457,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async sendTeamMessageAsync(message, timeout = 10000) {
+    async sendTeamMessageAsync(message, timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(2))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -478,7 +478,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async getEntityInfoAsync(id, timeout = 10000) {
+    async getEntityInfoAsync(id, timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(1))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -500,7 +500,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async getMapAsync(timeout = 30000) {
+    async getMapAsync(timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(5))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -519,7 +519,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async getTimeAsync(timeout = 10000) {
+    async getTimeAsync(timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(1))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -538,7 +538,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async getMapMarkersAsync(timeout = 10000) {
+    async getMapMarkersAsync(timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(1))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -576,7 +576,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async getTeamInfoAsync(timeout = 10000) {
+    async getTeamInfoAsync(timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(1))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -596,7 +596,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async subscribeToCameraAsync(identifier, timeout = 10000) {
+    async subscribeToCameraAsync(identifier, timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(1))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -617,7 +617,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async unsubscribeFromCameraAsync(timeout = 10000) {
+    async unsubscribeFromCameraAsync(timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(1))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -661,7 +661,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async promoteToLeaderAsync(steamId, timeout = 10000) {
+    async promoteToLeaderAsync(steamId, timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(1))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -682,7 +682,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async getTeamChatAsync(timeout = 10000) {
+    async getTeamChatAsync(timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(1))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -701,7 +701,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async checkSubscriptionAsync(id, timeout = 10000) {
+    async checkSubscriptionAsync(id, timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(1))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -721,7 +721,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async setSubscriptionAsync(id, value, timeout = 10000) {
+    async setSubscriptionAsync(id, value, timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(1))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
@@ -743,7 +743,7 @@ class RustPlus extends RustPlusLib {
         }
     }
 
-    async getCameraFrameAsync(identifier, frame, timeout = 10000) {
+    async getCameraFrameAsync(identifier, frame, timeout = 20000) {
         try {
             if (!(await this.waitForAvailableTokens(2))) {
                 return { error: Client.client.intlGet(null, "tokensDidNotReplenish") };
